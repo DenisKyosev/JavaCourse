@@ -2,17 +2,13 @@ package com.sirma.itt.javacourse.exceptions;
 
 import org.junit.Test;
 
-import com.sirma.itt.javacource.exceptions.ArrayIsEmptyException;
-import com.sirma.itt.javacource.exceptions.ArrayIsFullException;
-import com.sirma.itt.javacource.exceptions.ArrayWithExceptions;
-
 /**
  * test class for array with exceptions.
  * 
  * @author Fester
  */
 public class ArrayWithExceptionsTest {
-	private ArrayWithExceptions arr = new ArrayWithExceptions(2);
+	private final ArrayWithExceptions arr = new ArrayWithExceptions(2);
 
 	/**
 	 * testing add method exception.

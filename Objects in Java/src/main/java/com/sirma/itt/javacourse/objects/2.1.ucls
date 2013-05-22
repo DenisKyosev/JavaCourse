@@ -1,192 +1,223 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="com.sirma.itt.javacourse.objects.market.MarketLollipop" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketLollipop.java" binary="false" 
+  <interface id="1" language="java" name="com.sirma.itt.javacourse.objects.market.MarketSweets" 
+    project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketSweets.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="99" width="179" x="249" y="434"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="com.sirma.itt.javacourse.objects.market.MarketSeller" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketSeller.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="117" width="179" x="30" y="277"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <interface id="3" language="java" name="com.sirma.itt.javacourse.objects.market.MarketWorker" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketWorker.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="99" width="179" x="30" y="434"/>    
+    <position height="81" width="179" x="670" y="669"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="4" language="java" name="com.sirma.itt.javacourse.objects.market.MarketCustomer" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketCustomer.java" binary="false" 
+  <class id="2" language="java" name="com.sirma.itt.javacourse.objects.market.MarketSeller" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketSeller.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="179" x="468" y="277"/>    
+    <position height="117" width="179" x="-96" y="355"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.sirma.itt.javacourse.objects.market.MarketPerson" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketPerson.java" binary="false" 
+  <class id="3" language="java" name="com.sirma.itt.javacourse.objects.market.MarketFoods" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketFoods.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="135" width="179" x="249" y="-6"/>    
+    <position height="81" width="179" x="561" y="355"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.sirma.itt.javacourse.objects.market.MarketCocaCola" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketCocaCola.java" binary="false" 
+  <class id="4" language="java" name="com.sirma.itt.javacourse.objects.market.MarketNoFoods" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketNoFoods.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="117" width="179" x="687" y="434"/>    
+    <position height="81" width="179" x="854" y="355"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="7" language="java" name="com.sirma.itt.javacourse.objects.market.MarketSweets" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketSweets.java" binary="false" 
+  <class id="5" language="java" name="com.sirma.itt.javacourse.objects.market.MarketSprite" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketSprite.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="179" x="359" y="591"/>    
+    <position height="117" width="179" x="123" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.sirma.itt.javacourse.objects.market.MarketCleaner" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketCleaner.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="179" x="123" y="355"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.sirma.itt.javacourse.objects.market.MarketCustomer" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketCustomer.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="179" x="342" y="355"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.sirma.itt.javacourse.objects.market.MarketPerson" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketPerson.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="135" width="179" x="123" y="72"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.sirma.itt.javacourse.objects.market.MarketCocaCola" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketCocaCola.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="179" x="342" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="10" language="java" name="com.sirma.itt.javacourse.objects.market.MarketDrinks" 
+    project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketDrinks.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="179" x="232" y="669"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="8" language="java" name="com.sirma.itt.javacourse.objects.market.MarketProducts" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketProducts.java" binary="false" 
+  <class id="11" language="java" name="com.sirma.itt.javacourse.objects.market.MarketProducts" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketProducts.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="243" width="179" x="687" y="-6"/>    
+    <position height="243" width="179" x="708" y="72"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="9" language="java" name="com.sirma.itt.javacourse.objects.market.MarketDrinks" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketDrinks.java" binary="false" 
+  <class id="12" language="java" name="com.sirma.itt.javacourse.objects.market.MarketWaffle" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketWaffle.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="99" width="179" x="796" y="591"/>    
+    <position height="99" width="179" x="561" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="13" language="java" name="com.sirma.itt.javacourse.objects.market.MarketWorker" 
+    project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketWorker.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="179" x="-96" y="512"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="10" language="java" name="com.sirma.itt.javacourse.objects.market.MarketWaffle" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketWaffle.java" binary="false" 
+  <class id="14" language="java" name="com.sirma.itt.javacourse.objects.market.MarketLollipop" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketLollipop.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="99" width="179" x="468" y="434"/>    
+    <position height="99" width="179" x="780" y="512"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.sirma.itt.javacourse.objects.market.MarketSprite" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketSprite.java" binary="false" 
+  <class id="15" language="java" name="com.sirma.itt.javacourse.objects.market.MarketNapkins" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/market/MarketNapkins.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="117" width="179" x="906" y="434"/>    
+    <position height="81" width="179" x="999" y="512"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.sirma.itt.javacourse.objects.market.MarketCleaner" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketCleaner.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="117" width="179" x="249" y="277"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <class id="13" language="java" name="com.sirma.itt.javacourse.objects.market.MarketFoods" project="NOD1" 
-    file="/NOD1/src/main/java/com/sirma/itt/javacourse/objects/market/MarketFoods.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="81" width="179" x="687" y="277"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <realization id="14">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="7"/>  
-  </realization>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
   <realization id="16">    
     <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="13"/>  
   </realization>  
   <generalization id="17">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <realization id="18">    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="3"/>  
-  </realization>  
-  <realization id="19">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="9"/>  
-  </realization>  
-  <realization id="20">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="9"/>  
-  </realization>  
-  <generalization id="21">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="5"/>  
   </generalization>  
-  <generalization id="22">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <realization id="23">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="7"/>  
-  </realization>  
-  <generalization id="24">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="26">    
+  <generalization id="18">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="TARGET" refId="11"/>  
   </generalization>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="13"/>    
+  <generalization id="19">    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="8"/>  
   </generalization>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <realization id="21">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <realization id="24">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <realization id="26">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="27">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <realization id="31">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
