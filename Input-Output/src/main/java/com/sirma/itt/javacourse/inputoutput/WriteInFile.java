@@ -15,17 +15,16 @@ public class WriteInFile {
 
 	/**
 	 * Write in file.
+	 * 
+	 * @throws IOException
+	 *             io exception
 	 */
-	protected void write() {
+	protected void write() throws IOException {
 
 		String file = sc.nextLine();
 		FileWriter fw = null;
 
-		try {
-			fw = new FileWriter(file);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		fw = new FileWriter(file);
 
 		String line = sc.nextLine();
 		while (!".".equals(line)) {
@@ -37,12 +36,8 @@ public class WriteInFile {
 			line = sc.nextLine();
 		}
 
-		try {
-			sc.close();
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		sc.close();
+		fw.close();
 
 	}
 
@@ -51,8 +46,10 @@ public class WriteInFile {
 	 * 
 	 * @param stream
 	 *            the stream
+	 * @throws IOException
+	 *             io exception
 	 */
-	protected void write(InputStream stream) {
+	protected void write(InputStream stream) throws IOException {
 		sc = new Scanner(stream);
 		this.write();
 	}

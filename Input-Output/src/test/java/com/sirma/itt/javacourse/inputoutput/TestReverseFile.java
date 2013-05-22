@@ -16,13 +16,16 @@ import org.junit.Test;
  */
 public class TestReverseFile {
 
-	private ReverseFile rev = new ReverseFile();
+	private final ReverseFile rev = new ReverseFile();
 
 	/**
 	 * Test reverse file.
+	 * 
+	 * @throws IOException
+	 *             io exception
 	 */
 	@Test
-	public void testReverseFile() {
+	public void testReverseFile() throws IOException {
 		String file = "reverse.txt";
 		String file2 = "reversedTest.txt";
 
@@ -46,9 +49,12 @@ public class TestReverseFile {
 
 	/**
 	 * Test reverse reversed file.
+	 * 
+	 * @throws IOException
+	 *             io exception
 	 */
 	@Test
-	public void testReverseReversedFile() {
+	public void testReverseReversedFile() throws IOException {
 		String file = "reverse.txt";
 		String file2 = "notReversedTest.txt";
 

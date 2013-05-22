@@ -19,13 +19,16 @@ import org.junit.Test;
  */
 public class TestWriteInFile {
 
-	private WriteInFile fileWrite = new WriteInFile();
+	private final WriteInFile fileWrite = new WriteInFile();
 
 	/**
 	 * Test string reader.
+	 * 
+	 * @throws IOException
+	 *             io exception
 	 */
 	@Test
-	public void testFileWrite() {
+	public void testFileWrite() throws IOException {
 		String file = "asd.txt";
 		String file2 = "test.txt";
 		String data = file + "\r\n asd awda wddwa  wad\r\n assa \r\n.";

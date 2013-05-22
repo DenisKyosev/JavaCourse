@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -14,9 +15,12 @@ public class TestTransferObject {
 
 	/**
 	 * Test transfer object.
+	 * 
+	 * @throws IOException
+	 *             io exception
 	 */
 	@Test
-	public void testTransferObject() {
+	public void testTransferObject() throws IOException {
 		ByteArrayInputStream in = new ByteArrayInputStream("hello world".getBytes());
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		TransferObject transfer = new TransferObject(in, out);

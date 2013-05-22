@@ -1,5 +1,7 @@
 package com.sirma.itt.javacourse.inputoutput;
 
+import java.io.IOException;
+
 // TODO: Auto-generated Javadoc
 /**
  * Run WriteInFile.
@@ -18,8 +20,10 @@ public final class RunWriteInFile {
 	 * 
 	 * @param args
 	 *            the arguments
+	 * @throws IOException
+	 *             io exception
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		WriteInFile fileWriter = new WriteInFile();
 
 		fileWriter.write();

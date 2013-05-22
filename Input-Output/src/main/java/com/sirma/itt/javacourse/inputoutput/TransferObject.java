@@ -37,17 +37,17 @@ public class TransferObject {
 	 * @param offset
 	 *            the offset
 	 * @return size
+	 * @throws IOException
+	 *             io exception
 	 */
-	public int transfer(int numberOfBytes, int offset) {
+	public int transfer(int numberOfBytes, int offset) throws IOException {
 		byte[] buff = new byte[numberOfBytes];
 		int size = 0;
-		try {
-			in.skip(offset);
-			size = in.read(buff, 0, numberOfBytes);
-			out.write(buff);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		in.skip(offset);
+		size = in.read(buff, 0, numberOfBytes);
+		out.write(buff);
+
 		return size;
 	}
 

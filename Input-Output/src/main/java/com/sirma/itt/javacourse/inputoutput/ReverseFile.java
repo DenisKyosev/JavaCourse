@@ -15,8 +15,11 @@ public class ReverseFile {
 
 	/**
 	 * Reverse.
+	 * 
+	 * @throws IOException
+	 *             io exception
 	 */
-	protected void reverse() {
+	protected void reverse() throws IOException {
 		Charset charset = Charset.forName("UTF-8");
 		Path file = Paths.get("reverse.txt");
 		String wholeFile = "";
@@ -27,8 +30,6 @@ public class ReverseFile {
 				temp.append(line);
 				temp.append("\n");
 			}
-		} catch (IOException x) {
-			System.err.format("IOException: %s%n", x);
 		}
 
 		System.out.println(wholeFile);
@@ -37,8 +38,6 @@ public class ReverseFile {
 
 		try (BufferedWriter writer = Files.newBufferedWriter(file, charset)) {
 			writer.write(temp.toString(), 0, temp.length());
-		} catch (IOException x) {
-			System.err.format("IOException: %s%n", x);
 		}
 
 	}
