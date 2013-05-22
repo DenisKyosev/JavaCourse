@@ -10,6 +10,7 @@ public class RandomModificatorsClass {
 	public int publicInt = 1;
 
 	/** The private float. */
+	@SuppressWarnings("unused")
 	private float privateFloat;
 
 	/** The protected string. */
@@ -30,6 +31,7 @@ public class RandomModificatorsClass {
 	 * 
 	 * @return the double
 	 */
+	@SuppressWarnings("unused")
 	private double privateDouble() {
 		return 1.1;
 

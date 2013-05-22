@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.sirma.itt.javacourse.inputoutput.TestReverseFile
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.064 sec <<< FAILURE!
+com.sirma.itt.javacourse.inputoutput.TestReverseFile.testReverseFile()  Time elapsed: 0.039 sec  <<< FAILURE!
+java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+	at java.lang.AbstractStringBuilder.delete(Unknown Source)
+	at java.lang.StringBuffer.delete(Unknown Source)
+	at com.sirma.itt.javacourse.inputoutput.ReverseFile.reverse(ReverseFile.java:35)
+	at com.sirma.itt.javacourse.inputoutput.TestReverseFile.testReverseFile(TestReverseFile.java:43)
+com.sirma.itt.javacourse.inputoutput.TestReverseFile.testReverseReversedFile()  Time elapsed: 0.023 sec  <<< FAILURE!
+java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+	at java.lang.AbstractStringBuilder.delete(Unknown Source)
+	at java.lang.StringBuffer.delete(Unknown Source)
+	at com.sirma.itt.javacourse.inputoutput.ReverseFile.reverse(ReverseFile.java:35)
+	at com.sirma.itt.javacourse.inputoutput.TestReverseFile.testReverseReversedFile(TestReverseFile.java:69)

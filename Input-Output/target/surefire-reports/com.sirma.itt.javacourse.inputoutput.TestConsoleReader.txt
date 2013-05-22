@@ -1,0 +1,33 @@
+-------------------------------------------------------------------------------
+Test set: com.sirma.itt.javacourse.inputoutput.TestConsoleReader
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 0.105 sec <<< FAILURE!
+com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testStringReader()  Time elapsed: 0.049 sec  <<< FAILURE!
+java.lang.NoClassDefFoundError: org/junit/Assert
+	at com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testStringReader(TestConsoleReader.java:23)
+Caused by: java.lang.ClassNotFoundException: org.junit.Assert
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	... 19 more
+com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testIntReader()  Time elapsed: 0.009 sec  <<< FAILURE!
+java.lang.NoClassDefFoundError: org/junit/Assert
+	at com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testIntReader(TestConsoleReader.java:33)
+com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testFloatReader()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NoClassDefFoundError: org/junit/Assert
+	at com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testFloatReader(TestConsoleReader.java:43)
+com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testCharReader()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NoClassDefFoundError: org/junit/Assert
+	at com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testCharReader(TestConsoleReader.java:53)
+com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testIntReaderWrong()  Time elapsed: 0.007 sec  <<< FAILURE!
+java.lang.IllegalArgumentException
+	at com.sirma.itt.javacourse.inputoutput.ConsoleReader.readInt(ConsoleReader.java:67)
+	at com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testIntReaderWrong(TestConsoleReader.java:63)
+com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testFloatReaderWrong()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.IllegalArgumentException
+	at com.sirma.itt.javacourse.inputoutput.ConsoleReader.readFloat(ConsoleReader.java:123)
+	at com.sirma.itt.javacourse.inputoutput.TestConsoleReader.testFloatReaderWrong(TestConsoleReader.java:73)
