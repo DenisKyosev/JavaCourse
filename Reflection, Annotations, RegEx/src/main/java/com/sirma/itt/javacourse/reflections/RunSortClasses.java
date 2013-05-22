@@ -21,7 +21,11 @@ public final class RunSortClasses {
 	 */
 	public static void main(String[] args) {
 		SortClasses srt = new SortClasses();
-		srt.sortClasses();
+		ParentClass[] classes= {new ClassTwo(), new ClassOne(), new ClassThree()};
+		ParentClass[] sorted = srt.sort(classes);
+		for (int i = 0; i < sorted.length; i++) {
+			System.out.println(sorted[i]);
+		}
 
 	}
 
