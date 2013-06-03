@@ -2,6 +2,9 @@ package com.sirma.itt.javacourse.exceptions;
 
 import org.junit.Test;
 
+import com.sirma.itt.javacourse.exceptions.arrayExceptions.OutOfBoundsException;
+import com.sirma.itt.javacourse.exceptions.zeroToHundred.ZeroToHundred;
+
 /**
  * test class for numbers between 0-100.
  * 

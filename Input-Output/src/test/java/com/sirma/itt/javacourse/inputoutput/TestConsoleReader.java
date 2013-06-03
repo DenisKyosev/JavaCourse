@@ -3,15 +3,17 @@ package com.sirma.itt.javacourse.inputoutput;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 import org.junit.Test;
+
+import com.sirma.itt.javacourse.inputoutput.consoleReader.ConsoleReader;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TestConsoleReader.
  */
 public class TestConsoleReader {
+	private final ConsoleReader read = new ConsoleReader();
 
 	/**
 	 * Test string reader.
@@ -19,8 +21,8 @@ public class TestConsoleReader {
 	@Test
 	public void testStringReader() {
 		String data = "asd";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		assertEquals("asd", ConsoleReader.readString(is));
+		read.setSc(new ByteArrayInputStream(data.getBytes()));
+		assertEquals("asd", read.readString());
 	}
 
 	/**
@@ -29,8 +31,8 @@ public class TestConsoleReader {
 	@Test
 	public void testIntReader() {
 		String data = "6";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		assertEquals(6, ConsoleReader.readInt(is));
+		read.setSc(new ByteArrayInputStream(data.getBytes()));
+		assertEquals(6, read.readInt());
 	}
 
 	/**
@@ -39,8 +41,8 @@ public class TestConsoleReader {
 	@Test
 	public void testFloatReader() {
 		String data = "1.5";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		assertEquals(1.5, ConsoleReader.readFloat(is), 0.0);
+		read.setSc(new ByteArrayInputStream(data.getBytes()));
+		assertEquals(1.5, read.readFloat(), 0.0);
 	}
 
 	/**
@@ -49,8 +51,8 @@ public class TestConsoleReader {
 	@Test
 	public void testCharReader() {
 		String data = "ad6";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		assertEquals('a', ConsoleReader.readChar(is));
+		read.setSc(new ByteArrayInputStream(data.getBytes()));
+		assertEquals('a', read.readChar());
 	}
 
 	/**
@@ -59,8 +61,8 @@ public class TestConsoleReader {
 	@Test(expected = IllegalArgumentException.class)
 	public void testIntReaderWrong() {
 		String data = "fsefes";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		assertEquals(6, ConsoleReader.readInt(is));
+		read.setSc(new ByteArrayInputStream(data.getBytes()));
+		assertEquals(6, read.readInt());
 	}
 
 	/**
@@ -69,8 +71,8 @@ public class TestConsoleReader {
 	@Test(expected = IllegalArgumentException.class)
 	public void testFloatReaderWrong() {
 		String data = "dwadwa";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		assertEquals(1.5, ConsoleReader.readFloat(is), 0.0);
+		read.setSc(new ByteArrayInputStream(data.getBytes()));
+		assertEquals(1.5, read.readFloat(), 0.0);
 	}
 
 }

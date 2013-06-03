@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.sirma.itt.javacourse.collections.pageBean.PageBean;
+
 /**
  * The Class TestPageBean.
  */

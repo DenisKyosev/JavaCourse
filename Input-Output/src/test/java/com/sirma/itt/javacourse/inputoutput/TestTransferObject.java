@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.sirma.itt.javacourse.inputoutput.transferObject.TransferObject;
+
 /**
  * test class for TransferObject.
  */

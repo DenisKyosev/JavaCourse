@@ -10,12 +10,15 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.sirma.itt.javacourse.inputoutput.reverseFile.ReverseFile;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TestReverseFile.
  */
 public class TestReverseFile {
 
+	/** The rev. */
 	private final ReverseFile rev = new ReverseFile();
 
 	/**
@@ -43,7 +46,7 @@ public class TestReverseFile {
 			e.printStackTrace();
 		}
 
-		rev.reverse();
+		rev.reverse("reverse.txt");
 		assertEquals("The files differ!", expected, actual);
 	}
 
@@ -72,7 +75,18 @@ public class TestReverseFile {
 			e.printStackTrace();
 		}
 
-		rev.reverse();
+		rev.reverse("reverse.txt");
 		assertEquals("The files differ!", expected, actual);
+	}
+
+	/**
+	 * Test no such file.
+	 * 
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testNoSuchFile() throws IOException {
+		rev.reverse("asdsasa.txt");
 	}
 }

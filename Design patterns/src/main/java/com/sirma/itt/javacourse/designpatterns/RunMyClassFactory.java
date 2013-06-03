@@ -10,7 +10,7 @@ public class RunMyClassFactory {
 	public static void main(String[] args) {
 		MyClassFactory fac = new MyClassFactory();
 		Scanner sc = new Scanner(System.in);
-		fac.createInstance(1);
+		fac.createInstance("String");
 	}
 
 }

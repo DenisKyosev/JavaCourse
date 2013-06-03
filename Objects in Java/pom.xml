@@ -2,7 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Intro</groupId>
   <artifactId>Intro</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>Introducing Java</name>
   <description>Introducing Java</description>
+  <parent>
+  	<groupId>JavaCourse</groupId>
+  	<artifactId>JavaCourse</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<relativePath>../JavaCourse</relativePath>
+  </parent>
 </project>

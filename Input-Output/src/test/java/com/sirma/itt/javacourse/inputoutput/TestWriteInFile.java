@@ -5,13 +5,14 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Test;
+
+import com.sirma.itt.javacourse.inputoutput.writeInFile.WriteInFile;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,8 +34,8 @@ public class TestWriteInFile {
 		String file2 = "test.txt";
 		String data = file + "\r\n asd awda wddwa  wad\r\n assa \r\n.";
 		String dataExpected = " asd awda wddwa  wad assa ";
-		InputStream is = new ByteArrayInputStream(data.getBytes());
-		fileWrite.write(is);
+		fileWrite.setSc(new ByteArrayInputStream(data.getBytes()));
+		fileWrite.write();
 
 		List<String> actual = null;
 		try {

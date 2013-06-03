@@ -2,6 +2,10 @@ package com.sirma.itt.javacourse.exceptions;
 
 import org.junit.Test;
 
+import com.sirma.itt.javacourse.exceptions.arrayExceptions.ArrayIsEmptyException;
+import com.sirma.itt.javacourse.exceptions.arrayExceptions.ArrayIsFullException;
+import com.sirma.itt.javacourse.exceptions.arrayExceptions.ArrayWithExceptions;
+
 /**
  * test class for array with exceptions.
  * 
