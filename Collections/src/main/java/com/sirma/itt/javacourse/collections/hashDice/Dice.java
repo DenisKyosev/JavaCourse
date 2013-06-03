@@ -56,19 +56,24 @@ public class Dice {
 	}
 
 	/**
+	 * Throw one to six.
+	 * 
+	 * @return the int
+	 */
+	private int throwOneToSix() {
+		int dice;
+		dice = (int) (Math.random() * 6);
+		if (dice < 1) {
+			dice = 1;
+		}
+		return dice;
+	}
+
+	/**
 	 * Throw dice.
 	 */
 	protected void throwDice() {
-		Integer[] dice = new Integer[2];
-		dice[0] = (int) (Math.random() * 6);
-		if (dice[0] < 1) {
-			dice[0] = 1;
-		}
-		dice[1] = (int) (Math.random() * 6);
-		if (dice[1] < 1) {
-			dice[1] = 1;
-		}
-		fillStats(Integer.toString(dice[0]) + "," + Integer.toString(dice[1]));
+		fillStats(Integer.toString(throwOneToSix()) + "," + Integer.toString(throwOneToSix()));
 	}
 
 	/**
