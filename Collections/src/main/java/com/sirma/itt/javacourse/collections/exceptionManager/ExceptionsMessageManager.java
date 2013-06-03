@@ -22,9 +22,9 @@ public class ExceptionsMessageManager {
 	 * Instantiates a new exceptions message manager.
 	 */
 	public ExceptionsMessageManager() {
-		exceptions.put("Wrong debit card ID", "Invalid ID");
-		exceptions.put("Wrong ID", "Invalid ID");
-		exceptions.put("Wrong post ID", "Wrong ID");
+		exceptions.put("WrongCardID", "Invalid ID");
+		exceptions.put("WrongID", "Invalid ID");
+		exceptions.put("WrongPostID", "Wrong ID");
 	}
 
 	/**

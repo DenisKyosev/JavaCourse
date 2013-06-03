@@ -38,7 +38,7 @@ public class TestExceptionsMessageManager {
 		ExceptionsMessageManager exc2 = new ExceptionsMessageManager();
 		exc2.addExceptionMessageUsingCode("hey");
 
-		exc2.addExceptionMessageUsingCode("Wrong ID");
+		exc2.addExceptionMessageUsingCode("WrongID");
 		assertEquals("Invalid ID", exc2.getMessage());
 
 		exc2.addExceptionMessage("buu");
