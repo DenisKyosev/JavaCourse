@@ -21,7 +21,7 @@ public class ExceptionsMessageManager {
 	/**
 	 * Instantiates a new exceptions message manager.
 	 */
-	public ExceptionsMessageManager() {
+	protected ExceptionsMessageManager() {
 		exceptions.put("WrongCardID", "Invalid ID");
 		exceptions.put("WrongID", "Invalid ID");
 		exceptions.put("WrongPostID", "Wrong ID");
@@ -35,7 +35,7 @@ public class ExceptionsMessageManager {
 	 * @throws Exception
 	 *             exception
 	 */
-	public void addExceptionMessage(String mess) throws Exception {
+	protected void addExceptionMessage(String mess) throws Exception {
 		if (!exceptions.values().contains(mess)) {
 			throw new Exception("Message already exists");
 		} else {
@@ -56,7 +56,7 @@ public class ExceptionsMessageManager {
 	 * @throws Exception
 	 *             exception
 	 */
-	public void addExceptionMessageUsingCode(String messageCode) throws Exception {
+	protected void addExceptionMessageUsingCode(String messageCode) throws Exception {
 		if (!exceptions.containsKey(messageCode)) {
 			throw new Exception("Code doesn't exist");
 		} else {
@@ -75,7 +75,7 @@ public class ExceptionsMessageManager {
 	 * 
 	 * @return the message
 	 */
-	public String getMessage() {
+	protected String getMessage() {
 		return message;
 	}
 
@@ -96,7 +96,7 @@ public class ExceptionsMessageManager {
 	 * 
 	 * @return the exceptions
 	 */
-	public Map<String, String> getExceptions() {
+	protected Map<String, String> getExceptions() {
 		return exceptions;
 	}
 
@@ -106,7 +106,7 @@ public class ExceptionsMessageManager {
 	 * @param exceptions
 	 *            the exceptions to set
 	 */
-	public void setExceptions(Map<String, String> exceptions) {
+	protected void setExceptions(Map<String, String> exceptions) {
 		this.exceptions = exceptions;
 	}
 
@@ -115,7 +115,7 @@ public class ExceptionsMessageManager {
 	 * 
 	 * @return the firstElement
 	 */
-	public boolean isFirstElement() {
+	protected boolean isFirstElement() {
 		return firstElement;
 	}
 
@@ -125,7 +125,7 @@ public class ExceptionsMessageManager {
 	 * @param firstElement
 	 *            the firstElement to set
 	 */
-	public void setFirstElement(boolean firstElement) {
+	protected void setFirstElement(boolean firstElement) {
 		this.firstElement = firstElement;
 	}
 
@@ -135,7 +135,7 @@ public class ExceptionsMessageManager {
 	 * @param message
 	 *            the message to set
 	 */
-	public void setMessage(String message) {
+	protected void setMessage(String message) {
 		this.message = message;
 	}
 }

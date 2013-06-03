@@ -83,7 +83,7 @@ public class HomogeneousTree {
 	 *            root
 	 * @return true/false
 	 */
-	public boolean search(int data, HomogeneousNode node) {
+	protected boolean search(int data, HomogeneousNode node) {
 		HomogeneousNode current;
 		if (node == null) {
 			current = root;
@@ -108,7 +108,7 @@ public class HomogeneousTree {
 	 * 
 	 * @return override
 	 */
-	public String generateTreeString() {
+	protected String generateTreeString() {
 		return generateTreeString(root);
 	}
 
@@ -119,7 +119,7 @@ public class HomogeneousTree {
 	 *            root
 	 * @return all nodes sorted lrr
 	 */
-	public String generateTreeString(HomogeneousNode node) {
+	protected String generateTreeString(HomogeneousNode node) {
 		if (node.getLeft() != null) {
 			generateTreeString(node.getLeft());
 		}
@@ -135,7 +135,7 @@ public class HomogeneousTree {
 	/**
 	 * print method.
 	 */
-	public void printTree() {
+	protected void printTree() {
 		Logger log = Logger.getLogger("com.sirma.itt");
 		log.log(Level.INFO, generateTreeString());
 	}
@@ -145,7 +145,7 @@ public class HomogeneousTree {
 	 * 
 	 * @return the root
 	 */
-	public HomogeneousNode getRoot() {
+	protected HomogeneousNode getRoot() {
 		return root;
 	}
 
@@ -155,7 +155,7 @@ public class HomogeneousTree {
 	 * @param root
 	 *            the root to set
 	 */
-	public void setRoot(HomogeneousNode root) {
+	protected void setRoot(HomogeneousNode root) {
 		this.root = root;
 	}
 

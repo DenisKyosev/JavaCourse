@@ -23,7 +23,7 @@ public class Sumator {
 	 *            number
 	 * @return sum
 	 */
-	public int sum(int num1, int num2) {
+	protected int sum(int num1, int num2) {
 		return num1 + num2;
 	}
 
@@ -36,7 +36,7 @@ public class Sumator {
 	 *            number
 	 * @return sum
 	 */
-	public float sum(float num1, float num2) {
+	protected float sum(float num1, float num2) {
 		return num1 + num2;
 	}
 
@@ -49,7 +49,7 @@ public class Sumator {
 	 *            number
 	 * @return sum
 	 */
-	public String sum(String num1, String num2) {
+	protected String sum(String num1, String num2) {
 
 		if (num1 == null || num2 == null) {
 			throw new IllegalArgumentException("Can't calculate empty strings");
@@ -78,7 +78,7 @@ public class Sumator {
 	 *            number
 	 * @return sum
 	 */
-	public BigInteger sum(BigInteger num1, BigInteger num2) {
+	protected BigInteger sum(BigInteger num1, BigInteger num2) {
 		BigInteger res = num1.add(num2);
 		return res;
 	}
@@ -92,7 +92,7 @@ public class Sumator {
 	 *            number
 	 * @return sum
 	 */
-	public BigDecimal sum(BigDecimal num1, BigDecimal num2) {
+	protected BigDecimal sum(BigDecimal num1, BigDecimal num2) {
 		BigDecimal res = num1.add(num2);
 		return res;
 	}

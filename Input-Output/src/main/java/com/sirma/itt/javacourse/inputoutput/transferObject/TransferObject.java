@@ -23,7 +23,7 @@ public class TransferObject {
 	 * @param out
 	 *            the out
 	 */
-	public TransferObject(InputStream in, OutputStream out) {
+	protected TransferObject(InputStream in, OutputStream out) {
 		this.in = in;
 		this.out = out;
 
@@ -40,7 +40,7 @@ public class TransferObject {
 	 * @throws IOException
 	 *             io exception
 	 */
-	public int transfer(int numberOfBytes, int offset) throws IOException {
+	protected int transfer(int numberOfBytes, int offset) throws IOException {
 		byte[] buff = new byte[numberOfBytes];
 		int size = 0;
 
@@ -56,7 +56,7 @@ public class TransferObject {
 	 * 
 	 * @return the in
 	 */
-	public InputStream getIn() {
+	protected InputStream getIn() {
 		return in;
 	}
 
@@ -66,7 +66,7 @@ public class TransferObject {
 	 * @param in
 	 *            the in to set
 	 */
-	public void setIn(InputStream in) {
+	protected void setIn(InputStream in) {
 		this.in = in;
 	}
 
@@ -75,7 +75,7 @@ public class TransferObject {
 	 * 
 	 * @return the out
 	 */
-	public OutputStream getOut() {
+	protected OutputStream getOut() {
 		return out;
 	}
 
@@ -85,7 +85,7 @@ public class TransferObject {
 	 * @param out
 	 *            the out to set
 	 */
-	public void setOut(OutputStream out) {
+	protected void setOut(OutputStream out) {
 		this.out = out;
 	}
 

@@ -17,7 +17,7 @@ public final class ConsoleReader {
 	 * 
 	 * @return the sc
 	 */
-	public Scanner getSc() {
+	protected Scanner getSc() {
 		return sc;
 	}
 
@@ -27,7 +27,7 @@ public final class ConsoleReader {
 	 * @param stream
 	 *            the new sc
 	 */
-	public void setSc(InputStream stream) {
+	protected void setSc(InputStream stream) {
 		this.sc = new Scanner(stream);
 	}
 
@@ -36,7 +36,7 @@ public final class ConsoleReader {
 	 * 
 	 * @return the string
 	 */
-	public String readString() {
+	protected String readString() {
 		String str = sc.nextLine();
 		return str;
 	}
@@ -46,7 +46,7 @@ public final class ConsoleReader {
 	 * 
 	 * @return the int
 	 */
-	public int readInt() {
+	protected int readInt() {
 		if (!sc.hasNextInt()) {
 			throw new IllegalArgumentException();
 		}
@@ -59,7 +59,7 @@ public final class ConsoleReader {
 	 * 
 	 * @return the char
 	 */
-	public char readChar() {
+	protected char readChar() {
 		char ch = sc.findInLine(".").charAt(0);
 
 		return ch;
@@ -70,7 +70,7 @@ public final class ConsoleReader {
 	 * 
 	 * @return the float
 	 */
-	public float readFloat() {
+	protected float readFloat() {
 		sc.useLocale(Locale.US);
 		if (!sc.hasNextFloat()) {
 			throw new IllegalArgumentException();

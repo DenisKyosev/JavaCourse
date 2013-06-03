@@ -12,7 +12,7 @@ public class EmptyTags {
 	 *            string to be checked
 	 * @return new string
 	 */
-	public String emptyTag(String str) {
+	protected String emptyTag(String str) {
 		String pattern = "<x>[^<]*[^>]</x>";
 		String newStr = str.replaceAll(pattern, "<x/>");
 		return newStr;

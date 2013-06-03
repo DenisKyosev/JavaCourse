@@ -21,7 +21,7 @@ public class ReverseFile {
 	 * @throws IOException
 	 *             io exception
 	 */
-	public void reverse(String str) throws IOException {
+	protected void reverse(String str) throws IOException {
 		Path file = Paths.get(str);
 		if (!Files.exists(file)) {
 			throw new IllegalArgumentException("No such file");

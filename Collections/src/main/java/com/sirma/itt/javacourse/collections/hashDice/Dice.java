@@ -22,7 +22,7 @@ public class Dice {
 	 * 
 	 * @return the combinations
 	 */
-	public Map<String, List<Integer>> getCombinations() {
+	protected Map<String, List<Integer>> getCombinations() {
 		return combinations;
 	}
 
@@ -32,7 +32,7 @@ public class Dice {
 	 * @param combinations
 	 *            the combinations to set
 	 */
-	public void setCombinations(Map<String, List<Integer>> combinations) {
+	protected void setCombinations(Map<String, List<Integer>> combinations) {
 		Dice.combinations = combinations;
 	}
 
@@ -41,7 +41,7 @@ public class Dice {
 	 * 
 	 * @return the count
 	 */
-	public Integer getCount() {
+	protected Integer getCount() {
 		return count;
 	}
 
@@ -51,14 +51,14 @@ public class Dice {
 	 * @param count
 	 *            the count to set
 	 */
-	public void setCount(Integer count) {
+	protected void setCount(Integer count) {
 		Dice.count = count;
 	}
 
 	/**
 	 * Throw dice.
 	 */
-	public void throwDice() {
+	protected void throwDice() {
 		Integer[] dice = new Integer[2];
 		dice[0] = (int) (Math.random() * 6);
 		if (dice[0] < 1) {
@@ -77,7 +77,7 @@ public class Dice {
 	 * @param diceThrow
 	 *            the dice throw combination
 	 */
-	public void fillStats(String diceThrow) {
+	protected void fillStats(String diceThrow) {
 		String dice = diceThrow;
 		String dice2 = diceThrow.charAt(2) + "," + diceThrow.charAt(0);
 

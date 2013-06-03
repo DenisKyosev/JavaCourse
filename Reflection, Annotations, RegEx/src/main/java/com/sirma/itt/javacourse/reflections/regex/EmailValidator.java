@@ -14,7 +14,7 @@ public class EmailValidator {
 	 *            the email
 	 * @return true, if successful
 	 */
-	public boolean validate(String email) {
+	protected boolean validate(String email) {
 		String pattern = "([a-zA-Z])([a-zA-Z0-9\\.\\-]*)(@)([a-zA-Z])([a-zA-Z0-9\\.\\-]*)";
 
 		return Pattern.matches(pattern, email);

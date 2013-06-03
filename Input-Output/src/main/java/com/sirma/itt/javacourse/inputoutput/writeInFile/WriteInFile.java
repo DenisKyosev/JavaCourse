@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-// TODO: Auto-generated Javadoc
 /**
  * WriteInFile.
  */
@@ -20,7 +19,7 @@ public class WriteInFile {
 	 * @throws IOException
 	 *             io exception
 	 */
-	public void write() throws IOException {
+	protected void write() throws IOException {
 
 		String file = sc.nextLine();
 		FileWriter fw = null;
@@ -29,12 +28,7 @@ public class WriteInFile {
 
 		String line = sc.nextLine();
 		while (!".".equals(line)) {
-			try {
-				fw.append(line);
-			} catch (IOException e) {
-				e.printStackTrace();
-				sc.close();
-			}
+			fw.append(line);
 			line = sc.nextLine();
 		}
 
@@ -48,7 +42,7 @@ public class WriteInFile {
 	 * 
 	 * @return the sc
 	 */
-	public static Scanner getSc() {
+	protected static Scanner getSc() {
 		return sc;
 	}
 
@@ -58,7 +52,7 @@ public class WriteInFile {
 	 * @param stream
 	 *            the new sc
 	 */
-	public void setSc(InputStream stream) {
+	protected void setSc(InputStream stream) {
 		WriteInFile.sc = new Scanner(stream);
 	}
 }
