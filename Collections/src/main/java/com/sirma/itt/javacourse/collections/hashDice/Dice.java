@@ -60,7 +60,7 @@ public class Dice {
 	 * 
 	 * @return the int
 	 */
-	private int throwOneToSix() {
+	protected int throwOneToSix() {
 		int dice;
 		dice = (int) (Math.random() * 6);
 		if (dice < 1) {

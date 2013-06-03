@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestDice.
  */
 public class TestDice {
+
+	/** The dice. */
 	private static Dice dice = new Dice();
 
 	/**
@@ -58,4 +60,15 @@ public class TestDice {
 		assertEquals(expected, returnCombinations());
 	}
 
+	/**
+	 * Test throws.
+	 */
+	@Test
+	public void testThrows() {
+		String ok = "1,2,3,4,5,6";
+		for (int i = 0; i < 50; i++) {
+			assertEquals(true, ok.contains(Integer.toString(dice.throwOneToSix())));
+		}
+
+	}
 }
