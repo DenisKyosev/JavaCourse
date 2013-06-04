@@ -57,6 +57,7 @@ public class ObjectPool {
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
+			System.gc();
 			created--;
 		}
 

@@ -1,9 +1,23 @@
 package com.sirma.itt.javacourse.designpatterns.objectPool;
 
-public class RunObjectPool {
+// TODO: Auto-generated Javadoc
+/**
+ * Run class for ObjectPool.
+ */
+public final class RunObjectPool {
 
 	/**
+	 * Instantiates a new run object pool.
+	 */
+	private RunObjectPool() {
+
+	}
+
+	/**
+	 * The main method.
+	 * 
 	 * @param args
+	 *            args
 	 */
 	public static void main(String[] args) {
 		ObjectPool pool = new ObjectPool();

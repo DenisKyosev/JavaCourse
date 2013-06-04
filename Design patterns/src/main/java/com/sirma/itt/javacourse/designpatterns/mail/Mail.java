@@ -6,10 +6,32 @@ package com.sirma.itt.javacourse.designpatterns.mail;
  */
 public class Mail {
 
-	/** The from. */
+	/**
+	 * Instantiates a new mail.
+	 */
+	public Mail() {
+
+	}
+
+	/**
+	 * Instantiates a new mail.
+	 * 
+	 * @param builder
+	 *            the builder
+	 */
+	public Mail(MailBuilder builder) {
+		from = builder.getFrom();
+		to = builder.getTo();
+		subject = builder.getSubject();
+		content = builder.getContent();
+		cc = builder.getCc();
+		attachments = builder.getAttachments();
+	}
+
+	/** Sender. */
 	private String from;
 
-	/** The to. */
+	/** The recipient. */
 	private String to;
 
 	/** The subject. */
@@ -18,45 +40,45 @@ public class Mail {
 	/** The content. */
 	private String content;
 
-	/** The cc. */
+	/** The cc's. */
 	private String cc;
 
 	/** The attachments. */
 	private String[] attachments;
 
 	/**
-	 * Gets the from.
+	 * Gets sender.
 	 * 
-	 * @return the from
+	 * @return the sender
 	 */
 	public String getFrom() {
 		return from;
 	}
 
 	/**
-	 * Sets the from.
+	 * Sets the sender.
 	 * 
 	 * @param from
-	 *            the new from
+	 *            the new sender
 	 */
 	public void setFrom(String from) {
 		this.from = from;
 	}
 
 	/**
-	 * Gets the to.
+	 * Gets to.
 	 * 
-	 * @return the to
+	 * @return to
 	 */
 	public String getTo() {
 		return to;
 	}
 
 	/**
-	 * Sets the to.
+	 * Sets to.
 	 * 
 	 * @param to
-	 *            the new to
+	 *            to
 	 */
 	public void setTo(String to) {
 		this.to = to;
@@ -137,4 +159,5 @@ public class Mail {
 	public void setAttachments(String[] attachments) {
 		this.attachments = attachments;
 	}
+
 }

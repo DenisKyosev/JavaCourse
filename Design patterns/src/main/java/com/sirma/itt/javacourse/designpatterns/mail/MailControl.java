@@ -7,26 +7,7 @@ package com.sirma.itt.javacourse.designpatterns.mail;
 public class MailControl {
 
 	/** The mail builder. */
-	private EmailBuilder mailBuilder;
-
-	/**
-	 * Gets the mail builder.
-	 * 
-	 * @return the mail builder
-	 */
-	public EmailBuilder getMailBuilder() {
-		return mailBuilder;
-	}
-
-	/**
-	 * Sets the mail builder.
-	 * 
-	 * @param mailBuilder
-	 *            the new mail builder
-	 */
-	public void setMailBuilder(EmailBuilder mailBuilder) {
-		this.mailBuilder = mailBuilder;
-	}
+	private MailBuilder mailBuilder;
 
 	/**
 	 * Builds the mail.
@@ -46,8 +27,19 @@ public class MailControl {
 	 */
 	public void buildMail(String from, String to, String subject, String content, String cc,
 			String[] attachments) {
-		mailBuilder.from(from).to(to).subject(subject).content(content).cc(cc)
-				.attachments(attachments);
+		mailBuilder.setFrom(from);
+		mailBuilder.to(to).subject(subject).content(content).cc(cc).build();
+
+	}
+
+	/**
+	 * Builds the mail.
+	 * 
+	 * @param from
+	 *            the from
+	 */
+	public void buildMail(String from) {
+		mailBuilder.setFrom(from);
 	}
 
 }
