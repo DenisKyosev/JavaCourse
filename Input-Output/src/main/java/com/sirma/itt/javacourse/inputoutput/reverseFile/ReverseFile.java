@@ -42,7 +42,6 @@ public class ReverseFile {
 			reader.close();
 		}
 
-		System.out.println(wholeFile);
 		temp.delete(temp.length() - 1, temp.length());
 		temp.reverse();
 
