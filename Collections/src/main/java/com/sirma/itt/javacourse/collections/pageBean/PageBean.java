@@ -72,7 +72,7 @@ public final class PageBean<E> {
 	 * @return previous page
 	 */
 	public ArrayList<E> previous() {
-		if (currentPage == 0) {
+		if (currentPage <= 1) {
 			Logger log = Logger.getLogger("con.sirma.itt");
 			log.info("You're on page 1");
 		} else {
