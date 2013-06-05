@@ -26,8 +26,6 @@ public final class Singleton {
 	/**
 	 * Instantiates a new singleton.
 	 */
-	private Singleton() {
-		getInstance();
-		System.out.println("Singleton created");
+	protected Singleton() {
 	}
 }

@@ -39,8 +39,9 @@ public class ObjectPool {
 	 * @return the string
 	 */
 	public String acquire() {
+		created++;
 		if (created < max) {
-			instance[++created] = new ObjectPool();
+			instance[created] = new ObjectPool();
 			return "OK";
 		} else {
 			return "Error! Can't create more instances.";

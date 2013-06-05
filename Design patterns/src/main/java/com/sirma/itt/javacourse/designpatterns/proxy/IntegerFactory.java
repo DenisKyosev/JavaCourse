@@ -18,7 +18,7 @@ public class IntegerFactory {
 	 * 
 	 * @return the integer proxy
 	 */
-	IntegerProxy createInstance() {
+	public IntegerProxy createInstance() {
 		return new IntegerProxy();
 	}
 }
