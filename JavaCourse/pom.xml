@@ -32,5 +32,6 @@
   	<module>../Libraries and classpath</module>
   	<module>../Objects in Java</module>
   	<module>../Reflection, Annotations, RegEx</module>
+  	<module>Threads</module>
   </modules>
 </project>
