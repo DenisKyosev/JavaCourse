@@ -4,7 +4,7 @@ package com.sirma.itt.javacourse.threads.task7;
  * if there is room in the storage produces new product. If there's no room waits for customers to
  * get some products.
  */
-public class Producer extends Thread {
+public class Producer extends Storage implements Runnable {
 
 	/** The time interval to add new product in the storage. */
 	private int timeStep = 0;
@@ -16,6 +16,7 @@ public class Producer extends Thread {
 	 *            the time step
 	 */
 	Producer(int timeStep) {
+		super(timeStep);
 		this.timeStep = timeStep;
 	}
 
@@ -23,30 +24,29 @@ public class Producer extends Thread {
 	 * Produce.
 	 */
 	private void produce() {
-		Storage.getProducts()[Storage.getAvailable()] = new Object();
-		Storage.setAvailable(Storage.getAvailable() + 1);
+		getProducts()[getAvailable()] = new Object();
+		setAvailable(getAvailable() + 1);
 	}
 
 	/**
 	 * if there is room in the storage produces new product. If there's no room waits for customers
 	 * to get some products.
 	 */
-	@Override
 	public void run() {
 		while (true) {
 			try {
-				sleep(timeStep);
+				Thread.sleep(timeStep);
 			} catch (InterruptedException e1) {
 			}
-			synchronized (Storage.getProducts()) {
-				if (Storage.getAvailable() < Storage.getCapacity() - 1) {
+			synchronized (getProducts()) {
+				if (getAvailable() < getCapacity() - 1) {
 					produce();
 					System.out.println("new product made");
-					Storage.getProducts().notifyAll();
+					getProducts().notifyAll();
 				} else {
 					System.out.println("storage full waiting for consumer");
 					try {
-						Storage.getProducts().wait();
+						getProducts().wait();
 					} catch (InterruptedException e) {
 					}
 				}

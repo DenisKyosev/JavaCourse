@@ -7,7 +7,7 @@ import java.util.Hashtable;
  * hash table with thread checking for changes in the table every second if there are no changes for
  * x seconds the element is removed from the table.
  */
-public class MyTable extends Thread {
+public class MyTable implements Runnable {
 
 	/** The hash table with objects. */
 	private final Hashtable<String, Object> hash = new Hashtable<String, Object>();
@@ -65,12 +65,11 @@ public class MyTable extends Thread {
 	/**
 	 * run thread.
 	 */
-	@Override
 	public void run() {
 		while (true) {
 			while (currentLife <= life) {
 				try {
-					sleep(lifeStep);
+					Thread.sleep(lifeStep);
 				} catch (InterruptedException e) {
 				}
 				Enumeration<String> keys = hash.keys();

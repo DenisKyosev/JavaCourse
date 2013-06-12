@@ -7,20 +7,20 @@ package com.sirma.itt.javacourse.threads.task7;
 public class Storage {
 
 	/** The capacity. */
-	private static int capacity = 0;
+	private int capacity = 0;
 
 	/** The available products. */
-	private static int available = 0;
+	private int available = 0;
 
 	/** all products. */
-	private static Object[] products;
+	private Object[] products;
 
 	/**
 	 * Gets the capacity.
 	 * 
 	 * @return the capacity
 	 */
-	protected static int getCapacity() {
+	protected int getCapacity() {
 		return capacity;
 	}
 
@@ -31,7 +31,7 @@ public class Storage {
 	 *            the new capacity
 	 */
 	protected void setCapacity(int capacity) {
-		Storage.capacity = capacity;
+		this.capacity = capacity;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class Storage {
 	 * 
 	 * @return the available products
 	 */
-	protected static int getAvailable() {
+	protected int getAvailable() {
 		return available;
 	}
 
@@ -49,8 +49,8 @@ public class Storage {
 	 * @param available
 	 *            the new available products
 	 */
-	protected static void setAvailable(int available) {
-		Storage.available = available;
+	protected void setAvailable(int available) {
+		this.available = available;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Storage {
 	 * 
 	 * @return the products
 	 */
-	protected static Object[] getProducts() {
+	protected Object[] getProducts() {
 		return products;
 	}
 
@@ -68,8 +68,8 @@ public class Storage {
 	 * @param products
 	 *            the new products
 	 */
-	protected static void setProducts(Object[] products) {
-		Storage.products = products;
+	protected void setProducts(Object[] products) {
+		this.products = products;
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class Storage {
 	 *            the capacity
 	 */
 	protected Storage(int capacity) {
-		Storage.capacity = capacity;
-		Storage.products = new Object[capacity];
+		this.capacity = capacity;
+		this.products = new Object[capacity];
 	}
 
 }

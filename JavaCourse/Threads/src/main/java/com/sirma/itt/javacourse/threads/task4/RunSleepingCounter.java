@@ -23,7 +23,9 @@ public final class RunSleepingCounter {
 	public static void main(String[] args) throws InterruptedException {
 		SleepingCounter little = new SleepingCounter(15);
 		SleepingCounter big = new SleepingCounter(9);
-		little.start();
-		big.start();
+		Thread littleNumberThread = new Thread(little);
+		Thread bigNumberThread = new Thread(big);
+		littleNumberThread.start();
+		bigNumberThread.start();
 	}
 }

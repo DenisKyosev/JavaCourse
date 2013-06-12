@@ -4,7 +4,7 @@ package com.sirma.itt.javacourse.threads.task4;
  * thread counting to a max number. if there is another counter thread waits after each counted
  * number.
  */
-public class SleepingCounter extends Thread {
+public class SleepingCounter implements Runnable {
 
 	/** The max. */
 	private final long max;
@@ -31,7 +31,7 @@ public class SleepingCounter extends Thread {
 	public void count() {
 		while (count < max) {
 			count++;
-			System.out.println(this.getName() + ":" + count);
+			System.out.println(Thread.currentThread().getName() + ":" + count);
 			synchronized (lock) {
 				lock.notifyAll();
 				if (Thread.activeCount() == 3) {
@@ -52,7 +52,6 @@ public class SleepingCounter extends Thread {
 	/**
 	 * counting from 0 to max. if there is another counter thread waits after each counted number.
 	 */
-	@Override
 	public void run() {
 		count();
 	}

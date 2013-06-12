@@ -1,42 +1,71 @@
 package com.sirma.itt.javacourse.threads.task1;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
+// TODO: Auto-generated Javadoc
 /**
- * Counting numbers thread untill key is pressed.
+ * Counting numbers thread untill key is pressed or max is reached.
  */
-public class StopMe extends Thread {
-
-	/** The counter thread. */
-	private final Thread count = new Thread();
+public class StopMe implements Runnable {
 
 	/** The counter. */
-	private long counter = 0;
+	private int counter = 0;
 
 	/** input flag. */
 	private boolean hasInput = false;
 
+	/** The max number. */
+	private final int max;
+
+	/** The scanner. */
+	private Scanner sc = new Scanner(System.in);
+
 	/**
-	 * Read.
+	 * Instantiates a new stop me.
+	 * 
+	 * @param max
+	 *            the max
+	 */
+	StopMe(int max) {
+		this.max = max;
+	}
+
+	/**
+	 * Read input from another input stream.
+	 * 
+	 * @param input
+	 *            the input
+	 */
+	void read(InputStream input) {
+		sc = new Scanner(input);
+		read();
+	}
+
+	/**
+	 * Read input from console and interrupt.
 	 */
 	public void read() {
-		Scanner sc = new Scanner(System.in);
 		sc.next();
 		hasInput = true;
-		count.interrupt();
 		System.out.println(getCounter());
 		sc.close();
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * counting until there's input or max is reached.
 	 */
-	@Override
 	public void run() {
 		while (!hasInput) {
-			setCounter(getCounter() + 1);
-			if (count.isInterrupted()) {
-				break;
+			counter++;
+			if (Thread.currentThread().isInterrupted() || counter >= max) {
+				hasInput = true;
+				return;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+
 			}
 		}
 	}
@@ -46,19 +75,9 @@ public class StopMe extends Thread {
 	 * 
 	 * @return the counter
 	 */
-	public long getCounter() {
+	protected long getCounter() {
 		return counter;
 
-	}
-
-	/**
-	 * Sets the counter.
-	 * 
-	 * @param counter
-	 *            the new counter
-	 */
-	public void setCounter(long counter) {
-		this.counter = counter;
 	}
 
 }
