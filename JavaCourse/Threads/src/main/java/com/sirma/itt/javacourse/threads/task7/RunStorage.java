@@ -20,9 +20,9 @@ public final class RunStorage {
 	 */
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
-		Storage storage = new Storage(5);
-		Producer producer = new Producer(1000);
-		Consumer consumer = new Consumer(400);
+		Storage storage = new Storage(1);
+		Producer producer = new Producer(2);
+		Consumer consumer = new Consumer(1);
 		Thread producerThread = new Thread(producer);
 		Thread producerThread2 = new Thread(producer);
 		Thread producerThread3 = new Thread(producer);

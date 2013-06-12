@@ -17,7 +17,7 @@ public class Consumer extends Storage implements Runnable {
 	 *            the time step
 	 */
 	Consumer(int timeStep) {
-		super(timeStep);
+		super(getCapacity());
 		this.timeStep = timeStep;
 	}
 
@@ -25,7 +25,7 @@ public class Consumer extends Storage implements Runnable {
 	 * Gets a product.
 	 */
 	private void getProduct() {
-		getProducts()[getAvailable()] = null;
+		getProducts()[getAvailable() - 1] = null;
 		setAvailable(getAvailable() - 1);
 	}
 
@@ -33,16 +33,18 @@ public class Consumer extends Storage implements Runnable {
 	 * if there are products in the storage gets a product. If there are no products waits for
 	 * product and checks after defined time.
 	 */
+	@Override
 	public void run() {
 		while (true) {
+
 			try {
 				Thread.sleep(timeStep);
 			} catch (InterruptedException e1) {
 			}
 			synchronized (getProducts()) {
 				if (getAvailable() > 0) {
-					getProduct();
 					System.out.println("got a product");
+					getProduct();
 					getProducts().notifyAll();
 				} else {
 					System.out.println("storage empty waiting for producer");

@@ -16,7 +16,7 @@ public class Producer extends Storage implements Runnable {
 	 *            the time step
 	 */
 	Producer(int timeStep) {
-		super(timeStep);
+		super(getCapacity());
 		this.timeStep = timeStep;
 	}
 
@@ -32,6 +32,7 @@ public class Producer extends Storage implements Runnable {
 	 * if there is room in the storage produces new product. If there's no room waits for customers
 	 * to get some products.
 	 */
+	@Override
 	public void run() {
 		while (true) {
 			try {
@@ -39,7 +40,7 @@ public class Producer extends Storage implements Runnable {
 			} catch (InterruptedException e1) {
 			}
 			synchronized (getProducts()) {
-				if (getAvailable() < getCapacity() - 1) {
+				if (getAvailable() < getCapacity()) {
 					produce();
 					System.out.println("new product made");
 					getProducts().notifyAll();

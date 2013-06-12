@@ -7,20 +7,20 @@ package com.sirma.itt.javacourse.threads.task7;
 public class Storage {
 
 	/** The capacity. */
-	private int capacity = 0;
+	private static int capacity = 0;
 
 	/** The available products. */
-	private int available = 0;
+	private static int available = 0;
 
 	/** all products. */
-	private Object[] products;
+	private static Object[] products;
 
 	/**
 	 * Gets the capacity.
 	 * 
 	 * @return the capacity
 	 */
-	protected int getCapacity() {
+	protected static int getCapacity() {
 		return capacity;
 	}
 
