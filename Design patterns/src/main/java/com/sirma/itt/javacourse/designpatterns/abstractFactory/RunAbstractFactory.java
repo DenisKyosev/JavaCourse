@@ -24,21 +24,21 @@ public final class RunAbstractFactory {
 
 		SpeciesFactory speciesFactory1 = abstractFactory.getSpeciesFactory("mammal");
 		Animal a1 = speciesFactory1.getAnimal("cat");
-		System.out.println("a1 sound: ");
+		System.out.println("animal 1: ");
 		a1.showPicture();
 
 		Animal a2 = speciesFactory1.getAnimal("cow");
-		System.out.println("a2 sound: ");
+		System.out.println("animal 2: ");
 		a2.showPicture();
 
 		SpeciesFactory speciesFactory2 = abstractFactory.getSpeciesFactory("aquatic");
 		Animal a3 = speciesFactory2.getAnimal("fish");
 
-		System.out.println("a3 sound: ");
+		System.out.println("animal 3: ");
 		a3.showPicture();
 		Animal a4 = speciesFactory2.getAnimal("seaturtle");
 
-		System.out.println("a4 sound: ");
+		System.out.println("animal 4: ");
 		a4.showPicture();
 	}
 }

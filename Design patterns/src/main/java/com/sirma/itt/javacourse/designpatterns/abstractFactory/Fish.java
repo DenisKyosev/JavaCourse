@@ -10,8 +10,8 @@ public class Fish implements Animal {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void showPicture() {
-		System.out.println("it's a fish");
+	public String showPicture() {
+		return "it's a fish";
 	}
 
 }

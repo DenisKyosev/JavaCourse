@@ -8,6 +8,8 @@ public interface Animal {
 
 	/**
 	 * Show picture.
+	 * 
+	 * @return animal
 	 */
-	void showPicture();
+	String showPicture();
 }

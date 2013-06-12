@@ -10,8 +10,8 @@ public class SeaTurtle implements Animal {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void showPicture() {
-		System.out.println("it's a sea turtle");
+	public String showPicture() {
+		return "it's a sea turtle";
 
 	}
 

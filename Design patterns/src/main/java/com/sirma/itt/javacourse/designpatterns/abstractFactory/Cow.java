@@ -10,8 +10,8 @@ public class Cow implements Animal {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void showPicture() {
-		System.out.println("it's a cow");
+	public String showPicture() {
+		return "it's a cow";
 	}
 
 }
