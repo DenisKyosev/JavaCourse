@@ -31,7 +31,7 @@ public class Storage {
 	 *            the new capacity
 	 */
 	protected void setCapacity(int capacity) {
-		this.capacity = capacity;
+		Storage.capacity = capacity;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Storage {
 	 *            the new available products
 	 */
 	protected void setAvailable(int available) {
-		this.available = available;
+		Storage.available = available;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Storage {
 	 *            the new products
 	 */
 	protected void setProducts(Object[] products) {
-		this.products = products;
+		Storage.products = products;
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class Storage {
 	 *            the capacity
 	 */
 	protected Storage(int capacity) {
-		this.capacity = capacity;
-		this.products = new Object[capacity];
+		Storage.capacity = capacity;
+		Storage.products = new Object[capacity];
 	}
 
 }
