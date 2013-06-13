@@ -1,9 +1,17 @@
 package com.sirma.itt.javacourse.designpatterns.objectPool;
 
+import java.util.Stack;
+
 /**
  * Class creating an object pool.
  */
 public class ObjectPool {
+	/** Max possible instances. */
+	private int max = 10;
+
+	private final Stack<Object> inUse;
+	/** The instances. */
+	private final Stack<Object> pool;
 
 	/**
 	 * Instantiates a new object pool.
@@ -12,38 +20,27 @@ public class ObjectPool {
 	 *            the max capacity
 	 */
 	ObjectPool(int max) {
+		inUse = new Stack<Object>();
 		this.max = max;
+		pool = new Stack<Object>();
 	}
-
-	/** Max possible instances. */
-	private int max = 10;
-
-	/** free instances. */
-	private int free = 0;
-
-	/** Created instances. */
-	private int created = -1;
-
-	/** The instances. */
-	private final Object[] instance = new Object[max];
 
 	/**
 	 * Acquire new instance.
 	 * 
 	 * @return the string
 	 */
-	public String acquire() {
-		if (free == 0 && created < max) {
-			created++;
-			instance[created] = new Object();
-			return "OK. Instance created";
-		} else if (free > 0) {
-			free--;
-			return "OK.";
+	public Object acquire() {
+		if (pool.isEmpty()) {
+			inUse.add(new Object());
+			return inUse.peek();
+		} else if (inUse.size() == max) {
+			return null;
 		} else {
-			return "Error! Can't create more instances.";
-		}
+			inUse.add(pool.peek());
+			return pool.pop();
 
+		}
 	}
 
 	/**
@@ -52,9 +49,9 @@ public class ObjectPool {
 	 * @return the string
 	 */
 	public String release() {
-		if (created > -1) {
-			free++;
-			return "Instance released.";
+		if (inUse.size() > 0) {
+			pool.add(inUse.pop());
+			return "Object released";
 		} else {
 			return "No instances created.";
 		}

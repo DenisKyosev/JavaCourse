@@ -22,14 +22,17 @@ public final class RunObjectPool {
 	public static void main(String[] args) {
 		ObjectPool pool = new ObjectPool(3);
 		System.out.println(pool.acquire());
+
+		System.out.println(pool.release());
+
 		System.out.println(pool.acquire());
-		pool.release();
 		System.out.println(pool.acquire());
 		System.out.println(pool.acquire());
-		System.out.println(pool.acquire());
-		pool.release();
+
+		System.out.println(pool.release());
+		System.out.println(pool.release());
+
 		System.out.println(pool.acquire());
 		System.out.println(pool.acquire());
 	}
-
 }
