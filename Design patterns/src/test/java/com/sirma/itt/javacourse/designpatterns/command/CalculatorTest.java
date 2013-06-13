@@ -15,13 +15,13 @@ public class CalculatorTest {
 	 */
 	@Test
 	public void testCalculator() {
-		Calculate calc = new Calculate();
+
 		CommandInvoker invoke = new CommandInvoker();
 
-		assertEquals(16.0, invoke.execute("4^2", calc), 0.1);
-		assertEquals(1.0, invoke.execute("4/2/2", calc), 0.1);
-		assertEquals(3.0, invoke.execute("4-1", calc), 0.1);
-		assertEquals(84.0, invoke.execute("4*3*7", calc), 0.1);
+		assertEquals(16.0, invoke.execute("4^2"), 0.1);
+		assertEquals(1.0, invoke.execute("4/2/2"), 0.1);
+		assertEquals(3.0, invoke.execute("4-1"), 0.1);
+		assertEquals(84.0, invoke.execute("4*3*7"), 0.1);
 	}
 
 	/**
@@ -29,10 +29,10 @@ public class CalculatorTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongData() {
-		Calculate calc = new Calculate();
+
 		CommandInvoker invoke = new CommandInvoker();
 
-		assertEquals(16.0, invoke.execute("4554grrf", calc), 0.1);
+		assertEquals(16.0, invoke.execute("4554grrf"), 0.1);
 
 	}
 }

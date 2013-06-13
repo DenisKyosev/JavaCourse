@@ -13,23 +13,26 @@ public class MailControl {
 	 * Builds the mail.
 	 * 
 	 * @param from
-	 *            the sender
+	 *            the from
 	 * @param to
-	 *            the recipient
+	 *            the to
 	 * @param subject
 	 *            the subject
 	 * @param content
 	 *            the content
 	 * @param cc
-	 *            the cc's
+	 *            the cc
 	 * @param attachments
 	 *            the attachments
+	 * @return the mail
 	 */
-	public void buildMail(String from, String to, String subject, String content, String cc,
+	public Mail buildMail(String from, String to, String subject, String content, String cc,
 			String[] attachments) {
-		mailBuilder.setFrom(from);
-		mailBuilder.to(to).subject(subject).content(content).cc(cc).build();
-
+		if (!from.isEmpty()) {
+			return mailBuilder.from(from).to(to).subject(subject).content(content).cc(cc).build();
+		} else {
+			return null;
+		}
 	}
 
 	/**

@@ -15,10 +15,19 @@ public class ObjectPoolTest {
 	 */
 	@Test
 	public void testPool() {
-		ObjectPool pool = new ObjectPool();
-		for (int i = 0; i < 10; i++) {
-			assertEquals("OK", pool.acquire());
+		ObjectPool pool = new ObjectPool(2);
+
+		assertEquals("No instances created.", pool.release());
+
+		for (int i = 0; i < 3; i++) {
+			assertEquals("OK. Instance created", pool.acquire());
 		}
+		assertEquals("Error! Can't create more instances.", pool.acquire());
+
+		assertEquals("Instance released.", pool.release());
+		assertEquals("Instance released.", pool.release());
+		assertEquals("OK.", pool.acquire());
+		assertEquals("OK.", pool.acquire());
 		assertEquals("Error! Can't create more instances.", pool.acquire());
 	}
 

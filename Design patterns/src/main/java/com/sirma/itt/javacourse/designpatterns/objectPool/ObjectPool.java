@@ -1,37 +1,31 @@
 package com.sirma.itt.javacourse.designpatterns.objectPool;
 
 /**
- * Class creating a maximum number of instances.
+ * Class creating an object pool.
  */
 public class ObjectPool {
+
+	/**
+	 * Instantiates a new object pool.
+	 * 
+	 * @param max
+	 *            the max capacity
+	 */
+	ObjectPool(int max) {
+		this.max = max;
+	}
 
 	/** Max possible instances. */
 	private int max = 10;
 
-	/**
-	 * Gets the max.
-	 * 
-	 * @return the max
-	 */
-	public int getMax() {
-		return max;
-	}
-
-	/**
-	 * Sets the max.
-	 * 
-	 * @param max
-	 *            the new max
-	 */
-	public void setMax(int max) {
-		this.max = max;
-	}
+	/** free instances. */
+	private int free = 0;
 
 	/** Created instances. */
 	private int created = -1;
 
 	/** The instances. */
-	private final ObjectPool[] instance = new ObjectPool[max];
+	private final Object[] instance = new Object[max];
 
 	/**
 	 * Acquire new instance.
@@ -39,28 +33,30 @@ public class ObjectPool {
 	 * @return the string
 	 */
 	public String acquire() {
-		created++;
-		if (created < max) {
-			instance[created] = new ObjectPool();
-			return "OK";
+		if (free == 0 && created < max) {
+			created++;
+			instance[created] = new Object();
+			return "OK. Instance created";
+		} else if (free > 0) {
+			free--;
+			return "OK.";
 		} else {
 			return "Error! Can't create more instances.";
 		}
+
 	}
 
 	/**
 	 * Release instance.
+	 * 
+	 * @return the string
 	 */
-	public void release() {
+	public String release() {
 		if (created > -1) {
-			try {
-				instance[created].finalize();
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-			System.gc();
-			created--;
+			free++;
+			return "Instance released.";
+		} else {
+			return "No instances created.";
 		}
-
 	}
 }

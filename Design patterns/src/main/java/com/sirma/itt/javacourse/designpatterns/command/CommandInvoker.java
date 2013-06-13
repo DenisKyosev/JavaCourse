@@ -1,9 +1,12 @@
 package com.sirma.itt.javacourse.designpatterns.command;
 
+// TODO: Auto-generated Javadoc
 /**
  * Search for propriate command using the factory and executing it.
  */
 public class CommandInvoker {
+
+	/** The factory. */
 	private final Factory factory = new Factory();
 
 	/**
@@ -11,12 +14,10 @@ public class CommandInvoker {
 	 * 
 	 * @param input
 	 *            the input
-	 * @param cmd
-	 *            the command
 	 * @return the double result
 	 */
-	public double execute(String input, Calculate cmd) {
-		return factory.getCommand(input).execute(input, cmd);
+	public double execute(String input) {
+		return factory.getCommand(input).execute(input);
 	}
 
 }

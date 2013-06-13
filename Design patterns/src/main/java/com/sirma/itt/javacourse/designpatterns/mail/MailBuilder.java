@@ -7,7 +7,7 @@ package com.sirma.itt.javacourse.designpatterns.mail;
 public class MailBuilder extends Mail {
 
 	/** The from. */
-	private final String from;
+	private String from;
 
 	/** The to. */
 	private String to;
@@ -24,14 +24,9 @@ public class MailBuilder extends Mail {
 	/** The attachments. */
 	private String[] attachments;
 
-	/**
-	 * Instantiates a new mail builder.
-	 * 
-	 * @param from
-	 *            the from
-	 */
-	public MailBuilder(String from) {
+	public MailBuilder from(String from) {
 		this.from = from;
+		return this;
 	}
 
 	/**

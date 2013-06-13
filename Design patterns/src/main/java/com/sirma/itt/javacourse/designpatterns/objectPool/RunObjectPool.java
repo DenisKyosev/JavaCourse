@@ -20,9 +20,16 @@ public final class RunObjectPool {
 	 *            args
 	 */
 	public static void main(String[] args) {
-		ObjectPool pool = new ObjectPool();
+		ObjectPool pool = new ObjectPool(3);
+		System.out.println(pool.acquire());
 		System.out.println(pool.acquire());
 		pool.release();
+		System.out.println(pool.acquire());
+		System.out.println(pool.acquire());
+		System.out.println(pool.acquire());
+		pool.release();
+		System.out.println(pool.acquire());
+		System.out.println(pool.acquire());
 	}
 
 }

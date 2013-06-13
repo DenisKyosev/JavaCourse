@@ -1,22 +1,26 @@
 package com.sirma.itt.javacourse.designpatterns.command;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GradationCommand.
  */
 public class GradationCommand implements Command {
 
-	/** The calculator. */
-	private final Calculate calc = new Calculate();
-
 	/**
-	 * @Override
+	 * Execute gradation.
+	 * 
+	 * @param input
+	 *            the input
 	 * @return double result
-	 * @param str
-	 *            input string
-	 * @param cmd
-	 *            command
+	 * @Override
 	 */
-	public double execute(String str, Calculate cmd) {
-		return calc.gradation(str);
+	@Override
+	public double execute(String input) {
+		String[] in = input.split("\\^");
+		double result = Double.parseDouble(in[0]);
+		for (int i = 1; i < in.length; i++) {
+			result = Math.pow(result, Double.parseDouble(in[i]));
+		}
+		return result;
 	}
 }
