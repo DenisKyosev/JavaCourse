@@ -16,8 +16,8 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 	private static final long serialVersionUID = -3625404054087430237L;
 	private final JTextField field;
 	private int operation;
-	private double y;
-	private double x;
+	private double num2;
+	private double num1;
 	private final CalculatorFunctions function = new CalculatorFunctions();
 	private final JButton[] buttons;
 
@@ -53,23 +53,23 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 			} else {
 				field.setText(field.getText() + cmd);
 			}
-			y = Double.parseDouble(field.getText());
+			num2 = Double.parseDouble(field.getText());
 		}
 		if (!"0".equals(field.getText()) && !field.getText().isEmpty()) {
 			if ("+".equals(cmd)) {
-				x = Double.parseDouble(field.getText());
+				num1 = Double.parseDouble(field.getText());
 				field.setText("0");
 				operation = 1;
 			} else if ("-".equals(cmd)) {
-				x = Double.parseDouble(field.getText());
+				num1 = Double.parseDouble(field.getText());
 				field.setText("0");
 				operation = 2;
 			} else if ("*".equals(cmd)) {
-				x = Double.parseDouble(field.getText());
+				num1 = Double.parseDouble(field.getText());
 				field.setText("0");
 				operation = 3;
 			} else if ("/".equals(cmd)) {
-				x = Double.parseDouble(field.getText());
+				num1 = Double.parseDouble(field.getText());
 				field.setText("0");
 				operation = 4;
 			} else if (".".equals(cmd)) {
@@ -77,12 +77,12 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 			} else if ("C".equals(cmd)) {
 				field.setText(function.deleteDigit(field.getText()));
 			} else if ("CC".equals(cmd)) {
-				x = 0;
-				y = 0;
+				num1 = 0;
+				num2 = 0;
 				field.setText("0");
 			} else if ("=".equals(cmd)) {
-				field.setText(function.equal(operation, x, y));
-				x = Double.parseDouble(field.getText());
+				field.setText(function.equal(operation, num1, num2));
+				num1 = Double.parseDouble(field.getText());
 			}
 		}
 	}

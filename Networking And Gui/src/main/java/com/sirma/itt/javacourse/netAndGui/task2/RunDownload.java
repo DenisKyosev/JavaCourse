@@ -9,7 +9,7 @@ public class RunDownload {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		Download down = new Download();
+		Download wnd = new Download();
 
 	}
 

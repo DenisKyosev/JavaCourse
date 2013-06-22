@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.inputoutput.transferObject;
+package com.sirma.itt.javacourse.netAndGui.task2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +11,15 @@ public class TransferObject {
 
 	/** The in. */
 	private InputStream in;
+	private int read = 0;
+
+	protected int getRead() {
+		return read;
+	}
+
+	protected void setRead(int read) {
+		this.read = read;
+	}
 
 	/** The out. */
 	private OutputStream out;
@@ -40,15 +49,26 @@ public class TransferObject {
 	 * @throws IOException
 	 *             io exception
 	 */
-	protected long transfer(int numberOfBytes, int offset) throws IOException {
-		byte[] buff = new byte[numberOfBytes];
-		long size = 0;
+	protected int transfer(int numberOfBytes, int offset) throws IOException {
 
+		int lastRead = 0;
+		boolean flag = true;
 		in.skip(offset);
-		size = in.read(buff, 0, numberOfBytes);
-		out.write(buff);
 
-		return size;
+		int readed = 0;
+
+		byte[] buf = new byte[1024];
+		int len;
+		len = in.read(buf);
+		while (len > 0 && read < numberOfBytes) {
+			out.write(buf, 0, len);
+			read += len;
+			len = in.read(buf);
+		}
+
+		in.close();
+		out.close();
+		return readed;
 	}
 
 	/**
