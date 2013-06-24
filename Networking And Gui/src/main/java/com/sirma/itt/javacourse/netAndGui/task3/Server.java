@@ -2,9 +2,9 @@ package com.sirma.itt.javacourse.netAndGui.task3;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Calendar;
@@ -41,10 +41,10 @@ public class Server extends JFrame {
 		String message = "";
 		try {
 			client = socket.accept();
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-					client.getOutputStream()));
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
 			message = "Hello " + Calendar.getInstance().getTime();
-			writer.write(message);
+			writer.println(message);
+			writer.flush();
 			txtArea.append("Client connected. Sent message:" + message);
 		} catch (IOException e) {
 			e.printStackTrace();

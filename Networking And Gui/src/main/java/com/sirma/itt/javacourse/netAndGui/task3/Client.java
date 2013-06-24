@@ -33,14 +33,13 @@ public class Client extends JFrame {
 
 		setVisible(true);
 		client = openSocket();
-		txtArea.append("Client connected to server on port " + Integer.toString(client.getPort()));
+		txtArea.append("Client connected to server on port " + Integer.toString(client.getPort())
+				+ "\r\n");
 		String message;
 		BufferedReader stream = null;
 		try {
 			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			System.out.println(stream.read());
 			while ((message = stream.readLine()) != null) {
-				System.out.println(message);
 				txtArea.append(message);
 			}
 		} catch (IOException e) {
