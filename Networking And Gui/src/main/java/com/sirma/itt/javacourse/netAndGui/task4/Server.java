@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.netAndGui.task3;
+package com.sirma.itt.javacourse.netAndGui.task4;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,10 +34,12 @@ public class Server extends JFrame implements ActionListener {
 	private final ServerSocket server;
 
 	/** The client socket. */
-	private Socket client;
+	private final ArrayList<Socket> clients = new ArrayList<Socket>();
 
 	/** The text area. */
 	private final JTextArea txtArea;
+	ServerClients clientsList;
+	Thread thread;
 
 	/**
 	 * Instantiates a new server.
@@ -61,33 +63,24 @@ public class Server extends JFrame implements ActionListener {
 		inputField.add(close, BorderLayout.SOUTH);
 		setVisible(true);
 		txtArea.append("Trying to launch server\r\n");
+
 		server = Connect.openServerSocket();
 		if (server == null) {
 			txtArea.append("No available port in range 7000-7020.");
 		} else {
 			txtArea.append("Server started on port: " + server.getLocalPort()
 					+ "\r\nWaiting for clients\r\n");
-			sendMessage(client);
 		}
-	}
 
-	/**
-	 * Send message.
-	 * 
-	 * @param client
-	 *            the client
-	 */
-	void sendMessage(Socket client) {
-		String message = "";
-		try {
-			client = server.accept();
-			PrintWriter writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-			message = "Hello " + Calendar.getInstance().getTime();
-			writer.println(message);
-			writer.println();
-			writer.flush();
-			txtArea.append("Client connected. \r\nSent message:" + message);
-		} catch (IOException e) {
+		while (true) {
+			try {
+				clients.add(server.accept());
+				thread = new Thread(new ServerClients(clients));
+				thread.start();
+				txtArea.append("New client connected. \r\n Number of clients:" + clients.size()
+						+ "\r\n");
+			} catch (IOException e) {
+			}
 		}
 	}
 
@@ -95,6 +88,13 @@ public class Server extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if ("Close server".equals(e.getActionCommand())) {
 			try {
+				for (int j = 0; j < clients.size(); j++) {
+					PrintWriter writer = new PrintWriter(new OutputStreamWriter(clients.get(j)
+							.getOutputStream()));
+					writer.println("Server closed");
+					writer.flush();
+				}
+
 				server.close();
 				System.exit(0);
 			} catch (IOException e1) {

@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.netAndGui.task3;
+package com.sirma.itt.javacourse.netAndGui.connect;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -22,7 +22,7 @@ public final class Connect {
 	 * 
 	 * @return the socket
 	 */
-	protected static Socket openSocket() {
+	public static Socket openSocket() {
 		for (int i = 7000; i < 7020; i++) {
 			try {
 				return new Socket("localhost", i);
@@ -38,7 +38,7 @@ public final class Connect {
 	 * 
 	 * @return the server socket
 	 */
-	protected static ServerSocket openServerSocket() {
+	public static ServerSocket openServerSocket() {
 		for (int i = 7000; i <= 7020; i++) {
 			try {
 				return new ServerSocket(i);

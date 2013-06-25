@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.netAndGui.task3;
+package com.sirma.itt.javacourse.netAndGui.task4;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -33,8 +33,10 @@ public class Client extends JFrame {
 
 	/**
 	 * Instantiates a new client.
+	 * 
+	 * @throws NoSocketException
 	 */
-	Client() {
+	Client() throws NoSocketException {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(300, 200, 400, 250);
 		Container mainPanel = getContentPane();
@@ -56,8 +58,6 @@ public class Client extends JFrame {
 			txtArea.append("No server running on port in range 7000-7020.");
 		} else {
 			getMessage(client);
-			txtArea.append("Connection terminated");
-
 		}
 
 	}
@@ -67,19 +67,27 @@ public class Client extends JFrame {
 	 * 
 	 * @param client
 	 *            the client socket
+	 * @throws NoSocketException
 	 */
-	void getMessage(Socket client) {
+	void getMessage(Socket client) throws NoSocketException {
 		txtArea.append("Client connected to server on port " + Integer.toString(client.getPort())
 				+ "\r\n");
 		String message;
 		BufferedReader stream = null;
+
 		try {
 			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			message = stream.readLine();
-			txtArea.append(message + "\r\n");
+			while ((message = stream.readLine()) != null) {
+				txtArea.append(message + "\r\n");
+				if ("Server closed".equals(message)) {
+					throw new NoSocketException("boom");
+				}
+			}
 			client.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
+
+		throw new NoSocketException();
+
 	}
 }
