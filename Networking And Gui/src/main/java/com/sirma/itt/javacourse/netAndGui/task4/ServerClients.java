@@ -6,15 +6,34 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ServerClients.
+ */
 public class ServerClients implements Runnable {
-	ArrayList<Socket> clients;
-	String message;
-	PrintWriter writer;
 
+	/** The clients. */
+	private final ArrayList<Socket> clients;
+
+	/** The message. */
+	private String message;
+
+	/** The writer. */
+	private PrintWriter writer;
+
+	/**
+	 * Instantiates a new clients control class.
+	 * 
+	 * @param clients
+	 *            the clients
+	 */
 	ServerClients(ArrayList<Socket> clients) {
 		this.clients = clients;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void run() {
 		int size = clients.size();

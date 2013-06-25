@@ -35,6 +35,7 @@ public class Client extends JFrame {
 	 * Instantiates a new client.
 	 * 
 	 * @throws NoSocketException
+	 *             the no socket exception
 	 */
 	Client() throws NoSocketException {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -68,6 +69,7 @@ public class Client extends JFrame {
 	 * @param client
 	 *            the client socket
 	 * @throws NoSocketException
+	 *             the server is closed
 	 */
 	void getMessage(Socket client) throws NoSocketException {
 		txtArea.append("Client connected to server on port " + Integer.toString(client.getPort())

@@ -38,7 +38,6 @@ public class Server extends JFrame implements ActionListener {
 
 	/** The text area. */
 	private final JTextArea txtArea;
-	private ServerClients clientsList;
 	private Thread thread;
 
 	/**
