@@ -29,7 +29,7 @@ public class DownloaderWindow extends JFrame implements ActionListener {
 	private JTextField destination;
 
 	/** The error field. */
-	private final JTextField errorField;
+	private static JTextField errorField;
 
 	/** The download button. */
 	private final JButton download;
@@ -101,7 +101,7 @@ public class DownloaderWindow extends JFrame implements ActionListener {
 	 * 
 	 * @return the error field
 	 */
-	protected JTextField getErrorField() {
+	protected static JTextField getErrorField() {
 		return errorField;
 	}
 
@@ -142,7 +142,9 @@ public class DownloaderWindow extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Thread download = new Thread(new Download(this));
-		download.start();
+		if ("Download".equals(e.getActionCommand())) {
+			Thread download = new Thread(new Download(this));
+			download.start();
+		}
 	}
 }

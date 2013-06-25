@@ -38,8 +38,8 @@ public class Server extends JFrame implements ActionListener {
 
 	/** The text area. */
 	private final JTextArea txtArea;
-	ServerClients clientsList;
-	Thread thread;
+	private ServerClients clientsList;
+	private Thread thread;
 
 	/**
 	 * Instantiates a new server.
@@ -96,7 +96,7 @@ public class Server extends JFrame implements ActionListener {
 				}
 
 				server.close();
-				System.exit(0);
+				dispose();
 			} catch (IOException e1) {
 			}
 		}

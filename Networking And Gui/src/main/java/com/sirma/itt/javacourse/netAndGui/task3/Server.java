@@ -96,7 +96,7 @@ public class Server extends JFrame implements ActionListener {
 		if ("Close server".equals(e.getActionCommand())) {
 			try {
 				server.close();
-				System.exit(0);
+				dispose();
 			} catch (IOException e1) {
 			}
 		}

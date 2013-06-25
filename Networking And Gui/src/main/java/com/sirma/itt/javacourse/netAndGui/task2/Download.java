@@ -9,15 +9,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+// TODO: Auto-generated Javadoc
 /**
  * File download performer. Launches on click of the download button.
  */
-public class Download extends DownloaderWindow implements Runnable {
+public class Download implements Runnable {
 
-	/**
-	 * Comment for serialVersionUID.
-	 */
-	private static final long serialVersionUID = 1L;
 	/** The download. */
 	private final DownloaderWindow download;
 
@@ -36,7 +33,7 @@ public class Download extends DownloaderWindow implements Runnable {
 	 */
 	@Override
 	public void run() {
-		download.getErrorField().setText("");
+		DownloaderWindow.getErrorField().setText("");
 		String url = download.getSource().getText();
 
 		URL onlineFile = null;
@@ -49,17 +46,19 @@ public class Download extends DownloaderWindow implements Runnable {
 			in = new BufferedInputStream(connection.getInputStream());
 
 		} catch (IOException e1) {
-			getErrorField().setText("Wrong source url or could not open connection!");
+			DownloaderWindow.getErrorField().setText(
+					"Wrong source url or could not open connection!");
 			return;
 		}
 		int fileSize = connection.getContentLength();
-		File dest = new File(download.getDestination().getText());
+		File dest = new File(download.getDestination().getText()
+				+ getExtension(onlineFile.toString()));
 		BufferedOutputStream out = null;
 
 		try {
 			out = new BufferedOutputStream(new FileOutputStream(dest));
 		} catch (FileNotFoundException e1) {
-			download.getErrorField().setText("File system error!");
+			DownloaderWindow.getErrorField().setText("File system error!");
 		}
 
 		int readed = 0;
@@ -79,7 +78,7 @@ public class Download extends DownloaderWindow implements Runnable {
 
 			}
 			download.getProgress().setValue(100);
-			download.getErrorField().setText("File downloaded successfully");
+			DownloaderWindow.getErrorField().setText("File downloaded successfully");
 			in.close();
 			out.close();
 		} catch (IOException e1) {
@@ -87,5 +86,16 @@ public class Download extends DownloaderWindow implements Runnable {
 			e1.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * Gets the extension of a file.
+	 * 
+	 * @param input
+	 *            the input
+	 * @return the extension
+	 */
+	String getExtension(String input) {
+		return input.substring(input.lastIndexOf("."));
 	}
 }
