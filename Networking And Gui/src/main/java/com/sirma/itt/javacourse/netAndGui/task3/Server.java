@@ -2,6 +2,8 @@ package com.sirma.itt.javacourse.netAndGui.task3;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -9,15 +11,35 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Calendar;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-public class Server extends JFrame {
-	ServerSocket socket;
-	Socket client;
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Server.
+ */
+public class Server extends JFrame implements ActionListener {
 
+	/**
+	 * Comment for serialVersionUID.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** The server socket. */
+	private final ServerSocket server;
+
+	/** The client socket. */
+	private Socket client;
+
+	/** The text area. */
+	private final JTextArea txtArea;
+
+	/**
+	 * Instantiates a new server.
+	 */
 	Server() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(300, 200, 400, 250);
@@ -28,38 +50,54 @@ public class Server extends JFrame {
 		inputField.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mainPanel.add(inputField);
 
-		JTextArea txtArea = new JTextArea();
+		txtArea = new JTextArea();
 		txtArea.setFocusable(false);
+		JButton close = new JButton("Close server");
+		close.addActionListener(this);
 
 		inputField.add(txtArea);
-
-		socket = openServerSocket();
-		txtArea.append("Server started on port: " + socket.getLocalPort()
-				+ " Waiting for clients\r\n");
-
+		inputField.add(close, BorderLayout.SOUTH);
 		setVisible(true);
+		txtArea.append("Trying to launch server\r\n");
+		server = Connect.openServerSocket();
+		if (server == null) {
+			txtArea.append("No available port in range 7000-7020.");
+		} else {
+			txtArea.append("Server started on port: " + server.getLocalPort()
+					+ "\r\nWaiting for clients\r\n");
+			sendMessage(client);
+		}
+	}
+
+	/**
+	 * Send message.
+	 * 
+	 * @param client
+	 *            the client
+	 */
+	void sendMessage(Socket client) {
 		String message = "";
 		try {
-			client = socket.accept();
+			client = server.accept();
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
 			message = "Hello " + Calendar.getInstance().getTime();
 			writer.println(message);
+			writer.println();
 			writer.flush();
-			txtArea.append("Client connected. Sent message:" + message);
+			txtArea.append("Client connected. \r\nSent message:" + message);
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
-
 	}
 
-	ServerSocket openServerSocket() {
-		for (int i = 7000; i <= 7020; i++) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if ("Close server".equals(e.getActionCommand())) {
 			try {
-				return new ServerSocket(i);
-			} catch (IOException ex) {
-				continue;
+				server.close();
+				System.exit(0);
+			} catch (IOException e1) {
 			}
 		}
-		return null;
+
 	}
 }

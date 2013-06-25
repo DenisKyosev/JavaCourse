@@ -1,11 +1,26 @@
 package com.sirma.itt.javacourse.netAndGui.task3;
 
-public class RunServer {
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RunServer.
+ */
+public final class RunServer {
 
 	/**
+	 * Instantiates a new server.
+	 */
+	private RunServer() {
+
+	}
+
+	/**
+	 * The main method.
+	 * 
 	 * @param args
+	 *            the arguments
 	 */
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		Server server = new Server();
 	}
 
