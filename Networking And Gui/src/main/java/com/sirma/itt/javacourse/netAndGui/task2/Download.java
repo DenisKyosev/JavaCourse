@@ -18,6 +18,27 @@ public class Download implements Runnable {
 	/** The download. */
 	private final DownloaderWindow download;
 
+	/** The online file. */
+	private URL onlineFile = null;
+
+	/** The connection. */
+	private URLConnection connection = null;
+
+	/** The url. */
+	private String url;
+
+	/** The in. */
+	private BufferedInputStream in = null;
+
+	/** The out. */
+	private BufferedOutputStream out = null;
+
+	/** The file size. */
+	private int fileSize;
+
+	/** The destination file. */
+	private File dest;
+
 	/**
 	 * Instantiates a new download.
 	 * 
@@ -34,33 +55,42 @@ public class Download implements Runnable {
 	@Override
 	public void run() {
 		DownloaderWindow.getErrorField().setText("");
-		String url = download.getSource().getText();
+		url = download.getSource().getText();
 
-		URL onlineFile = null;
-		URLConnection connection = null;
-		BufferedInputStream in = null;
-
-		try {
-			onlineFile = new URL(url);
-			connection = onlineFile.openConnection();
-			in = new BufferedInputStream(connection.getInputStream());
-
-		} catch (IOException e1) {
-			DownloaderWindow.getErrorField().setText(
-					"Wrong source url or could not open connection!");
-			return;
+		if (connect()) {
+			fileSize = connection.getContentLength();
+			if (destinationConnect()) {
+				download();
+			}
 		}
-		int fileSize = connection.getContentLength();
-		File dest = new File(download.getDestination().getText()
-				+ getExtension(onlineFile.toString()));
-		BufferedOutputStream out = null;
 
+	}
+
+	/**
+	 * Try to make new file with given name.
+	 * 
+	 * @return true, if successful
+	 */
+	boolean destinationConnect() {
+
+		dest = new File(download.getDestination().getText() + getExtension(onlineFile.toString()));
 		try {
 			out = new BufferedOutputStream(new FileOutputStream(dest));
-		} catch (FileNotFoundException e1) {
-			DownloaderWindow.getErrorField().setText("File system error!");
-		}
 
+			return true;
+		} catch (FileNotFoundException e1) {
+			DownloaderWindow.getErrorField().setText("Can't open stream.");
+			return false;
+
+		}
+	}
+
+	/**
+	 * Try to download file.
+	 * 
+	 * @return true, if successful
+	 */
+	boolean download() {
 		int readed = 0;
 
 		byte[] buf = new byte[1024];
@@ -81,11 +111,30 @@ public class Download implements Runnable {
 			DownloaderWindow.getErrorField().setText("File downloaded successfully");
 			in.close();
 			out.close();
+			return true;
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			return false;
 		}
+	}
 
+	/**
+	 * Connect to online source.
+	 * 
+	 * @return true, if successful
+	 */
+	boolean connect() {
+		try {
+			onlineFile = new URL(url);
+			connection = onlineFile.openConnection();
+			in = new BufferedInputStream(connection.getInputStream());
+			return true;
+		} catch (IOException e1) {
+			DownloaderWindow.getErrorField().setText(
+					"Wrong source url or could not open connection!");
+			return false;
+		}
 	}
 
 	/**

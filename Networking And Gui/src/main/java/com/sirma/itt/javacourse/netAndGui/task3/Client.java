@@ -30,7 +30,9 @@ public class Client extends JFrame {
 
 	/** The text area. */
 	private final JTextArea txtArea;
-	String message;
+
+	/** The message. */
+	private String message;
 
 	/**
 	 * Instantiates a new client.
@@ -56,6 +58,13 @@ public class Client extends JFrame {
 		clientConnected(client);
 	}
 
+	/**
+	 * Client connected.
+	 * 
+	 * @param client
+	 *            the client
+	 * @return the string
+	 */
 	String clientConnected(Socket client) {
 		if (client == null) {
 			return "No server running on port in range 7000-7020.";
