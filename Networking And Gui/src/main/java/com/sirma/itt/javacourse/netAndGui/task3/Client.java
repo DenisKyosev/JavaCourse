@@ -30,6 +30,7 @@ public class Client extends JFrame {
 
 	/** The text area. */
 	private final JTextArea txtArea;
+	String message;
 
 	/**
 	 * Instantiates a new client.
@@ -52,14 +53,17 @@ public class Client extends JFrame {
 		setVisible(true);
 		txtArea.append("Trying to connect to server\r\n");
 		client = Connect.openSocket();
+		clientConnected(client);
+	}
+
+	String clientConnected(Socket client) {
 		if (client == null) {
-			txtArea.append("No server running on port in range 7000-7020.");
+			return "No server running on port in range 7000-7020.";
 		} else {
 			getMessage(client);
-			txtArea.append("Connection terminated");
-
+			return "Client connected to server on port " + Integer.toString(client.getPort())
+					+ "\r\n" + message + "Connection terminated";
 		}
-
 	}
 
 	/**
@@ -71,7 +75,7 @@ public class Client extends JFrame {
 	void getMessage(Socket client) {
 		txtArea.append("Client connected to server on port " + Integer.toString(client.getPort())
 				+ "\r\n");
-		String message;
+
 		BufferedReader stream = null;
 		try {
 			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));

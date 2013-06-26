@@ -38,6 +38,7 @@ public class Server extends JFrame implements ActionListener {
 
 	/** The text area. */
 	private final JTextArea txtArea;
+	private boolean closed = false;
 
 	/**
 	 * Instantiates a new server.
@@ -62,14 +63,25 @@ public class Server extends JFrame implements ActionListener {
 		setVisible(true);
 		txtArea.append("Trying to launch server\r\n");
 		server = Connect.openServerSocket();
+		txtArea.append(serverStarted(server));
+		while (!closed) {
+			sendMessage(client);
+		}
+	}
+
+	/**
+	 * Check if server is started.
+	 * 
+	 * @param server
+	 *            the server
+	 * @return the string
+	 */
+	String serverStarted(ServerSocket server) {
 		if (server == null) {
-			txtArea.append("No available port in range 7000-7020.");
+			return "No available port in range 7000-7020.";
 		} else {
-			txtArea.append("Server started on port: " + server.getLocalPort()
-					+ "\r\nWaiting for clients\r\n");
-			while (true) {
-				sendMessage(client);
-			}
+			return "Server started on port: " + server.getLocalPort()
+					+ "\r\nWaiting for clients\r\n";
 		}
 	}
 
@@ -93,15 +105,18 @@ public class Server extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Close server".equals(e.getActionCommand())) {
 			try {
+				closed = true;
 				server.close();
 				dispose();
 			} catch (IOException e1) {
 			}
 		}
-
 	}
 }
