@@ -33,10 +33,16 @@ public class ArrayAdd extends MyLock implements Runnable {
 	/**
 	 * run the thread.
 	 */
+	@Override
 	public void run() {
 		while (true) {
 			add(new Object());
-
+			try {
+				Thread.sleep((long) (Math.random() * 1000));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

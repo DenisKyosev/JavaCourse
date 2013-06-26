@@ -25,11 +25,18 @@ public final class RunTimeoutHashtable {
 		hashCheck.start();
 		hash.put("hello", "wooo");
 		hash.put("wazzaaa", "wooo");
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
+		for (int i = 0; i < 10; i++) {
+			try {
+				Thread.sleep((long) (Math.random() * 1000));
+				if (i % 2 == 0) {
+					hash.get("hello");
+				} else {
+					hash.put("asd", "valueee");
+				}
+			} catch (InterruptedException e) {
+			}
 		}
-		System.out.println(hash.get("wazzaaa"));
+		System.out.println(hash.get("end"));
 	}
 
 }

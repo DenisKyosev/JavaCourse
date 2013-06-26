@@ -53,7 +53,7 @@ public class SleepingCounter extends Thread {
 	 */
 	@Override
 	public void run() {
-		while (count < max && !this.isInterrupted()) {
+		while (count < max && Thread.activeCount() > 2) {
 			count++;
 			try {
 				Thread.sleep(sleepTime);
@@ -61,6 +61,7 @@ public class SleepingCounter extends Thread {
 			}
 		}
 		this.interrupt();
+
 	}
 
 	/**

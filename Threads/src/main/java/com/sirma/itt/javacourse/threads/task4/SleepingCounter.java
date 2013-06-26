@@ -30,6 +30,11 @@ public class SleepingCounter implements Runnable {
 	 */
 	public void count() {
 		while (count < max) {
+			try {
+				Thread.sleep(600);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			count++;
 			System.out.println(Thread.currentThread().getName() + ":" + count);
 			synchronized (lock) {
@@ -52,6 +57,7 @@ public class SleepingCounter implements Runnable {
 	/**
 	 * counting from 0 to max. if there is another counter thread waits after each counted number.
 	 */
+	@Override
 	public void run() {
 		count();
 	}

@@ -26,18 +26,8 @@ public final class RunSleepingCounter {
 		bigNumber.start();
 
 		while (Thread.activeCount() > 1) {
-			if (littleNumber.isInterrupted()) {
-				bigNumber.interrupt();
-
-				System.out.println(littleNumber.getCount());
-				System.out.println(bigNumber.getCount());
-			} else if (bigNumber.isInterrupted()) {
-				littleNumber.interrupt();
-				System.out.println(littleNumber.getCount());
-				System.out.println(bigNumber.getCount());
-			}
-
+			System.out.println(littleNumber.getCount());
+			System.out.println(bigNumber.getCount());
 		}
 	}
-
 }
