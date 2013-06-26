@@ -67,7 +67,9 @@ public class Server extends JFrame implements ActionListener {
 		} else {
 			txtArea.append("Server started on port: " + server.getLocalPort()
 					+ "\r\nWaiting for clients\r\n");
-			sendMessage(client);
+			while (true) {
+				sendMessage(client);
+			}
 		}
 	}
 
@@ -86,7 +88,7 @@ public class Server extends JFrame implements ActionListener {
 			writer.println(message);
 			writer.println();
 			writer.flush();
-			txtArea.append("Client connected. \r\nSent message:" + message);
+			txtArea.append("Client connected. \r\nSent message:" + message + "\r\n");
 		} catch (IOException e) {
 		}
 	}
