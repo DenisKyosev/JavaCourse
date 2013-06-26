@@ -20,9 +20,8 @@ public final class RunCalculator {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		CommandInvoker invoke = new CommandInvoker();
-
-		System.out.println(invoke.execute("4^2"));
 
 	}
 
