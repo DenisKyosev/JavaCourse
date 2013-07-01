@@ -64,9 +64,9 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		cmd = e.getActionCommand();
 		if (function.isNumber(cmd)) {
-			if (field.getText().startsWith("0") && !field.getText().contains(".")) {
+			if (field.getText().startsWith("0") && ".".equals(cmd)) {
 				field.setText(cmd);
-			} else if (operation == 0) {
+			} else if (operation == 0 && !"0".equals(field.getText())) {
 				field.setText(field.getText() + cmd);
 			} else {
 				field.setText(cmd);
@@ -104,7 +104,7 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 				num1 = 0;
 				num2 = 0;
 				field.setText("0");
-			} else if ("=".equals(cmd)) {
+			} else if ("=".equals(cmd) && operation != 0) {
 				calculate();
 				operation = 0;
 			}
