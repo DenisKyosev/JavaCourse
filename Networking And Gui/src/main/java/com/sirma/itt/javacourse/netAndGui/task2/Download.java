@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -37,7 +38,7 @@ public class Download implements Runnable {
 	private int fileSize;
 
 	/** The destination file. */
-	private File dest;
+	private File dest = null;
 
 	/**
 	 * Instantiates a new download.
@@ -72,8 +73,10 @@ public class Download implements Runnable {
 	 * @return true, if successful
 	 */
 	boolean destinationConnect() {
-
-		dest = new File(download.getDestination().getText() + getExtension(onlineFile.toString()));
+		if (dest == null) {
+			dest = new File(download.getDestination().getText()
+					+ getExtension(onlineFile.toString()));
+		}
 		try {
 			out = new BufferedOutputStream(new FileOutputStream(dest));
 
@@ -83,6 +86,11 @@ public class Download implements Runnable {
 			return false;
 
 		}
+	}
+
+	boolean destinationConnect(String path) {
+		dest = new File(path);
+		return destinationConnect();
 	}
 
 	/**
@@ -119,22 +127,44 @@ public class Download implements Runnable {
 		}
 	}
 
+	boolean download(String source, String dest) {
+		connect(source);
+		destinationConnect(dest);
+		return download();
+	}
+
 	/**
 	 * Connect to online source.
 	 * 
 	 * @return true, if successful
 	 */
 	boolean connect() {
+		if (onlineFile == null) {
+			try {
+				onlineFile = new URL(url);
+			} catch (IOException e1) {
+
+			}
+		}
 		try {
-			onlineFile = new URL(url);
 			connection = onlineFile.openConnection();
 			in = new BufferedInputStream(connection.getInputStream());
 			return true;
-		} catch (IOException e1) {
+		} catch (IOException e) {
 			DownloaderWindow.getErrorField().setText(
 					"Wrong source url or could not open connection!");
 			return false;
 		}
+
+	}
+
+	boolean connect(String url) {
+		try {
+			onlineFile = new URL(url);
+		} catch (MalformedURLException e) {
+			return false;
+		}
+		return connect();
 	}
 
 	/**
