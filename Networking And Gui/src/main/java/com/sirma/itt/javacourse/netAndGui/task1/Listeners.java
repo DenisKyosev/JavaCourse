@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+// TODO: Auto-generated Javadoc
 /**
  * Listeners for the buttons and actions attached.
  */
@@ -14,12 +15,27 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 	 * Comment for serialVersionUID.
 	 */
 	private static final long serialVersionUID = -3625404054087430237L;
+
+	/** The field. */
 	private final JTextField field;
-	private int operation;
-	private double num2;
-	private double num1;
+
+	/** The operation. */
+	private int operation = 0;
+
+	/** The num2. */
+	private double num2 = 0;
+
+	/** The num1. */
+	private double num1 = 0;
+
+	/** The function. */
 	private final CalculatorFunctions function = new CalculatorFunctions();
+
+	/** The buttons. */
 	private final JButton[] buttons;
+
+	/** The cmd. */
+	private String cmd = "0";
 
 	/**
 	 * Instantiates new listeners.
@@ -46,34 +62,42 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
+		cmd = e.getActionCommand();
 		if (function.isNumber(cmd)) {
-			if ("0".equals(field.getText())) {
+			if (field.getText().startsWith("0") && !field.getText().contains(".")) {
 				field.setText(cmd);
-			} else {
+			} else if (operation == 0) {
 				field.setText(field.getText() + cmd);
+			} else {
+				field.setText(cmd);
 			}
 			num2 = Double.parseDouble(field.getText());
 		}
-		if (!"0".equals(field.getText()) && !field.getText().isEmpty()) {
+		if (!field.getText().isEmpty() && !"0".equals(field.getText())) {
 			if ("+".equals(cmd)) {
-				num1 = Double.parseDouble(field.getText());
-				field.setText("0");
+				if (operation != 0) {
+					calculate();
+				}
 				operation = 1;
+				num1 = Double.parseDouble(field.getText());
 			} else if ("-".equals(cmd)) {
-				num1 = Double.parseDouble(field.getText());
-				field.setText("0");
+				if (operation != 0) {
+					calculate();
+				}
 				operation = 2;
+				num1 = Double.parseDouble(field.getText());
 			} else if ("*".equals(cmd)) {
-				num1 = Double.parseDouble(field.getText());
-				field.setText("0");
+				if (operation != 0) {
+					calculate();
+				}
 				operation = 3;
-			} else if ("/".equals(cmd)) {
 				num1 = Double.parseDouble(field.getText());
-				field.setText("0");
+			} else if ("/".equals(cmd)) {
+				if (operation != 0) {
+					calculate();
+				}
 				operation = 4;
-			} else if (".".equals(cmd)) {
-				field.setText(function.putDot(field.getText()));
+				num1 = Double.parseDouble(field.getText());
 			} else if ("C".equals(cmd)) {
 				field.setText(function.deleteDigit(field.getText()));
 			} else if ("CC".equals(cmd)) {
@@ -81,10 +105,22 @@ public class Listeners extends CalculatorWindow implements ActionListener {
 				num2 = 0;
 				field.setText("0");
 			} else if ("=".equals(cmd)) {
-				field.setText(function.equal(operation, num1, num2));
-				num1 = Double.parseDouble(field.getText());
+				calculate();
+				operation = 0;
 			}
+		}
+
+		if (".".equals(cmd)) {
+			field.setText(function.putDot(field.getText()));
 		}
 	}
 
+	/**
+	 * Calculate.
+	 */
+	void calculate() {
+		cmd = function.equal(operation, num1, num2);
+		field.setText(cmd);
+		num1 = Double.parseDouble(field.getText());
+	}
 }

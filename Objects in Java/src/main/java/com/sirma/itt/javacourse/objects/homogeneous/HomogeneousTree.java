@@ -1,7 +1,7 @@
 package com.sirma.itt.javacourse.objects.homogeneous;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * binary tree.

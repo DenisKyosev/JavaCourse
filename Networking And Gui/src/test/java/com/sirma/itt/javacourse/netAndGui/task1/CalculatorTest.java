@@ -7,8 +7,8 @@ import org.junit.Test;
 public class CalculatorTest {
 	@Test
 	public void testFunctions() {
-		CalculatorFunctions func = new CalculatorFunctions();
 
+		CalculatorFunctions func = new CalculatorFunctions();
 		String input = "6.000";
 		assertEquals("6", func.removeDot(input));
 
