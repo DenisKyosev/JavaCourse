@@ -35,8 +35,6 @@ public final class RunCounter {
 				System.out.println(little.getCount());
 				System.out.println(big.getCount());
 			}
-
 		}
 	}
-
 }

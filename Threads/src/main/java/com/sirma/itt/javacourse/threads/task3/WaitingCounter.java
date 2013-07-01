@@ -3,7 +3,7 @@ package com.sirma.itt.javacourse.threads.task3;
 /**
  * The Class SleepingCounter.
  */
-public class SleepingCounter extends Thread {
+public class WaitingCounter extends Thread {
 
 	/** The stopped. */
 	private boolean stopped = false;
@@ -43,7 +43,7 @@ public class SleepingCounter extends Thread {
 	 * @param sleepTime
 	 *            sleeping time
 	 */
-	public SleepingCounter(long max, int sleepTime) {
+	public WaitingCounter(long max, int sleepTime) {
 		this.max = max;
 		this.sleepTime = sleepTime;
 	}
@@ -56,7 +56,7 @@ public class SleepingCounter extends Thread {
 		while (count < max && Thread.activeCount() > 2) {
 			count++;
 			try {
-				wait(sleepTime);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 			}
 		}

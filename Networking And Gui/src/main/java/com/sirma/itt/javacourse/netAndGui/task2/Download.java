@@ -88,6 +88,13 @@ public class Download implements Runnable {
 		}
 	}
 
+	/**
+	 * Destination connect.
+	 * 
+	 * @param path
+	 *            the path
+	 * @return true, if successful
+	 */
 	boolean destinationConnect(String path) {
 		dest = new File(path);
 		return destinationConnect();
@@ -127,6 +134,15 @@ public class Download implements Runnable {
 		}
 	}
 
+	/**
+	 * Download file.
+	 * 
+	 * @param source
+	 *            the source
+	 * @param dest
+	 *            the destination
+	 * @return true, if successful
+	 */
 	boolean download(String source, String dest) {
 		connect(source);
 		destinationConnect(dest);
@@ -158,6 +174,13 @@ public class Download implements Runnable {
 
 	}
 
+	/**
+	 * Connect to source.
+	 * 
+	 * @param url
+	 *            the url
+	 * @return true, if successful
+	 */
 	boolean connect(String url) {
 		try {
 			onlineFile = new URL(url);
