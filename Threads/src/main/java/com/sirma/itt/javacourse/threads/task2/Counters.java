@@ -68,7 +68,11 @@ public class Counters extends Thread {
 	 */
 	@Override
 	public void run() {
-		while (count < max && !this.isInterrupted()) {
+		while (count < max && Thread.activeCount() > 2) {
+			try {
+				Thread.sleep((long) (Math.random() * 2000));
+			} catch (InterruptedException e) {
+			}
 			count++;
 		}
 		this.interrupt();

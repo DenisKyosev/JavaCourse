@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.netAndGui.task4;
+package com.sirma.itt.javacourse.netAndGui.task5;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -17,7 +17,7 @@ public class ServerFunctions {
 
 	/** The thread. */
 	private Thread thread;
-
+	Socket client;
 	/** The server socket. */
 	private ServerSocket server;
 	/** The client socket. */
@@ -77,10 +77,10 @@ public class ServerFunctions {
 	String acceptClient() {
 
 		try {
-			clients.add(server.accept());
+			client = server.accept();
 		} catch (IOException e) {
 		}
-		thread = new Thread(new ServerClients(clients));
+		thread = new Thread(new ServerClients(client));
 		thread.start();
 		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
 
@@ -95,7 +95,7 @@ public class ServerFunctions {
 	 */
 	String acceptClient(Socket client) {
 		clients.add(client);
-		thread = new Thread(new ServerClients(clients));
+		thread = new Thread(new ServerClients(client));
 		thread.start();
 		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
 	}

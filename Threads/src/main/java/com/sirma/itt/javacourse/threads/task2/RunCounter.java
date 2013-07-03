@@ -20,21 +20,20 @@ public final class RunCounter {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
-		Counters little = new Counters(999);
-		Counters big = new Counters(999999);
+		Counters little = new Counters(4);
+		Counters big = new Counters(9);
 		little.start();
 		big.start();
 
 		while (Thread.activeCount() > 1) {
-			if (little.isInterrupted()) {
-				big.interrupt();
-				System.out.println(little.getCount());
-				System.out.println(big.getCount());
-			} else if (big.isInterrupted()) {
-				little.interrupt();
-				System.out.println(little.getCount());
-				System.out.println(big.getCount());
+			try {
+				Thread.sleep(700);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+			System.out.println("Thread 1 - " + little.getCount());
+			System.out.println("Thread 2 - " + big.getCount());
+
 		}
 	}
 }
