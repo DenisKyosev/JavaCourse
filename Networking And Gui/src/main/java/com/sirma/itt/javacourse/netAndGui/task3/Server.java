@@ -4,20 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,15 +23,13 @@ public class Server extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** The server socket. */
-	private final ServerSocket server;
-
 	/** The client socket. */
 	private Socket client;
 
 	/** The text area. */
 	private final JTextArea txtArea;
 	private boolean closed = false;
+	private final JButton close;
 
 	/**
 	 * Instantiates a new server.
@@ -55,53 +46,19 @@ public class Server extends JFrame implements ActionListener {
 
 		txtArea = new JTextArea();
 		txtArea.setFocusable(false);
-		JButton close = new JButton("Close server");
+		close = new JButton("Close server");
 		close.addActionListener(this);
 
 		inputField.add(txtArea);
 		inputField.add(close, BorderLayout.SOUTH);
 		setVisible(true);
 		txtArea.append("Trying to launch server\r\n");
-		server = Connect.openServerSocket();
-		txtArea.append(serverStarted(server));
+
+		ServerFunctions server = new ServerFunctions();
+
+		txtArea.append(server.serverStarted());
 		while (!closed) {
-			sendMessage(client);
-		}
-	}
-
-	/**
-	 * Check if server is started.
-	 * 
-	 * @param server
-	 *            the server
-	 * @return the string
-	 */
-	String serverStarted(ServerSocket server) {
-		if (server == null) {
-			return "No available port in range 7000-7020.";
-		} else {
-			return "Server started on port: " + server.getLocalPort()
-					+ "\r\nWaiting for clients\r\n";
-		}
-	}
-
-	/**
-	 * Send message.
-	 * 
-	 * @param client
-	 *            the client
-	 */
-	void sendMessage(Socket client) {
-		String message = "";
-		try {
-			client = server.accept();
-			PrintWriter writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-			message = "Hello " + Calendar.getInstance().getTime();
-			writer.println(message);
-			writer.println();
-			writer.flush();
-			txtArea.append("Client connected. \r\nSent message:" + message + "\r\n");
-		} catch (IOException e) {
+			txtArea.append(server.sendMessage(client));
 		}
 	}
 
@@ -111,12 +68,8 @@ public class Server extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Close server".equals(e.getActionCommand())) {
-			try {
-				closed = true;
-				server.close();
-				dispose();
-			} catch (IOException e1) {
-			}
+			closed = true;
+			dispose();
 		}
 	}
 }

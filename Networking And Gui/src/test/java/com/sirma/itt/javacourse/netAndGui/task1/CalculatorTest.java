@@ -4,7 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CalculatorTest.
+ */
 public class CalculatorTest {
+
+	/**
+	 * Test calculator functions.
+	 */
 	@Test
 	public void testFunctions() {
 

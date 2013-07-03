@@ -2,17 +2,11 @@ package com.sirma.itt.javacourse.netAndGui.task3;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,14 +19,8 @@ public class Client extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** The client socket. */
-	private final Socket client;
-
 	/** The text area. */
 	private final JTextArea txtArea;
-
-	/** The message. */
-	private String message;
 
 	/**
 	 * Instantiates a new client.
@@ -54,45 +42,8 @@ public class Client extends JFrame {
 
 		setVisible(true);
 		txtArea.append("Trying to connect to server\r\n");
-		client = Connect.openSocket();
-		clientConnected(client);
+		ClientFunctions client = new ClientFunctions();
+		txtArea.append(client.clientConnected());
 	}
 
-	/**
-	 * Client connected.
-	 * 
-	 * @param client
-	 *            the client
-	 * @return the string
-	 */
-	String clientConnected(Socket client) {
-		if (client == null) {
-			return "No server running on port in range 7000-7020.";
-		} else {
-			getMessage(client);
-			return "Client connected to server on port " + Integer.toString(client.getPort())
-					+ "\r\n" + message + "Connection terminated";
-		}
-	}
-
-	/**
-	 * Gets message from server.
-	 * 
-	 * @param client
-	 *            the client socket
-	 */
-	void getMessage(Socket client) {
-		txtArea.append("Client connected to server on port " + Integer.toString(client.getPort())
-				+ "\r\n");
-
-		BufferedReader stream = null;
-		try {
-			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			message = stream.readLine();
-			txtArea.append(message + "\r\n");
-			client.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

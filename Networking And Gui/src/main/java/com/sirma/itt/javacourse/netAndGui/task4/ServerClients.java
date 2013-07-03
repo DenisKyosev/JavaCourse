@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ServerClients implements Runnable {
 
 	/** The clients. */
-	private final ArrayList<Socket> clients;
+	private static ArrayList<Socket> clients;
 
 	/** The message. */
 	private String message;
@@ -28,7 +28,7 @@ public class ServerClients implements Runnable {
 	 *            the clients
 	 */
 	ServerClients(ArrayList<Socket> clients) {
-		this.clients = clients;
+		ServerClients.clients = clients;
 	}
 
 	/**
@@ -43,9 +43,9 @@ public class ServerClients implements Runnable {
 			} catch (IOException e) {
 			}
 			if (i == size - 1) {
-				message = "You're client number " + i;
+				message = "You're client number " + (i + 1);
 			} else {
-				message = "Client number " + (i + 1) + " connected";
+				message = "Client number " + size + " connected";
 			}
 			writer.println(message);
 			writer.println();
