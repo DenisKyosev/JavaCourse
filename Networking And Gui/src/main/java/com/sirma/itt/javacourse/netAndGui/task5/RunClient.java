@@ -1,5 +1,7 @@
 package com.sirma.itt.javacourse.netAndGui.task5;
 
+import java.io.IOException;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class RunClient.
@@ -23,7 +25,7 @@ public final class RunClient {
 		try {
 			@SuppressWarnings("unused")
 			Client client = new Client();
-		} catch (NoSocketException e) {
+		} catch (NoSocketException | IOException e) {
 			e.printStackTrace();
 		}
 

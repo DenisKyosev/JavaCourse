@@ -33,7 +33,7 @@ public class Server extends JFrame implements ActionListener {
 	 */
 	Server() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(300, 200, 400, 250);
+		setBounds(300, 200, 700, 750);
 		Container mainPanel = getContentPane();
 
 		JPanel inputField = new JPanel(new BorderLayout(30, 30));
