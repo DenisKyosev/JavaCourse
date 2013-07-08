@@ -1,6 +1,7 @@
 package com.sirma.itt.javacourse.designpatterns.observer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 
@@ -15,14 +16,20 @@ public class ObserverTest {
 	 */
 	@Test
 	public void observerAddInStock() {
-		Sold sold = new Sold();
-		InStock stock = new InStock(1, "waffle");
-		Product product = new Product(1, "waffle");
+		InStock inStock = new InStock();
+		StockListener stock = new StockListener();
 
-		stock.registerObserver(sold);
-		assertEquals("[]", sold.getProducts().toString());
+		assertEquals(0, inStock.getObservers().size());
 
-		stock.sellProduct(product);
-		assertEquals("waffle", sold.getProducts().get(0).getName().toString());
+		inStock.registerObserver(stock);
+		inStock.addProduct("waffle");
+
+		assertEquals(false, stock.isUpdated());
+
+		inStock.notifyObservers();
+		assertEquals(true, stock.isUpdated());
+
+		assertNotEquals(null, inStock.getObservers().get(0));
+		assertEquals(1, inStock.getObservers().size());
 	}
 }

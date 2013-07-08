@@ -19,9 +19,10 @@ public final class RunObserver {
 	 *            the args
 	 */
 	public static void main(String[] args) {
-		Sold sold = new Sold();
-		InStock stock = new InStock(1, "waffle");
-		stock.registerObserver(sold);
-		stock.sellProduct(new Product(1, "waffle"));
+		InStock inStock = new InStock();
+		StockListener stock = new StockListener();
+		inStock.registerObserver(stock);
+		inStock.addProduct("waffle");
+		inStock.notifyObservers();
 	}
 }
