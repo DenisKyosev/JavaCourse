@@ -8,7 +8,7 @@ package com.sirma.itt.javacourse.designpatterns.observer;
 public class StockListener implements Observer {
 
 	/** The updated. */
-	private boolean updated;
+	private boolean updated = false;
 
 	/**
 	 * Invoked when Checks if is update occurs.
@@ -20,16 +20,6 @@ public class StockListener implements Observer {
 	}
 
 	/**
-	 * Invoked when Sets the update occurs.
-	 * 
-	 * @param updated
-	 *            the updated
-	 */
-	protected void setUpdated(boolean updated) {
-		this.updated = updated;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -37,5 +27,4 @@ public class StockListener implements Observer {
 		System.out.println("In stock products list was updated");
 		updated = true;
 	}
-
 }

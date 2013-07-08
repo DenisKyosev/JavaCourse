@@ -36,4 +36,19 @@ public class AbstractFactoryTest {
 		a1 = speciesFactory1.getAnimal("fish");
 		assertEquals("it's a fish", a1.showPicture());
 	}
+
+	/**
+	 * Test by reflection.
+	 */
+	@Test
+	public void byReflection() {
+		AbstractFactory factory = new AbstractFactory();
+		assertEquals("AquaticAnimalsFactory", factory.getSpeciesFactory("aquatic").getClass()
+				.getSimpleName());
+
+		assertEquals("Fish", factory.getSpeciesFactory("aquatic").getAnimal("fish").getClass()
+				.getSimpleName());
+		assertEquals("SeaTurtle", factory.getSpeciesFactory("aquatic").getAnimal("wadd").getClass()
+				.getSimpleName());
+	}
 }
