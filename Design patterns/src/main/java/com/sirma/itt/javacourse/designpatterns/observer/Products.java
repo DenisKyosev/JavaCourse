@@ -73,7 +73,7 @@ public class Products {
 	 */
 	public void addProduct(String product) {
 		products.add(product);
-
+		notifyObservers();
 	}
 
 	/**
@@ -86,5 +86,4 @@ public class Products {
 		products.remove(product);
 		notifyObservers();
 	}
-
 }
