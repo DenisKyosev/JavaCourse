@@ -43,5 +43,15 @@ public final class RunAbstractFactory {
 
 		System.out.println(abstractFactory.getSpeciesFactory("aquatic").getAnimal("wadd")
 				.getClass().getSimpleName());
+
+		ByReflection reflection = new ByReflection();
+		try {
+			System.out
+					.println(reflection
+							.createInstance("com.sirma.itt.javacourse.designpatterns.abstractFactory.Fish"));
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 	}
 }

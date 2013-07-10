@@ -20,13 +20,14 @@ public class ServerClients implements Runnable {
 	private static ArrayList<Socket> clients;
 
 	/** The message. */
-	private String message = "Welcome";
+	private String message = "Welcome\r\n";
 
 	/** The writer. */
 	private PrintWriter writer;
 
 	/** The reader. */
 	private BufferedReader reader;
+	boolean update = false;
 
 	private final JTextArea txtArea;
 
@@ -54,20 +55,21 @@ public class ServerClients implements Runnable {
 		}
 	}
 
-	protected void receiveAndRespond() throws IOException {
+	protected String receiveAndRespond() throws IOException {
 		reader = new BufferedReader(new InputStreamReader(clients.get(clients.size() - 1)
 				.getInputStream()));
 		message = reader.readLine();
-
+		String result = "";
 		if (!".".contains(message)) {
-			txtArea.append("Received message \"" + message + "\"\r\n");
+			result = "Received message \"" + message + "\"\r\n";
 			writer.println("The reverse of [" + message + "] is ["
 					+ new StringBuilder(message).reverse().toString() + "]");
 			writer.println();
 			writer.flush();
-			txtArea.append("Sent reversed message\r\n");
-			message = reader.readLine();
+			result += "Sent reversed message\r\n";
 		}
+		txtArea.append(result);
+		return result;
 	}
 
 	/**
@@ -84,5 +86,13 @@ public class ServerClients implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+
+	protected String getMessage() {
+		return message;
+	}
+
+	protected void setMessage(String message) {
+		this.message = message;
 	}
 }

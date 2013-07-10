@@ -19,11 +19,13 @@ public class ServerFunctions {
 
 	/** The thread. */
 	private Thread thread;
-	JTextArea txtArea;
+
 	/** The server socket. */
 	private ServerSocket server;
 	/** The client socket. */
 	private final ArrayList<Socket> clients = new ArrayList<Socket>();
+
+	private final JTextArea txtArea;
 
 	/**
 	 * Instantiates a new server functions.
@@ -31,10 +33,14 @@ public class ServerFunctions {
 	ServerFunctions(JTextArea txtArea) {
 		try {
 			server = new ServerSocket();
-			this.txtArea = txtArea;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.txtArea = txtArea;
+	}
+
+	protected ArrayList<Socket> getClients() {
+		return clients;
 	}
 
 	/**
@@ -83,23 +89,10 @@ public class ServerFunctions {
 			clients.add(server.accept());
 		} catch (IOException e) {
 		}
-		thread = new Thread(new ServerClients(clients, txtArea));
+		ServerClients client = new ServerClients(clients, txtArea);
+		thread = new Thread(client);
 		thread.start();
 		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
 
-	}
-
-	/**
-	 * Accept client.
-	 * 
-	 * @param client
-	 *            the client
-	 * @return the string
-	 */
-	String acceptClient(Socket client) {
-		clients.add(client);
-		thread = new Thread(new ServerClients(clients, txtArea));
-		thread.start();
-		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
 	}
 }

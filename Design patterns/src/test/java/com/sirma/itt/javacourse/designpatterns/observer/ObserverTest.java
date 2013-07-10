@@ -16,20 +16,17 @@ public class ObserverTest {
 	 */
 	@Test
 	public void observerAddInStock() {
-		InStock inStock = new InStock();
+		Products products = new Products();
 		StockListener stock = new StockListener();
 
-		assertEquals(0, inStock.getObservers().size());
+		assertEquals(0, products.getObservers().size());
 
-		inStock.registerObserver(stock);
-		inStock.addProduct("waffle");
+		products.registerObserver(stock);
+		products.addProduct("waffle");
 
-		assertEquals(false, stock.isUpdated());
-
-		inStock.notifyObservers();
 		assertEquals(true, stock.isUpdated());
 
-		assertNotEquals(null, inStock.getObservers().get(0));
-		assertEquals(1, inStock.getObservers().size());
+		assertNotEquals(null, products.getObservers().get(0));
+		assertEquals(1, products.getObservers().size());
 	}
 }
