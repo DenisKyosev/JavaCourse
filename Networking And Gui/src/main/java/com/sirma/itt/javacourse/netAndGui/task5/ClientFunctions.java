@@ -20,37 +20,57 @@ import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ClientFunctions.
+ * Client window functions.
  */
 public class ClientFunctions implements ActionListener, KeyListener {
 	/** The client socket. */
 	private Socket client;
-	PrintWriter out;
+
+	/** The out. */
+	private PrintWriter out;
 	/** The message. */
 	private String message;
-	boolean flag = false;
+
+	/** The flag. */
+	private boolean flag = false;
 	/** The txt area. */
 	private final JTextArea txtArea;
-	JTextField txtField;
-	String send = "";
-	JButton sendBtn;
-	Originator memento;
-	List<Memento> savedStates;
-	int current = 0;
+
+	/** The send. */
+	private String send = "";
+
+	/** The send btn. */
+	private final JButton sendBtn;
+
+	/** The memento. */
+	private Originator memento;
+
+	/** The saved states. */
+	private List<Memento> savedStates;
+
+	/** The current. */
+	private int current = 0;
 
 	/**
 	 * Instantiates a new client functions.
 	 * 
 	 * @param txtArea
-	 *            the txt area
+	 *            the text area
+	 * @param sendBtn
+	 *            the send button
+	 * @param txtField
+	 *            the text field
+	 * @throws NoSocketException
+	 * @throws IOException
 	 */
-	ClientFunctions(JTextArea txtArea, JTextField txtfField, JButton sendBtn) {
+	ClientFunctions(JTextArea txtArea, JTextField txtField, JButton sendBtn)
+			throws NoSocketException, IOException {
 		this.txtArea = txtArea;
-		this.txtField = txtField;
 		this.sendBtn = sendBtn;
 		sendBtn.addActionListener(this);
-		txtfField.addKeyListener(this);
+		txtField.addKeyListener(this);
 		client = new Socket();
+
 	}
 
 	/**
@@ -59,6 +79,7 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	 * @throws NoSocketException
 	 *             the no socket exception
 	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	void openConnection() throws NoSocketException, IOException {
 		client = Connect.openSocket();
@@ -78,14 +99,20 @@ public class ClientFunctions implements ActionListener, KeyListener {
 			message = "Client connected to server on port " + Integer.toString(client.getPort())
 					+ "\r\n";
 			txtArea.append(message);
-			getMessageFromServer();
+
 		}
 
-		sendMessage();
 	}
 
-	void sendMessage() throws NoSocketException {
-		while (!send.contains(".")) {
+	/**
+	 * Send message.
+	 * 
+	 * @throws NoSocketException
+	 *             the no socket exception
+	 * @throws IOException
+	 */
+	void sendMessage() throws NoSocketException, IOException {
+		if (!send.contains(".")) {
 			if (flag) {
 				savedStates.add(memento.saveToMemento(send));
 				out.println(send);
@@ -94,6 +121,8 @@ public class ClientFunctions implements ActionListener, KeyListener {
 				flag = false;
 				current++;
 			}
+		} else {
+			client.close();
 		}
 	}
 
@@ -113,18 +142,20 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	 *             the server is closed
 	 */
 	void getMessageFromServer() throws NoSocketException {
-		String receivedMsg = null;
 
 		BufferedReader stream = null;
 
 		try {
 			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			receivedMsg = stream.readLine();
-			txtArea.append(receivedMsg + "\r\n");
-
+			message = stream.readLine();
+			txtArea.append(message + "\r\n");
 		} catch (IOException e) {
 			throw new NoSocketException();
 		}
+	}
+
+	protected void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 
 	/**
@@ -136,10 +167,19 @@ public class ClientFunctions implements ActionListener, KeyListener {
 		return message;
 	}
 
+	/**
+	 * Sets the send.
+	 * 
+	 * @param send
+	 *            the new send
+	 */
 	protected void setSend(String send) {
 		this.send = send;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -149,10 +189,16 @@ public class ClientFunctions implements ActionListener, KeyListener {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 38 && current > 0) {
@@ -167,6 +213,9 @@ public class ClientFunctions implements ActionListener, KeyListener {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}

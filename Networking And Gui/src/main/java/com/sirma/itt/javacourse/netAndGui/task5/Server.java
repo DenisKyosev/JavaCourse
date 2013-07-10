@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Server.
+ * Server GUI.
  */
 public class Server extends JFrame implements ActionListener {
 
@@ -23,7 +23,16 @@ public class Server extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	/** The text area. */
-	private final JTextArea txtArea;
+	private static JTextArea txtArea;
+
+	/**
+	 * Gets the txt area.
+	 * 
+	 * @return the txt area
+	 */
+	protected static JTextArea getTxtArea() {
+		return txtArea;
+	}
 
 	/** The server. */
 	private final ServerFunctions server;
@@ -51,7 +60,7 @@ public class Server extends JFrame implements ActionListener {
 		setVisible(true);
 		txtArea.append("Trying to launch server\r\n");
 
-		server = new ServerFunctions();
+		server = new ServerFunctions(txtArea);
 		txtArea.append(server.openConnection());
 		while (true) {
 			txtArea.append(server.acceptClient());

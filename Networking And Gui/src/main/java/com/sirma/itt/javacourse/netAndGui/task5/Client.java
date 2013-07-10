@@ -14,14 +14,25 @@ import javax.swing.border.EmptyBorder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Client.
+ * Client window GUI.
  */
 public class Client extends JFrame {
 
+	/**
+	 * Gets the text field.
+	 * 
+	 * @return the text field
+	 */
 	protected static JTextField getTxtField() {
 		return txtField;
 	}
 
+	/**
+	 * Sets the txt field.
+	 * 
+	 * @param txtField
+	 *            the new txt field
+	 */
 	protected static void setTxtField(JTextField txtField) {
 		Client.txtField = txtField;
 	}
@@ -30,9 +41,13 @@ public class Client extends JFrame {
 	 * Comment for serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
-	ClientFunctions client;
+
+	/** The client. */
+	private final ClientFunctions client;
 	/** The text area. */
 	private static JTextArea txtArea;
+
+	/** The text field. */
 	private static JTextField txtField;
 
 	/**
@@ -41,6 +56,7 @@ public class Client extends JFrame {
 	 * @throws NoSocketException
 	 *             the no socket exception
 	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	Client() throws NoSocketException, IOException {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -71,7 +87,9 @@ public class Client extends JFrame {
 		client = new ClientFunctions(txtArea, txtField, send);
 
 		client.openConnection();
-
+		client.getMessageFromServer();
+		while (true) {
+			client.sendMessage();
+		}
 	}
-
 }

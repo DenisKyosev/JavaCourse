@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.JTextArea;
+
 import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
@@ -17,7 +19,7 @@ public class ServerFunctions {
 
 	/** The thread. */
 	private Thread thread;
-
+	JTextArea txtArea;
 	/** The server socket. */
 	private ServerSocket server;
 	/** The client socket. */
@@ -26,9 +28,10 @@ public class ServerFunctions {
 	/**
 	 * Instantiates a new server functions.
 	 */
-	ServerFunctions() {
+	ServerFunctions(JTextArea txtArea) {
 		try {
 			server = new ServerSocket();
+			this.txtArea = txtArea;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +83,7 @@ public class ServerFunctions {
 			clients.add(server.accept());
 		} catch (IOException e) {
 		}
-		thread = new Thread(new ServerClients(clients));
+		thread = new Thread(new ServerClients(clients, txtArea));
 		thread.start();
 		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
 
@@ -95,7 +98,7 @@ public class ServerFunctions {
 	 */
 	String acceptClient(Socket client) {
 		clients.add(client);
-		thread = new Thread(new ServerClients(clients));
+		thread = new Thread(new ServerClients(clients, txtArea));
 		thread.start();
 		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
 	}

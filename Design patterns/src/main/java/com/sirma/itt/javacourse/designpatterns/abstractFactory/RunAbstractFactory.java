@@ -35,5 +35,13 @@ public final class RunAbstractFactory {
 
 		Animal a4 = speciesFactory2.getAnimal("seaturtle");
 		System.out.println("animal 4: " + a4.showPicture());
+
+		System.out.println(abstractFactory.getSpeciesFactory("aquatic").getClass().getSimpleName());
+
+		System.out.println(abstractFactory.getSpeciesFactory("aquatic").getAnimal("fish")
+				.getClass().getSimpleName());
+
+		System.out.println(abstractFactory.getSpeciesFactory("aquatic").getAnimal("wadd")
+				.getClass().getSimpleName());
 	}
 }

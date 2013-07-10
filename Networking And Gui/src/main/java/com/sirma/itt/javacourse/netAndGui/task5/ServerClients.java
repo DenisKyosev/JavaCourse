@@ -8,9 +8,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.JTextArea;
+
 // TODO: Auto-generated Javadoc
 /**
- * The Class ServerClients.
+ * Clients thread. New instance is made when new client is connected.
  */
 public class ServerClients implements Runnable {
 
@@ -18,11 +20,15 @@ public class ServerClients implements Runnable {
 	private static ArrayList<Socket> clients;
 
 	/** The message. */
-	private final String message = "Welcome";
+	private String message = "Welcome";
 
 	/** The writer. */
 	private PrintWriter writer;
-	BufferedReader reader;
+
+	/** The reader. */
+	private BufferedReader reader;
+
+	private final JTextArea txtArea;
 
 	/**
 	 * Instantiates a new clients control class.
@@ -30,32 +36,37 @@ public class ServerClients implements Runnable {
 	 * @param clients
 	 *            the clients
 	 */
-	ServerClients(ArrayList<Socket> clients) {
+	ServerClients(ArrayList<Socket> clients, JTextArea txtArea) {
 		ServerClients.clients = clients;
+		this.txtArea = txtArea;
 	}
 
-	void receiveMessage() {
+	protected void greetClient() {
 		try {
 			writer = new PrintWriter(new OutputStreamWriter(clients.get(clients.size() - 1)
 					.getOutputStream()), true);
-			reader = new BufferedReader(new InputStreamReader(clients.get(clients.size() - 1)
-					.getInputStream()));
 
 			writer.println(message);
 			writer.println();
 			writer.flush();
-
-			String line = reader.readLine();
-
-			while (!".".contains(line)) {
-				writer.println(new StringBuilder(line).reverse().toString());
-				writer.println();
-				writer.flush();
-				line = reader.readLine();
-			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	protected void receiveAndRespond() throws IOException {
+		reader = new BufferedReader(new InputStreamReader(clients.get(clients.size() - 1)
+				.getInputStream()));
+		message = reader.readLine();
+
+		if (!".".contains(message)) {
+			txtArea.append("Received message \"" + message + "\"\r\n");
+			writer.println("The reverse of [" + message + "] is ["
+					+ new StringBuilder(message).reverse().toString() + "]");
+			writer.println();
+			writer.flush();
+			txtArea.append("Sent reversed message\r\n");
+			message = reader.readLine();
 		}
 	}
 
@@ -64,6 +75,14 @@ public class ServerClients implements Runnable {
 	 */
 	@Override
 	public void run() {
-		receiveMessage();
+		try {
+			greetClient();
+			while (true) {
+				receiveAndRespond();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
