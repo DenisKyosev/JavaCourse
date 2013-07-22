@@ -24,9 +24,9 @@ public class SoldListener implements Observer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(Products list) {
+	public void update() {
 		updated = true;
-		System.out.println("Sold products list updated to " + list);
+		System.out.println("Sold products list updated");
 	}
 
 }

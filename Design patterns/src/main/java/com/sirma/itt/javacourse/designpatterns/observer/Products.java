@@ -61,7 +61,7 @@ public class Products {
 	public void notifyObservers() {
 		for (Observer ob : observers) {
 			System.out.println("Notifying Observers on change in products");
-			ob.update(this);
+			ob.update();
 		}
 	}
 

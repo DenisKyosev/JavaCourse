@@ -84,7 +84,6 @@ public class ServerFunctions {
 	 * @return the string
 	 */
 	String acceptClient() {
-
 		try {
 			clients.add(server.accept());
 		} catch (IOException e) {
@@ -93,6 +92,5 @@ public class ServerFunctions {
 		thread = new Thread(client);
 		thread.start();
 		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
-
 	}
 }
