@@ -56,7 +56,7 @@ public class SleepingCounter extends Thread {
 		while (count < max && Thread.activeCount() > 2) {
 			count++;
 			try {
-				wait(sleepTime);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 			}
 		}
