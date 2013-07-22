@@ -19,7 +19,6 @@ public final class RunStorage {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		Storage storage = new Storage(1);
 		Producer producer = new Producer(2, storage);
 		Consumer consumer = new Consumer(1, storage);
