@@ -1,24 +1,33 @@
 package com.sirma.itt.javacourse.netAndGui.task6;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 // TODO: Auto-generated Javadoc
 /**
- * Clients thread. New instance is made when new client is connected.
+ * channels thread. New instance is made when new client is connected to channel.
+ * 
+ * @see ChannelsEvent
  */
 public class ChannelsListener implements Runnable {
 
-	/** The clients. */
-	private static Socket client;
+	/** The update flag. */
 	private boolean update = false;
 
+	/**
+	 * Invoked when update occurs.
+	 * 
+	 * @return true, if checks if is updated
+	 */
 	protected boolean isUpdated() {
 		return update;
 	}
 
+	/**
+	 * Invoked when update occurs.
+	 * 
+	 * @param update
+	 *            the update
+	 */
 	protected void setUpdated(boolean update) {
 		this.update = update;
 	}
@@ -26,32 +35,37 @@ public class ChannelsListener implements Runnable {
 	/** The message. */
 	private String message = "Welcome\r\n";
 
-	/** The writer. */
-	private PrintWriter writer;
+	/** The new connection. */
+	private final ClientConnector newConnection;
 
-	/** The reader. */
-	private BufferedReader reader;
-	ClientConnector newConnection;
-	Mediator manager;
-	ServerSocket server;
-	Messenger msg;
+	/** The manager. */
+	private final Mediator manager;
+
+	/** The messenger. */
+	private final Messenger msg;
 
 	/**
 	 * Instantiates a new clients control class.
 	 * 
+	 * @param client
+	 *            the client
 	 * @param clients
 	 *            the clients
 	 */
-	ChannelsListener(Socket client) {
-		this.client = client;
+	ChannelsListener(Socket client, Mediator clients) {
+		this.manager = clients;
 		msg = new Messenger();
 		this.newConnection = new ClientConnector(client);
-		this.manager = new Mediator();
 	}
 
+	/**
+	 * Client connected to channel.
+	 * 
+	 * @return true, if successful
+	 */
 	boolean channelConnected() {
 		message = newConnection.receive();
-		int channel;
+		int channel = 0;
 		try {
 			channel = Integer.parseInt(message);
 			manager.newUser(newConnection, channel);

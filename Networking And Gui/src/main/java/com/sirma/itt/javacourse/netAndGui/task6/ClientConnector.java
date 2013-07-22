@@ -7,13 +7,25 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ClientConnector.
+ */
 public class ClientConnector {
-	BufferedReader reader;
-	BufferedWriter writer;
-	Socket client;
 
+	/** The reader. */
+	private BufferedReader reader;
+
+	/** The writer. */
+	private BufferedWriter writer;
+
+	/**
+	 * Instantiates a new client connector.
+	 * 
+	 * @param client
+	 *            the client
+	 */
 	ClientConnector(Socket client) {
-		this.client = new Socket();
 		try {
 			reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
@@ -22,6 +34,12 @@ public class ClientConnector {
 		}
 	}
 
+	/**
+	 * Send.
+	 * 
+	 * @param message
+	 *            the message
+	 */
 	protected void send(String message) {
 		try {
 			writer.write(message);
@@ -32,35 +50,53 @@ public class ClientConnector {
 		}
 	}
 
+	/**
+	 * Receive.
+	 * 
+	 * @return the string
+	 */
 	protected String receive() {
 		try {
 			return reader.readLine();
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	protected void closeClient() {
-		try {
-			client.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return null;
 		}
 	}
 
+	/**
+	 * Gets the reader.
+	 * 
+	 * @return the reader
+	 */
 	protected BufferedReader getReader() {
 		return reader;
 	}
 
+	/**
+	 * Sets the reader.
+	 * 
+	 * @param reader
+	 *            the new reader
+	 */
 	protected void setReader(BufferedReader reader) {
 		this.reader = reader;
 	}
 
+	/**
+	 * Gets the writer.
+	 * 
+	 * @return the writer
+	 */
 	protected BufferedWriter getWriter() {
 		return writer;
 	}
 
+	/**
+	 * Sets the writer.
+	 * 
+	 * @param writer
+	 *            the new writer
+	 */
 	protected void setWriter(BufferedWriter writer) {
 		this.writer = writer;
 	}

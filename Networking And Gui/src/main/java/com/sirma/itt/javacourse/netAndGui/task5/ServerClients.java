@@ -27,8 +27,8 @@ public class ServerClients implements Runnable {
 
 	/** The reader. */
 	private BufferedReader reader;
-	boolean update = false;
 
+	/** The txt area. */
 	private final JTextArea txtArea;
 
 	/**
@@ -36,12 +36,17 @@ public class ServerClients implements Runnable {
 	 * 
 	 * @param clients
 	 *            the clients
+	 * @param txtArea
+	 *            the txt area
 	 */
 	ServerClients(ArrayList<Socket> clients, JTextArea txtArea) {
 		ServerClients.clients = clients;
 		this.txtArea = txtArea;
 	}
 
+	/**
+	 * Greet client.
+	 */
 	protected void greetClient() {
 		try {
 			writer = new PrintWriter(new OutputStreamWriter(clients.get(clients.size() - 1)
@@ -55,6 +60,13 @@ public class ServerClients implements Runnable {
 		}
 	}
 
+	/**
+	 * Receive and respond.
+	 * 
+	 * @return the string
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	protected String receiveAndRespond() throws IOException {
 		reader = new BufferedReader(new InputStreamReader(clients.get(clients.size() - 1)
 				.getInputStream()));
@@ -88,10 +100,21 @@ public class ServerClients implements Runnable {
 
 	}
 
+	/**
+	 * Gets the message.
+	 * 
+	 * @return the message
+	 */
 	protected String getMessage() {
 		return message;
 	}
 
+	/**
+	 * Sets the message.
+	 * 
+	 * @param message
+	 *            the new message
+	 */
 	protected void setMessage(String message) {
 		this.message = message;
 	}

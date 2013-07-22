@@ -56,12 +56,14 @@ public class Products {
 	/**
 	 * Notify observers.
 	 * 
+	 * @param product
+	 *            the product
 	 * @Override
 	 */
-	public void notifyObservers() {
+	public void notifyObservers(String product) {
 		for (Observer ob : observers) {
 			System.out.println("Notifying Observers on change in products");
-			ob.update();
+			ob.update(product);
 		}
 	}
 
@@ -73,7 +75,7 @@ public class Products {
 	 */
 	public void addProduct(String product) {
 		products.add(product);
-		notifyObservers();
+		notifyObservers(product);
 	}
 
 	/**
@@ -84,6 +86,6 @@ public class Products {
 	 */
 	public void sellProduct(String product) {
 		products.remove(product);
-		notifyObservers();
+		notifyObservers(product);
 	}
 }

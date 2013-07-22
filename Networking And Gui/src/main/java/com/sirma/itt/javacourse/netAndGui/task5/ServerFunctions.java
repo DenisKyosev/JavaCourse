@@ -25,10 +25,14 @@ public class ServerFunctions {
 	/** The client socket. */
 	private final ArrayList<Socket> clients = new ArrayList<Socket>();
 
+	/** The txt area. */
 	private final JTextArea txtArea;
 
 	/**
 	 * Instantiates a new server functions.
+	 * 
+	 * @param txtArea
+	 *            the txt area
 	 */
 	ServerFunctions(JTextArea txtArea) {
 		try {
@@ -39,6 +43,11 @@ public class ServerFunctions {
 		this.txtArea = txtArea;
 	}
 
+	/**
+	 * Gets the clients.
+	 * 
+	 * @return the clients
+	 */
 	protected ArrayList<Socket> getClients() {
 		return clients;
 	}

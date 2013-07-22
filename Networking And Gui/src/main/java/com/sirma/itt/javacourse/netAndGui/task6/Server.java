@@ -31,9 +31,15 @@ public class Server extends JFrame implements ActionListener, Runnable {
 
 	/** The text area. */
 	private static JTextArea txtArea;
-	ServerSocket server;
-	Messenger msg;
-	JTextField channel;
+
+	/** The server. */
+	private final ServerSocket server;
+
+	/** The msg. */
+	private final Messenger msg;
+
+	/** The channel. */
+	private final JTextField channel;
 
 	/**
 	 * Gets the txt area.
@@ -44,10 +50,11 @@ public class Server extends JFrame implements ActionListener, Runnable {
 		return txtArea;
 	}
 
-	/** The server. */
-	// private final ServerFunctions server;
-	NewClientsListener listen;
-	Mediator clients;
+	/** The listen. */
+	private final NewClientsListener listen;
+
+	/** The clients. */
+	private final Mediator clients;
 
 	/**
 	 * Instantiates a new server.
@@ -94,13 +101,13 @@ public class Server extends JFrame implements ActionListener, Runnable {
 					+ "\r\nWaiting for clients\r\n");
 		}
 
-		listen = new NewClientsListener(server);
+		clients = new Mediator();
+		listen = new NewClientsListener(server, clients);
 		Thread thread = new Thread(this);
 		thread.start();
 		thread = new Thread(listen);
 		thread.start();
 
-		clients = new Mediator();
 	}
 
 	/**
@@ -116,10 +123,17 @@ public class Server extends JFrame implements ActionListener, Runnable {
 			}
 			System.exit(1);
 		} else if ("Send".equals(e.getActionCommand())) {
-			clients.sendMessage(Integer.parseInt(channel.getText()));
+			try {
+				clients.sendMessage(Integer.parseInt(channel.getText()));
+			} catch (NumberFormatException e2) {
+				msg.setServerMessage("Wrong channel entered\r\n");
+			}
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void run() {
 		while (true) {

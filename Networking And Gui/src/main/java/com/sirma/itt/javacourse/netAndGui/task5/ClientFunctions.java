@@ -56,12 +56,14 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	 * 
 	 * @param txtArea
 	 *            the text area
-	 * @param sendBtn
-	 *            the send button
 	 * @param txtField
 	 *            the text field
+	 * @param sendBtn
+	 *            the send button
 	 * @throws NoSocketException
+	 *             the no socket exception
 	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	ClientFunctions(JTextArea txtArea, JTextField txtField, JButton sendBtn)
 			throws NoSocketException, IOException {
@@ -110,6 +112,7 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	 * @throws NoSocketException
 	 *             the no socket exception
 	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	void sendMessage() throws NoSocketException, IOException {
 		if (!send.contains(".")) {
@@ -154,6 +157,12 @@ public class ClientFunctions implements ActionListener, KeyListener {
 		}
 	}
 
+	/**
+	 * Sets the flag.
+	 * 
+	 * @param flag
+	 *            the new flag
+	 */
 	protected void setFlag(boolean flag) {
 		this.flag = flag;
 	}

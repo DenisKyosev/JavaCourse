@@ -5,28 +5,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Mediator.
+ */
 public class Mediator {
-	private final List<ClientConnector> clientList;
-	private static Map<Integer, List<ClientConnector>> connections = new HashMap<Integer, List<ClientConnector>>();
-	boolean newUser = false;
 
+	/** The connections. */
+	private final Map<Integer, List<ClientConnector>> connections = new HashMap<Integer, List<ClientConnector>>();
+
+	/**
+	 * Instantiates a new mediator.
+	 */
 	Mediator() {
-		clientList = new ArrayList<ClientConnector>();
 		for (int j = 1; j < 10; j++) {
-			connections.put(j, clientList);
+			connections.put(j, new ArrayList<ClientConnector>());
 		}
-
 	}
 
+	/**
+	 * New user.
+	 * 
+	 * @param client
+	 *            the client
+	 * @param channel
+	 *            the channel
+	 */
 	void newUser(ClientConnector client, int channel) {
 		if (connections.containsKey(channel)) {
 			connections.get(channel).add(client);
+			System.out.println(connections.get(channel).size());
 			client.send("Connected to channel: " + channel + "\r\n");
 		} else {
 			client.send("No such channel\r\n");
 		}
 	}
 
+	/**
+	 * Send message.
+	 * 
+	 * @param channel
+	 *            the channel
+	 */
 	void sendMessage(int channel) {
 		System.out.println(connections.get(channel).size());
 		for (int i = 0; i < connections.get(channel).size(); i++) {

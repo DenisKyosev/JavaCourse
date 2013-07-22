@@ -10,8 +10,20 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ServerClientTest.
+ */
 public class ServerClientTest {
 
+	/**
+	 * Communication test.
+	 * 
+	 * @throws NoSocketException
+	 *             the no socket exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void communicationTest() throws NoSocketException, IOException {
 

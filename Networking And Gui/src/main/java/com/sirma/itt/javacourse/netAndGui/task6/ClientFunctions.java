@@ -1,11 +1,8 @@
 package com.sirma.itt.javacourse.netAndGui.task6;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 import com.sirma.itt.javacourse.netAndGui.connect.Connect;
-import com.sirma.itt.javacourse.netAndGui.task5.Originator;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,22 +12,24 @@ public class ClientFunctions implements Runnable {
 	/** The client socket. */
 	private Socket client;
 
-	/** The out. */
-	private PrintWriter out;
 	/** The message. */
 	private String message = "";
-	Messenger msg;
 
-	/** The send. */
-	private final String send = "";
+	/** The messenger. */
+	private Messenger msg;
 
-	/** The memento. */
-	private Originator memento;
+	/** The closed. */
+	private boolean closed = false;
 
-	/** The current. */
-	private final int current = 0;
-	ClientConnector connector;
+	/** The connector. */
+	private ClientConnector connector;
 
+	/**
+	 * Send.
+	 * 
+	 * @param msg
+	 *            the msg
+	 */
 	void send(String msg) {
 		connector.send(msg);
 	}
@@ -39,11 +38,9 @@ public class ClientFunctions implements Runnable {
 	 * Open connection.
 	 * 
 	 * @throws NoSocketException
-	 *             the no socket exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 *             if there is no server running exception
 	 */
-	void openConnection() throws IOException {
+	void openConnection() throws NoSocketException {
 		client = Connect.openSocket();
 		if (client == null) {
 			message = "No server running on port in range 7000-7020.";
@@ -55,18 +52,26 @@ public class ClientFunctions implements Runnable {
 		connector = new ClientConnector(client);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void run() {
 		client = new Socket();
 		msg = new Messenger();
 		try {
 			openConnection();
-		} catch (IOException e) {
+		} catch (NoSocketException e) {
 			e.printStackTrace();
 		}
-		while (true) {
+		while (!closed) {
 			message = connector.receive();
-			msg.setClientMessage(message + "\r\n");
+			if (message == null) {
+				msg.setClientMessage("Server closed");
+				closed = true;
+			} else {
+				msg.setClientMessage(message + "\r\n");
+			}
 		}
 	}
 }

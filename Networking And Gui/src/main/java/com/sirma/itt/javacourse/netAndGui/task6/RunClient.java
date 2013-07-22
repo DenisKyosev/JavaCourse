@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.netAndGui.task6;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class RunClient.
@@ -21,9 +20,7 @@ public final class RunClient {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
-
-		Client client = new Client();
-
+		new Client();
 	}
 
 }

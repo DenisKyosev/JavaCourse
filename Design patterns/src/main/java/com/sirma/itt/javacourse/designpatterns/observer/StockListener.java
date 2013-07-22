@@ -23,8 +23,8 @@ public class StockListener implements Observer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update() {
-		System.out.println("In stock products list was updated");
+	public void update(String product) {
+		System.out.println("In stock products list was updated. Product added: " + product);
 		updated = true;
 	}
 }

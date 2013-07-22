@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,25 +21,6 @@ import javax.swing.border.EmptyBorder;
 public class Client extends JFrame implements ActionListener, Runnable {
 
 	/**
-	 * Gets the text field.
-	 * 
-	 * @return the text field
-	 */
-	protected static JTextField getTxtField() {
-		return txtField;
-	}
-
-	/**
-	 * Sets the txt field.
-	 * 
-	 * @param txtField
-	 *            the new txt field
-	 */
-	protected static void setTxtField(JTextField txtField) {
-		Client.txtField = txtField;
-	}
-
-	/**
 	 * Comment for serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
@@ -50,16 +30,15 @@ public class Client extends JFrame implements ActionListener, Runnable {
 
 	/** The text field. */
 	private static JTextField txtField;
-	ClientFunctions client;
-	Messenger msg;
+
+	/** The client. */
+	private final ClientFunctions client;
+
+	/** The message. */
+	private final Messenger msg;
 
 	/**
 	 * Instantiates a new client.
-	 * 
-	 * @throws NoSocketException
-	 *             the no socket exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
 	 */
 	Client() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -100,11 +79,17 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		thread.start();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		client.send(txtField.getText());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void run() {
 		while (true) {
