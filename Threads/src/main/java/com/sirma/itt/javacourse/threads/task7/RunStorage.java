@@ -21,8 +21,8 @@ public final class RunStorage {
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		Storage storage = new Storage(1);
-		Producer producer = new Producer(2);
-		Consumer consumer = new Consumer(1);
+		Producer producer = new Producer(2, storage);
+		Consumer consumer = new Consumer(1, storage);
 		Thread producerThread = new Thread(producer);
 		Thread producerThread2 = new Thread(producer);
 		Thread producerThread3 = new Thread(producer);

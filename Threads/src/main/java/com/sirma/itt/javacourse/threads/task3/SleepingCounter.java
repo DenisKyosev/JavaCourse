@@ -70,7 +70,6 @@ public class SleepingCounter extends Thread {
 	 * @return the count
 	 */
 	public long getCount() {
-
 		return count;
 	}
 

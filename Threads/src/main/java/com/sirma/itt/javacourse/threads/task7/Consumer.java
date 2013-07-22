@@ -5,19 +5,25 @@ package com.sirma.itt.javacourse.threads.task7;
  * if there are products in the storage gets a product. If there are no products waits for product
  * and checks after defined time.
  */
-public class Consumer extends Storage implements Runnable {
+public class Consumer implements Runnable {
 
 	/** The time interval to check for products. */
 	private int timeStep = 0;
+
+	/** The storage. */
+	private final Storage storage;
 
 	/**
 	 * Instantiates a new consumer.
 	 * 
 	 * @param timeStep
 	 *            the time step
+	 * @param storage
+	 *            the storage
 	 */
-	Consumer(int timeStep) {
-		super(getCapacity());
+	Consumer(int timeStep, Storage storage) {
+		this.storage = storage;
+		storage.getCapacity();
 		this.timeStep = timeStep;
 	}
 
@@ -25,8 +31,8 @@ public class Consumer extends Storage implements Runnable {
 	 * Gets a product.
 	 */
 	private void getProduct() {
-		getProducts()[getAvailable() - 1] = null;
-		setAvailable(getAvailable() - 1);
+		storage.getProducts()[storage.getAvailable() - 1] = null;
+		storage.setAvailable(storage.getAvailable() - 1);
 	}
 
 	/**
@@ -41,15 +47,15 @@ public class Consumer extends Storage implements Runnable {
 				Thread.sleep(timeStep);
 			} catch (InterruptedException e1) {
 			}
-			synchronized (getProducts()) {
-				if (getAvailable() > 0) {
+			synchronized (storage.getProducts()) {
+				if (storage.getAvailable() > 0) {
 					System.out.println("got a product");
 					getProduct();
-					getProducts().notifyAll();
+					storage.getProducts().notifyAll();
 				} else {
 					System.out.println("storage empty waiting for producer");
 					try {
-						getProducts().wait();
+						storage.getProducts().wait();
 					} catch (InterruptedException e) {
 					}
 				}
