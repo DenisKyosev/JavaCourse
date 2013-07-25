@@ -15,9 +15,8 @@ import com.sirma.itt.javacourse.netAndGui.connect.Connect;
  */
 public class ServerFunctions {
 
-	/** The thread. */
-	private Thread thread;
-
+	/** The msg. */
+	private final Messenger msg;
 	/** The server socket. */
 	private ServerSocket server;
 	/** The client socket. */
@@ -25,12 +24,16 @@ public class ServerFunctions {
 
 	/**
 	 * Instantiates a new server functions.
+	 * 
+	 * @param msg
+	 *            the msg
 	 */
-	ServerFunctions() {
+	ServerFunctions(Messenger msg) {
+		this.msg = msg;
 		try {
 			server = new ServerSocket();
 		} catch (IOException e) {
-			e.printStackTrace();
+			msg.setServerTextArea("Error starting server.\r\n");
 		}
 	}
 
@@ -39,7 +42,7 @@ public class ServerFunctions {
 	 * 
 	 * @return true, if successful
 	 */
-	boolean closeServer() {
+	protected boolean closeServer() {
 		try {
 			for (int j = 0; j < clients.size(); j++) {
 				PrintWriter writer = new PrintWriter(new OutputStreamWriter(clients.get(j)
@@ -59,13 +62,15 @@ public class ServerFunctions {
 	 * 
 	 * @return the string
 	 */
-	String openConnection() {
+	protected boolean openConnection() {
 		server = Connect.openServerSocket();
 		if (server == null) {
-			return "No available port in range 7000-7020.";
+			msg.setServerTextArea("No available port in range 7000-7020.");
+			return false;
 		} else {
-			return "Server started on port: " + server.getLocalPort()
-					+ "\r\nWaiting for clients\r\n";
+			msg.setServerTextArea("Server started on port: " + server.getLocalPort()
+					+ "\r\nWaiting for clients\r\n");
+			return true;
 		}
 	}
 
@@ -74,16 +79,19 @@ public class ServerFunctions {
 	 * 
 	 * @return the string
 	 */
-	String acceptClient() {
+	protected boolean acceptClient() {
 
 		try {
 			clients.add(server.accept());
 		} catch (IOException e) {
+			msg.setServerTextArea("Something went wrong while connecting to client.\r\n");
+			return false;
 		}
-		thread = new Thread(new ServerClients(clients));
+		Thread thread = new Thread(new ServerClients(clients));
 		thread.start();
-		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
-
+		msg.setServerTextArea("New client connected. \r\n Number of clients:" + clients.size()
+				+ "\r\n");
+		return true;
 	}
 
 	/**
@@ -93,10 +101,9 @@ public class ServerFunctions {
 	 *            the client
 	 * @return the string
 	 */
-	String acceptClient(Socket client) {
-		clients.add(client);
-		thread = new Thread(new ServerClients(clients));
-		thread.start();
-		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
-	}
+	/*
+	 * String acceptClient(Socket client) { clients.add(client); Thread thread = new Thread(new
+	 * ServerClients(clients)); thread.start(); return
+	 * "New client connected. \r\n Number of clients:" + clients.size() + "\r\n"; }
+	 */
 }

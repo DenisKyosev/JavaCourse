@@ -26,7 +26,5 @@ public final class RunClient {
 		} catch (NoSocketException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

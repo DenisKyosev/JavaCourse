@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * The Class Client.
  */
-public class Client extends JFrame {
+public class Client extends JFrame implements Runnable {
 
 	/**
 	 * Comment for serialVersionUID.
@@ -21,6 +21,7 @@ public class Client extends JFrame {
 
 	/** The text area. */
 	private final JTextArea txtArea;
+	private final Messenger msg = new Messenger();
 
 	/**
 	 * Instantiates a new client.
@@ -42,8 +43,24 @@ public class Client extends JFrame {
 
 		setVisible(true);
 		txtArea.append("Trying to connect to server\r\n");
-		ClientFunctions client = new ClientFunctions();
-		txtArea.append(client.clientConnected());
+		ClientFunctions client = new ClientFunctions(msg);
+		Thread thread = new Thread(this);
+		thread.start();
+		client.clientConnected();
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+			}
+			if (msg.clientFlagUp()) {
+				txtArea.append(msg.getClientTextArea());
+			}
+		}
+
 	}
 
 }

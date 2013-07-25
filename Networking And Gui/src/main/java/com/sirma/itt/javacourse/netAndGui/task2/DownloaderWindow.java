@@ -16,99 +16,34 @@ import javax.swing.JTextField;
 /**
  * File downloader with source, destination and progress bar.
  */
-public class DownloaderWindow extends JFrame implements ActionListener {
+public class DownloaderWindow extends JFrame implements ActionListener, Runnable {
 
 	/**
 	 * ID.
 	 */
 	private static final long serialVersionUID = 1L;
 	/** The source text field. */
-	private JTextField source;
+	private final JTextField source;
 
 	/** The destination text field. */
-	private JTextField destination;
+	private final JTextField destination;
 
 	/** The error field. */
-	private static JTextField errorField;
+	private final JTextField errorField;
 
 	/** The download button. */
 	private final JButton download;
 
-	/** The main panel. */
-	private final Container mainPanel;
 	/** The progress. */
-	private JProgressBar progress;
+	private final JProgressBar progress;
 
-	/**
-	 * Gets the progress.
-	 * 
-	 * @return the progress
-	 */
-	protected JProgressBar getProgress() {
-		return progress;
-	}
-
-	/**
-	 * Sets the progress.
-	 * 
-	 * @param progress
-	 *            the new progress
-	 */
-	protected void setProgress(JProgressBar progress) {
-		this.progress = progress;
-	}
-
-	/**
-	 * Gets the source.
-	 * 
-	 * @return the source
-	 */
-	protected JTextField getSource() {
-		return source;
-	}
-
-	/**
-	 * Sets the source.
-	 * 
-	 * @param source
-	 *            the new source
-	 */
-	protected void setSource(JTextField source) {
-		this.source = source;
-	}
-
-	/**
-	 * Gets the destination.
-	 * 
-	 * @return the destination
-	 */
-	protected JTextField getDestination() {
-		return destination;
-	}
-
-	/**
-	 * Sets the destination.
-	 * 
-	 * @param destination
-	 *            the new destination
-	 */
-	protected void setDestination(JTextField destination) {
-		this.destination = destination;
-	}
-
-	/**
-	 * Gets the error field.
-	 * 
-	 * @return the error field
-	 */
-	protected static JTextField getErrorField() {
-		return errorField;
-	}
+	private final Messenger msg = new Messenger();
 
 	/**
 	 * Instantiates a new downloader window.
 	 */
 	DownloaderWindow() {
+		Container mainPanel;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(300, 200, 400, 300);
 		mainPanel = getContentPane();
@@ -134,7 +69,11 @@ public class DownloaderWindow extends JFrame implements ActionListener {
 		progress.setStringPainted(true);
 		mainPanel.add(progress, BorderLayout.SOUTH);
 		download.addActionListener(this);
+
 		setVisible(true);
+
+		Thread thread = new Thread(this);
+		thread.start();
 	}
 
 	/**
@@ -143,8 +82,27 @@ public class DownloaderWindow extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Download".equals(e.getActionCommand())) {
-			Thread download = new Thread(new Download(this));
+			Thread download = new Thread(new Download(source.getText(), destination.getText(), msg));
 			download.start();
+		}
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+			}
+			if (progress.getMaximum() == 100 && msg.progressFlagUp()) {
+				progress.setMaximum(msg.getMaxProgressValue());
+			}
+			if (msg.progressFlagUp()) {
+				progress.setValue(msg.getProgressValue());
+			}
+			if (msg.isUpdatedClient()) {
+				errorField.setText(msg.getErrorMessage());
+			}
 		}
 	}
 }

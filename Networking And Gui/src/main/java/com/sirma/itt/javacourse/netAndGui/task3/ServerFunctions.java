@@ -9,32 +9,41 @@ import java.util.Calendar;
 
 import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
+// TODO: Auto-generated Javadoc
 /**
  * Server Functions.
  */
 public class ServerFunctions {
 
+	/** The messenger. */
+	private final Messenger msg;
 	/** The server. */
 	private ServerSocket server = null;
 
 	/**
 	 * Instantiates a new server on port 7000-7020.
+	 * 
+	 * @param msg
+	 *            the messenger
 	 */
-	ServerFunctions() {
+	ServerFunctions(Messenger msg) {
+		this.msg = msg;
 		server = Connect.openServerSocket();
 	}
 
 	/**
 	 * Check if server is started.
 	 * 
-	 * @return started or no available port
+	 * @return true, if started
 	 */
-	String serverStarted() {
+	boolean serverStarted() {
 		if (server == null) {
-			return "No available port in range 7000-7020.";
+			msg.setServerTextArea("No available port in range 7000-7020.");
+			return false;
 		} else {
-			return "Server started on port: " + server.getLocalPort()
-					+ "\r\nWaiting for clients\r\n";
+			msg.setServerTextArea("Server started on port: " + server.getLocalPort()
+					+ "\r\nWaiting for clients\r\n");
+			return true;
 		}
 	}
 
@@ -45,7 +54,7 @@ public class ServerFunctions {
 	 *            the client
 	 * @return the string
 	 */
-	String sendMessage(Socket client) {
+	boolean sendMessage(Socket client) {
 		String message = "";
 		try {
 			client = server.accept();
@@ -54,9 +63,11 @@ public class ServerFunctions {
 			writer.println(message);
 			writer.println();
 			writer.flush();
-			return "Client connected. \r\nSent message:" + message + "\r\n";
+			msg.setServerTextArea("Client connected. \r\nSent message:" + message + "\r\n");
+			return true;
 		} catch (IOException e) {
-			return "System error";
+			msg.setServerTextArea("System error");
+			return false;
 		}
 	}
 }

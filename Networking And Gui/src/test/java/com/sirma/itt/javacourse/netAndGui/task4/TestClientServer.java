@@ -1,13 +1,8 @@
 package com.sirma.itt.javacourse.netAndGui.task4;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import javax.swing.JTextArea;
 
 import org.junit.Test;
-
-import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -20,26 +15,32 @@ public class TestClientServer {
 	 */
 	@Test
 	public void testClientServerConnections() {
+		Messenger msg = new Messenger();
+		ServerFunctions server = new ServerFunctions(msg);
 
-		ServerFunctions server = new ServerFunctions();
+		assertEquals(true, server.openConnection());
 		assertEquals("Server started on port: 7000\r\nWaiting for clients\r\n",
-				server.openConnection());
+				msg.getServerTextArea());
 
-		ClientFunctions client = new ClientFunctions(new JTextArea());
-
+		@SuppressWarnings("unused")
+		ClientFunctions client = null;
 		try {
-			client.openConnection();
-		} catch (NoSocketException e1) {
-			e1.printStackTrace();
+			client = new ClientFunctions(msg);
+		} catch (NoSocketException e) {
 		}
 
-		assertEquals("New client connected. \r\n Number of clients:1\r\n", server.acceptClient());
+		assertEquals(true, server.acceptClient());
+		assertEquals("New client connected. \r\n Number of clients:1\r\n", msg.getServerTextArea());
 
-		assertEquals("Client connected to server on port 7000\r\n", client.getMessage());
+		assertEquals("Client connected to server on port 7000\r\n", msg.getClientTextArea());
 
-		assertEquals("New client connected. \r\n Number of clients:2\r\n", server.acceptClient());
+		try {
+			client = new ClientFunctions(msg);
+		} catch (NoSocketException e) {
+		}
 
-		assertNotEquals(null, Connect.openServerSocket());
-		assertNotEquals(null, Connect.openSocket());
+		assertEquals(true, server.acceptClient());
+		assertEquals("New client connected. \r\n Number of clients:2\r\n", msg.getServerTextArea());
+
 	}
 }

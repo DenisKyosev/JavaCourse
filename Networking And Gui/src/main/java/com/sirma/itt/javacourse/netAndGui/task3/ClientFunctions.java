@@ -17,13 +17,29 @@ public class ClientFunctions {
 	private String message;
 
 	/** The client. */
-	private final Socket client;
+	private Socket client = null;
+
+	/** The messanger. */
+	private final Messenger msg;
 
 	/**
 	 * Instantiates a new client functions.
+	 * 
+	 * @param msg
+	 *            the messemger
 	 */
-	ClientFunctions() {
+	ClientFunctions(Messenger msg) {
+		this.msg = msg;
 		client = Connect.openSocket();
+	}
+
+	/**
+	 * Gets the client.
+	 * 
+	 * @return the client
+	 */
+	protected Socket getClient() {
+		return client;
 	}
 
 	/**
@@ -31,11 +47,14 @@ public class ClientFunctions {
 	 * 
 	 * @return the string
 	 */
-	String clientConnected() {
-		if (getClient() == null) {
-			return "No server running on port in range 7000-7020.";
+	boolean clientConnected() {
+		if (client == null) {
+			msg.setClientTextArea("No server running on port in range 7000-7020.");
+			return false;
 		} else {
-			return getMessage() + "\r\nConnection terminated";
+			getMessage();
+			msg.setClientTextArea("Connection terminated");
+			return true;
 
 		}
 	}
@@ -45,32 +64,21 @@ public class ClientFunctions {
 	 * 
 	 * @return the message
 	 */
-	String getMessage() {
-		String result = "Client connected to server on port "
-				+ Integer.toString(getClient().getPort()) + "\r\n";
+	boolean getMessage() {
+		msg.setClientTextArea("Client connected to server on port "
+				+ Integer.toString(client.getPort()) + "\r\n");
 
 		BufferedReader stream = null;
 		try {
-			stream = new BufferedReader(new InputStreamReader(getClient().getInputStream()));
+			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			message = stream.readLine();
-			result += message + "\r\n";
-			getClient().close();
+			msg.setClientTextArea(message + "\r\n");
+			client.close();
 
 		} catch (IOException e) {
-
-			result += "Error while receiving message";
-			e.printStackTrace();
+			msg.setClientTextArea("Error while receiving message\r\n");
+			return false;
 		}
-
-		return result;
-	}
-
-	/**
-	 * Gets the client.
-	 * 
-	 * @return the client
-	 */
-	public Socket getClient() {
-		return client;
+		return true;
 	}
 }

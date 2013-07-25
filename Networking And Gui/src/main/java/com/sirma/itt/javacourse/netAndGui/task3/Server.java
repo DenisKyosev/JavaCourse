@@ -16,19 +16,25 @@ import javax.swing.border.EmptyBorder;
 /**
  * The Class Server.
  */
-public class Server extends JFrame implements ActionListener {
+public class Server extends JFrame implements ActionListener, Runnable {
 
 	/**
 	 * Comment for serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** The messenger. */
+	private final Messenger msg = new Messenger();
 	/** The client socket. */
 	private Socket client;
 
 	/** The text area. */
 	private final JTextArea txtArea;
+
+	/** The closed. */
 	private boolean closed = false;
+
+	/** The close. */
 	private final JButton close;
 
 	/**
@@ -54,11 +60,13 @@ public class Server extends JFrame implements ActionListener {
 		setVisible(true);
 		txtArea.append("Trying to launch server\r\n");
 
-		ServerFunctions server = new ServerFunctions();
+		ServerFunctions server = new ServerFunctions(msg);
 
-		txtArea.append(server.serverStarted());
+		server.serverStarted();
+		Thread thread = new Thread(this);
+		thread.start();
 		while (!closed) {
-			txtArea.append(server.sendMessage(client));
+			server.sendMessage(client);
 		}
 	}
 
@@ -70,6 +78,24 @@ public class Server extends JFrame implements ActionListener {
 		if ("Close server".equals(e.getActionCommand())) {
 			closed = true;
 			dispose();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void run() {
+
+		while (!closed) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+			}
+
+			if (msg.serverFlagUp()) {
+				txtArea.append(msg.getServerTextArea());
+			}
 		}
 	}
 }

@@ -16,8 +16,9 @@ public class Task2Test {
 	 */
 	@Test
 	public void testDownloader() {
-		Download download = new Download(new DownloaderWindow());
 
+		Messenger msg = new Messenger();
+		Download download = new Download("asd", "http://middleages-bg.info/aaa.mkv", msg);
 		String test = "X:\\asd.mkv";
 		assertEquals(false, download.destinationConnect(test));
 
@@ -29,8 +30,8 @@ public class Task2Test {
 		assertEquals(true, download.connect(test));
 
 		// not existing file
-		test = "http://middleages-bg.info/asasaaa.mkv";
-		assertEquals(false, download.connect(test));
+		download = new Download("asd", "http://middleages-bg.info/aaadawdaw.mkv", msg);
+		assertEquals(false, download.connect());
 
 		test = "http://middleages-bg.info/aaa.mkv";
 		assertEquals(true, download.connect(test));
@@ -43,7 +44,7 @@ public class Task2Test {
 		File downloaded = new File("C:\\asd.mkv");
 		assertEquals(49330329, downloaded.length());
 
-		Download download2 = new Download(new DownloaderWindow());
+		Download download2 = new Download("asd", "http://middleages-bg.info/aaa.mkv", msg);
 
 		source = "file:///C:\\asd.mkv";
 		dest = "C:\\asd2.mkv";

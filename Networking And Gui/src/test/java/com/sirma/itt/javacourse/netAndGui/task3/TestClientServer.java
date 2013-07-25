@@ -18,14 +18,20 @@ public class TestClientServer {
 	 */
 	@Test
 	public void testClientServerConnections() {
+		Messenger msg = new Messenger();
+		ServerFunctions server = new ServerFunctions(msg);
 
-		ServerFunctions server = new ServerFunctions();
+		assertEquals(true, server.serverStarted());
 		assertEquals("Server started on port: 7000\r\nWaiting for clients\r\n",
-				server.serverStarted());
+				msg.getServerTextArea());
 
-		ClientFunctions client = new ClientFunctions();
+		ClientFunctions client = new ClientFunctions(msg);
+		server.sendMessage(client.getClient());
+		client.getMessage();
 
-		assertEquals(true, server.sendMessage(client.getClient()).contains("Hello"));
+		assertEquals(true, client.clientConnected());
+		assertEquals(true, msg.getClientTextArea().contains("Hello"));
+		assertEquals(true, msg.getServerTextArea().contains("Hello"));
 
 		assertNotEquals(null, Connect.openServerSocket());
 		assertNotEquals(null, Connect.openSocket());

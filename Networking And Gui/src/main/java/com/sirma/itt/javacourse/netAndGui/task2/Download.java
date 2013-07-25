@@ -16,17 +16,11 @@ import java.net.URLConnection;
  */
 public class Download implements Runnable {
 
-	/** The download. */
-	private final DownloaderWindow download;
-
 	/** The online file. */
 	private URL onlineFile = null;
 
 	/** The connection. */
 	private URLConnection connection = null;
-
-	/** The url. */
-	private String url;
 
 	/** The in. */
 	private BufferedInputStream in = null;
@@ -37,17 +31,32 @@ public class Download implements Runnable {
 	/** The file size. */
 	private int fileSize;
 
+	/** The destination text. */
+	private String destination = null;
+
+	/** The source. */
+	private final String source;
+
+	/** The messenger. */
+	private final Messenger msg;
+
 	/** The destination file. */
-	private File dest = null;
+	private File destinationFile;
 
 	/**
 	 * Instantiates a new download.
 	 * 
-	 * @param download
-	 *            the download
+	 * @param source
+	 *            the source
+	 * @param destination
+	 *            the destination
+	 * @param msg
+	 *            the msg
 	 */
-	public Download(DownloaderWindow download) {
-		this.download = download;
+	public Download(String source, String destination, Messenger msg) {
+		this.source = source;
+		this.destination = destination;
+		this.msg = msg;
 	}
 
 	/**
@@ -55,9 +64,7 @@ public class Download implements Runnable {
 	 */
 	@Override
 	public void run() {
-		DownloaderWindow.getErrorField().setText("");
-		url = download.getSource().getText();
-
+		msg.setErrorMessage("");
 		if (connect()) {
 			fileSize = connection.getContentLength();
 			if (destinationConnect()) {
@@ -73,16 +80,15 @@ public class Download implements Runnable {
 	 * @return true, if successful
 	 */
 	boolean destinationConnect() {
-		if (dest == null) {
-			dest = new File(download.getDestination().getText()
-					+ getExtension(onlineFile.toString()));
+
+		if (destinationFile == null) {
+			destinationFile = new File(destination + getExtension(source.toString()));
 		}
 		try {
-			out = new BufferedOutputStream(new FileOutputStream(dest));
-
+			out = new BufferedOutputStream(new FileOutputStream(destinationFile));
 			return true;
 		} catch (FileNotFoundException e1) {
-			DownloaderWindow.getErrorField().setText("Can't open stream.");
+			msg.setErrorMessage("Can't open stream.");
 			return false;
 
 		}
@@ -96,7 +102,7 @@ public class Download implements Runnable {
 	 * @return true, if successful
 	 */
 	boolean destinationConnect(String path) {
-		dest = new File(path);
+		destinationFile = new File(path);
 		return destinationConnect();
 	}
 
@@ -113,17 +119,16 @@ public class Download implements Runnable {
 		try {
 			len = in.read(buf);
 
-			download.getProgress().setMaximum(fileSize);
-
+			// download.getProgress().setMaximum(fileSize);
+			msg.setMaxProgressValue(fileSize);
 			while (len > 0) {
 				out.write(buf, 0, len);
 				len = in.read(buf);
 				readed += len;
-				download.getProgress().setValue(readed);
+				msg.setProgressValue(readed);
 
 			}
-			download.getProgress().setValue(100);
-			DownloaderWindow.getErrorField().setText("File downloaded successfully");
+			msg.setErrorMessage("File downloaded successfully");
 			in.close();
 			out.close();
 			return true;
@@ -155,22 +160,24 @@ public class Download implements Runnable {
 	 * @return true, if successful
 	 */
 	boolean connect() {
+		boolean error = false;
 		if (onlineFile == null) {
 			try {
-				onlineFile = new URL(url);
+				onlineFile = new URL(source);
 			} catch (IOException e1) {
-
+				error = true;
 			}
 		}
-		try {
-			connection = onlineFile.openConnection();
-			in = new BufferedInputStream(connection.getInputStream());
-			return true;
-		} catch (IOException e) {
-			DownloaderWindow.getErrorField().setText(
-					"Wrong source url or could not open connection!");
-			return false;
+		if (!error) {
+			try {
+				connection = onlineFile.openConnection();
+				in = new BufferedInputStream(connection.getInputStream());
+			} catch (IOException e) {
+			}
+		} else {
+			msg.setErrorMessage("Wrong source url or could not open connection!");
 		}
+		return !error;
 
 	}
 
