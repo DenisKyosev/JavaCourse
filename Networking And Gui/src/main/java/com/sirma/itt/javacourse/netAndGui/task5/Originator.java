@@ -6,6 +6,28 @@ package com.sirma.itt.javacourse.netAndGui.task5;
  */
 public class Originator {
 
+	/** current list position. */
+	private int current = 0;
+
+	/**
+	 * Gets the current list position.
+	 * 
+	 * @return the current list position
+	 */
+	protected int getCurrent() {
+		return current;
+	}
+
+	/**
+	 * Sets the current list position.
+	 * 
+	 * @param current
+	 *            the new list position
+	 */
+	protected void setCurrent(int current) {
+		this.current = current;
+	}
+
 	/**
 	 * Save to memento.
 	 * 

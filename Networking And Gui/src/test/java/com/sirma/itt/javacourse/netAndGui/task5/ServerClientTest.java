@@ -4,10 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import org.junit.Test;
 
 // TODO: Auto-generated Javadoc
@@ -27,14 +23,13 @@ public class ServerClientTest {
 	@Test
 	public void communicationTest() throws NoSocketException, IOException {
 
-		JTextArea dummyTextArea = new JTextArea();
-		JTextField dummyTextField = new JTextField();
-		JButton dummyButton = new JButton();
+		Messenger msg = new Messenger();
 
-		ServerFunctions server = new ServerFunctions(dummyTextArea);
+		ServerFunctions server = new ServerFunctions(msg);
+		assertEquals(true, server.openConnection());
 		assertEquals("Server started on port: 7000\r\nWaiting for clients\r\n",
-				server.openConnection());
-		ClientFunctions client = new ClientFunctions(dummyTextArea, dummyTextField, dummyButton);
+				msg.getServerTextArea());
+		ClientFunctions client = new ClientFunctions(msg);
 
 		client.openConnection();
 		assertEquals("Client connected to server on port 7000\r\n", client.getMessage());

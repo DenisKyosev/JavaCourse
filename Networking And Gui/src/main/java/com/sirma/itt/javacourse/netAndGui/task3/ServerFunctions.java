@@ -36,7 +36,7 @@ public class ServerFunctions {
 	 * 
 	 * @return true, if started
 	 */
-	boolean serverStarted() {
+	protected boolean serverStarted() {
 		if (server == null) {
 			msg.setServerTextArea("No available port in range 7000-7020.");
 			return false;
@@ -54,7 +54,7 @@ public class ServerFunctions {
 	 *            the client
 	 * @return the string
 	 */
-	boolean sendMessage(Socket client) {
+	protected boolean sendMessage(Socket client) {
 		String message = "";
 		try {
 			client = server.accept();

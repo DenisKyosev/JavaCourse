@@ -102,7 +102,7 @@ public class Server extends JFrame implements ActionListener, Runnable {
 		}
 
 		clients = new Mediator();
-		listen = new NewClientsListener(server, clients);
+		listen = new NewClientsListener(server, clients, msg);
 		Thread thread = new Thread(this);
 		thread.start();
 		thread = new Thread(listen);

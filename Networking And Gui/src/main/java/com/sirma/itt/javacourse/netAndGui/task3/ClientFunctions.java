@@ -47,7 +47,7 @@ public class ClientFunctions {
 	 * 
 	 * @return the string
 	 */
-	boolean clientConnected() {
+	protected boolean clientConnected() {
 		if (client == null) {
 			msg.setClientTextArea("No server running on port in range 7000-7020.");
 			return false;
@@ -64,7 +64,7 @@ public class ClientFunctions {
 	 * 
 	 * @return the message
 	 */
-	boolean getMessage() {
+	protected boolean getMessage() {
 		msg.setClientTextArea("Client connected to server on port "
 				+ Integer.toString(client.getPort()) + "\r\n");
 

@@ -70,7 +70,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		msg = new Messenger();
 		msg.setClientMessage("Trying to connect to server\r\n");
 
-		client = new ClientFunctions();
+		client = new ClientFunctions(msg);
 
 		Thread thread = new Thread(client);
 		thread.start();

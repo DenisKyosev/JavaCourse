@@ -16,7 +16,7 @@ public class ClientFunctions implements Runnable {
 	private String message = "";
 
 	/** The messenger. */
-	private Messenger msg;
+	private final Messenger msg;
 
 	/** The closed. */
 	private boolean closed = false;
@@ -25,12 +25,23 @@ public class ClientFunctions implements Runnable {
 	private ClientConnector connector;
 
 	/**
-	 * Send.
+	 * Instantiates a new client functions.
 	 * 
 	 * @param msg
 	 *            the msg
 	 */
-	void send(String msg) {
+	ClientFunctions(Messenger msg) {
+		this.msg = msg;
+		client = new Socket();
+	}
+
+	/**
+	 * Set message to send.
+	 * 
+	 * @param msg
+	 *            the message
+	 */
+	protected void send(String msg) {
 		connector.send(msg);
 	}
 
@@ -40,7 +51,7 @@ public class ClientFunctions implements Runnable {
 	 * @throws NoSocketException
 	 *             if there is no server running exception
 	 */
-	void openConnection() throws NoSocketException {
+	protected void openConnection() throws NoSocketException {
 		client = Connect.openSocket();
 		if (client == null) {
 			message = "No server running on port in range 7000-7020.";
@@ -57,8 +68,6 @@ public class ClientFunctions implements Runnable {
 	 */
 	@Override
 	public void run() {
-		client = new Socket();
-		msg = new Messenger();
 		try {
 			openConnection();
 		} catch (NoSocketException e) {
@@ -73,5 +82,14 @@ public class ClientFunctions implements Runnable {
 				msg.setClientMessage(message + "\r\n");
 			}
 		}
+	}
+
+	/**
+	 * Gets the connector.
+	 * 
+	 * @return the connector
+	 */
+	protected ClientConnector getConnector() {
+		return connector;
 	}
 }

@@ -1,9 +1,5 @@
 package com.sirma.itt.javacourse.netAndGui.task5;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,17 +8,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
 /**
  * Client window functions.
  */
-public class ClientFunctions implements ActionListener, KeyListener {
+public class ClientFunctions implements Runnable {
 	/** The client socket. */
 	private Socket client;
 
@@ -33,46 +25,47 @@ public class ClientFunctions implements ActionListener, KeyListener {
 
 	/** The flag. */
 	private boolean flag = false;
-	/** The txt area. */
-	private final JTextArea txtArea;
-
-	/** The send. */
-	private String send = "";
-
-	/** The send btn. */
-	private final JButton sendBtn;
 
 	/** The memento. */
-	private Originator memento;
+	private final Originator memento;
+
+	/** The send string. */
+	private String sendString = "";
+
+	/** The messenger. */
+	private final Messenger msg;
 
 	/** The saved states. */
-	private List<Memento> savedStates;
-
-	/** The current. */
-	private int current = 0;
+	private final List<Memento> savedStates;
 
 	/**
 	 * Instantiates a new client functions.
 	 * 
-	 * @param txtArea
-	 *            the text area
-	 * @param txtField
-	 *            the text field
-	 * @param sendBtn
-	 *            the send button
-	 * @throws NoSocketException
-	 *             the no socket exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param msg
+	 *            the messenger
 	 */
-	ClientFunctions(JTextArea txtArea, JTextField txtField, JButton sendBtn)
-			throws NoSocketException, IOException {
-		this.txtArea = txtArea;
-		this.sendBtn = sendBtn;
-		sendBtn.addActionListener(this);
-		txtField.addKeyListener(this);
+	protected ClientFunctions(Messenger msg) {
 		client = new Socket();
+		this.msg = msg;
+		memento = new Originator();
+		savedStates = new ArrayList<Memento>();
+	}
 
+	/**
+	 * Instantiates a new client functions.
+	 * 
+	 * @param msg
+	 *            the messenger
+	 * @param savedStates
+	 *            the saved states
+	 * @param memento
+	 *            the memento
+	 */
+	ClientFunctions(Messenger msg, List<Memento> savedStates, Originator memento) {
+		client = new Socket();
+		this.msg = msg;
+		this.savedStates = savedStates;
+		this.memento = memento;
 	}
 
 	/**
@@ -83,24 +76,23 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	void openConnection() throws NoSocketException, IOException {
+	protected void openConnection() throws NoSocketException, IOException {
 		client = Connect.openSocket();
-		memento = new Originator();
-		savedStates = new ArrayList<Memento>();
-		message = "No server running on port in range 7000-7020.";
-
+		if (client == null) {
+			msg.setClientTextArea("No server running on port in range 7000-7020.");
+		}
 		try {
 			out = new PrintWriter(client.getOutputStream(), true);
 		} catch (IOException e) {
-			e.printStackTrace();
+			msg.setClientTextArea("Error in connection");
 		}
 
 		if (client == null) {
-			txtArea.append(message);
+			msg.setClientTextArea(message);
 		} else {
 			message = "Client connected to server on port " + Integer.toString(client.getPort())
 					+ "\r\n";
-			txtArea.append(message);
+			msg.setClientTextArea(message);
 
 		}
 
@@ -110,22 +102,23 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	 * Send message.
 	 * 
 	 * @throws NoSocketException
-	 *             the no socket exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 *             the no socket exception Signals that an I/O exception has occurred.
 	 */
-	void sendMessage() throws NoSocketException, IOException {
-		if (!send.contains(".")) {
+	protected void sendMessage() throws NoSocketException {
+		if (!sendString.contains(".")) {
 			if (flag) {
-				savedStates.add(memento.saveToMemento(send));
-				out.println(send);
+				savedStates.add(memento.saveToMemento(sendString));
+				out.println(sendString);
 				out.flush();
 				getMessageFromServer();
 				flag = false;
-				current++;
 			}
 		} else {
-			client.close();
+			try {
+				client.close();
+			} catch (IOException e) {
+				throw new NoSocketException();
+			}
 		}
 	}
 
@@ -139,19 +132,18 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * Gets message from server. the client socket
+	 * Gets message from server.
 	 * 
 	 * @throws NoSocketException
 	 *             the server is closed
 	 */
-	void getMessageFromServer() throws NoSocketException {
-
+	protected void getMessageFromServer() throws NoSocketException {
 		BufferedReader stream = null;
 
 		try {
 			stream = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			message = stream.readLine();
-			txtArea.append(message + "\r\n");
+			msg.setClientTextArea(message + "\r\n");
 		} catch (IOException e) {
 			throw new NoSocketException();
 		}
@@ -179,53 +171,25 @@ public class ClientFunctions implements ActionListener, KeyListener {
 	/**
 	 * Sets the send.
 	 * 
-	 * @param send
+	 * @param sendString
 	 *            the new send
 	 */
-	protected void setSend(String send) {
-		this.send = send;
+	protected void setSend(String sendString) {
+		this.sendString = sendString;
+		flag = true;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		if (e.getSource() == sendBtn) {
-			send = Client.getTxtField().getText();
-			flag = true;
+	public void run() {
+		while (true) {
+			try {
+				sendMessage();
+			} catch (NoSocketException e) {
+				e.printStackTrace();
+			}
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void keyPressed(KeyEvent e) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == 38 && current > 0) {
-			current--;
-			Client.getTxtField().setText(savedStates.get(current).getSavedState());
-
-		}
-		if (e.getKeyCode() == 40 && current < savedStates.size() - 1) {
-			current++;
-			Client.getTxtField().setText(savedStates.get(current).getSavedState());
-
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void keyTyped(KeyEvent e) {
 	}
 }

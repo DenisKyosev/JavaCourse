@@ -7,15 +7,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.swing.JTextArea;
-
 import com.sirma.itt.javacourse.netAndGui.connect.Connect;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServerFunctions.
  */
-public class ServerFunctions {
+public class ServerFunctions implements Runnable {
 
 	/** The thread. */
 	private Thread thread;
@@ -25,22 +23,22 @@ public class ServerFunctions {
 	/** The client socket. */
 	private final ArrayList<Socket> clients = new ArrayList<Socket>();
 
-	/** The txt area. */
-	private final JTextArea txtArea;
+	/** The messenger. */
+	private final Messenger msg;
 
 	/**
 	 * Instantiates a new server functions.
 	 * 
-	 * @param txtArea
-	 *            the txt area
+	 * @param msg
+	 *            the msg
 	 */
-	ServerFunctions(JTextArea txtArea) {
+	ServerFunctions(Messenger msg) {
+		this.msg = msg;
 		try {
 			server = new ServerSocket();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.txtArea = txtArea;
 	}
 
 	/**
@@ -57,7 +55,7 @@ public class ServerFunctions {
 	 * 
 	 * @return true, if successful
 	 */
-	boolean closeServer() {
+	protected boolean closeServer() {
 		try {
 			for (int j = 0; j < clients.size(); j++) {
 				PrintWriter writer = new PrintWriter(new OutputStreamWriter(clients.get(j)
@@ -77,13 +75,15 @@ public class ServerFunctions {
 	 * 
 	 * @return the string
 	 */
-	String openConnection() {
+	protected boolean openConnection() {
 		server = Connect.openServerSocket();
 		if (server == null) {
-			return "No available port in range 7000-7020.";
+			msg.setServerTextArea("No available port in range 7000-7020.");
+			return false;
 		} else {
-			return "Server started on port: " + server.getLocalPort()
-					+ "\r\nWaiting for clients\r\n";
+			msg.setServerTextArea("Server started on port: " + server.getLocalPort()
+					+ "\r\nWaiting for clients\r\n");
+			return true;
 		}
 	}
 
@@ -92,14 +92,28 @@ public class ServerFunctions {
 	 * 
 	 * @return the string
 	 */
-	String acceptClient() {
+	protected boolean acceptClient() {
 		try {
 			clients.add(server.accept());
 		} catch (IOException e) {
+			msg.setServerTextArea("Error while accepting client.\r\n");
+			return false;
 		}
-		ServerClients client = new ServerClients(clients, txtArea);
+		ServerClients client = new ServerClients(clients, msg);
 		thread = new Thread(client);
 		thread.start();
-		return "New client connected. \r\n Number of clients:" + clients.size() + "\r\n";
+		msg.setServerTextArea("New client connected. \r\n Number of clients:" + clients.size()
+				+ "\r\n");
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void run() {
+		while (true) {
+			acceptClient();
+		}
 	}
 }

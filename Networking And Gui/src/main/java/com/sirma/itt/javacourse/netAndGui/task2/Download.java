@@ -79,7 +79,7 @@ public class Download implements Runnable {
 	 * 
 	 * @return true, if successful
 	 */
-	boolean destinationConnect() {
+	protected boolean destinationConnect() {
 
 		if (destinationFile == null) {
 			destinationFile = new File(destination + getExtension(source.toString()));
@@ -101,7 +101,7 @@ public class Download implements Runnable {
 	 *            the path
 	 * @return true, if successful
 	 */
-	boolean destinationConnect(String path) {
+	protected boolean destinationConnect(String path) {
 		destinationFile = new File(path);
 		return destinationConnect();
 	}
@@ -111,7 +111,7 @@ public class Download implements Runnable {
 	 * 
 	 * @return true, if successful
 	 */
-	boolean download() {
+	protected boolean download() {
 		int readed = 0;
 
 		byte[] buf = new byte[1024];
@@ -148,7 +148,7 @@ public class Download implements Runnable {
 	 *            the destination
 	 * @return true, if successful
 	 */
-	boolean download(String source, String dest) {
+	protected boolean download(String source, String dest) {
 		connect(source);
 		destinationConnect(dest);
 		return download();
@@ -159,7 +159,7 @@ public class Download implements Runnable {
 	 * 
 	 * @return true, if successful
 	 */
-	boolean connect() {
+	protected boolean connect() {
 		boolean error = false;
 		if (onlineFile == null) {
 			try {
@@ -188,7 +188,7 @@ public class Download implements Runnable {
 	 *            the url
 	 * @return true, if successful
 	 */
-	boolean connect(String url) {
+	protected boolean connect(String url) {
 		try {
 			onlineFile = new URL(url);
 		} catch (MalformedURLException e) {
@@ -204,7 +204,7 @@ public class Download implements Runnable {
 	 *            the input
 	 * @return the extension
 	 */
-	String getExtension(String input) {
+	protected String getExtension(String input) {
 		return input.substring(input.lastIndexOf("."));
 	}
 }

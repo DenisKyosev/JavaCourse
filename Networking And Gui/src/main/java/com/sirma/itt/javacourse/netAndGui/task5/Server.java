@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * Server GUI.
  */
-public class Server extends JFrame implements ActionListener {
+public class Server extends JFrame implements ActionListener, Runnable {
 
 	/**
 	 * Comment for serialVersionUID.
@@ -24,6 +24,7 @@ public class Server extends JFrame implements ActionListener {
 
 	/** The text area. */
 	private static JTextArea txtArea;
+	private final Messenger msg = new Messenger();
 
 	/**
 	 * Gets the txt area.
@@ -60,11 +61,12 @@ public class Server extends JFrame implements ActionListener {
 		setVisible(true);
 		txtArea.append("Trying to launch server\r\n");
 
-		server = new ServerFunctions(txtArea);
-		txtArea.append(server.openConnection());
-		while (true) {
-			txtArea.append(server.acceptClient());
-		}
+		new Thread(this).start();
+
+		server = new ServerFunctions(msg);
+		server.openConnection();
+		new Thread(server).start();
+
 	}
 
 	/**
@@ -77,5 +79,18 @@ public class Server extends JFrame implements ActionListener {
 			System.exit(1);
 		}
 
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+			}
+			if (msg.serverTextAreaChanged()) {
+				txtArea.append(msg.getServerTextArea());
+			}
+		}
 	}
 }

@@ -51,10 +51,12 @@ public class ChannelsListener implements Runnable {
 	 *            the client
 	 * @param clients
 	 *            the clients
+	 * @param msg
+	 *            the msg
 	 */
-	ChannelsListener(Socket client, Mediator clients) {
+	ChannelsListener(Socket client, Mediator clients, Messenger msg) {
 		this.manager = clients;
-		msg = new Messenger();
+		this.msg = msg;
 		this.newConnection = new ClientConnector(client);
 	}
 
@@ -63,7 +65,7 @@ public class ChannelsListener implements Runnable {
 	 * 
 	 * @return true, if successful
 	 */
-	boolean channelConnected() {
+	protected boolean channelConnected() {
 		message = newConnection.receive();
 		int channel = 0;
 		try {

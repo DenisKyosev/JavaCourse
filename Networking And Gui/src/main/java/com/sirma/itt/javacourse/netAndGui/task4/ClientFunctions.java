@@ -41,7 +41,7 @@ public class ClientFunctions {
 	 * @throws NoSocketException
 	 *             the no socket exception
 	 */
-	boolean openConnection() throws NoSocketException {
+	protected boolean openConnection() throws NoSocketException {
 		client = Connect.openSocket();
 		if (client == null) {
 			msg.setClientTextArea("No server running on port in range 7000-7020.");
@@ -68,7 +68,7 @@ public class ClientFunctions {
 	 * @throws NoSocketException
 	 *             the server is closed
 	 */
-	void getMessageFromServer() throws NoSocketException {
+	protected void getMessageFromServer() throws NoSocketException {
 		BufferedReader stream = null;
 
 		try {

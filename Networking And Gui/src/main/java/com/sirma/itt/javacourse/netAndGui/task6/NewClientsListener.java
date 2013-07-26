@@ -45,17 +45,19 @@ public class NewClientsListener implements Runnable {
 	 *            the server
 	 * @param clients
 	 *            the clients
+	 * @param msg
+	 *            the messenger
 	 */
-	NewClientsListener(ServerSocket server, Mediator clients) {
+	NewClientsListener(ServerSocket server, Mediator clients, Messenger msg) {
 		this.server = server;
 		this.clients = clients;
-		msg = new Messenger();
+		this.msg = msg;
 	}
 
 	/**
 	 * Close server.
 	 */
-	void closeServer() {
+	protected void closeServer() {
 		for (int i = 0; i < clientsList.size(); i++) {
 			try {
 				clientsList.get(i).close();
@@ -81,7 +83,7 @@ public class NewClientsListener implements Runnable {
 				}
 
 			}
-			ChannelsListener newClient = new ChannelsListener(client, clients);
+			ChannelsListener newClient = new ChannelsListener(client, clients, msg);
 			Thread thread = new Thread(newClient);
 			thread.start();
 			clientsList.add(client);

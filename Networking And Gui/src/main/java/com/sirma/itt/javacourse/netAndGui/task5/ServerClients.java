@@ -8,8 +8,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.swing.JTextArea;
-
 // TODO: Auto-generated Javadoc
 /**
  * Clients thread. New instance is made when new client is connected.
@@ -28,20 +26,20 @@ public class ServerClients implements Runnable {
 	/** The reader. */
 	private BufferedReader reader;
 
-	/** The txt area. */
-	private final JTextArea txtArea;
+	/** The messenger. */
+	private final Messenger msg;
 
 	/**
 	 * Instantiates a new clients control class.
 	 * 
 	 * @param clients
 	 *            the clients
-	 * @param txtArea
-	 *            the txt area
+	 * @param msg
+	 *            the messenger
 	 */
-	ServerClients(ArrayList<Socket> clients, JTextArea txtArea) {
+	ServerClients(ArrayList<Socket> clients, Messenger msg) {
 		ServerClients.clients = clients;
-		this.txtArea = txtArea;
+		this.msg = msg;
 	}
 
 	/**
@@ -61,7 +59,7 @@ public class ServerClients implements Runnable {
 	}
 
 	/**
-	 * Receive and respond.
+	 * Receive and respond to server.
 	 * 
 	 * @return the string
 	 * @throws IOException
@@ -80,7 +78,7 @@ public class ServerClients implements Runnable {
 			writer.flush();
 			result += "Sent reversed message\r\n";
 		}
-		txtArea.append(result);
+		msg.setServerTextArea(result);
 		return result;
 	}
 
@@ -92,10 +90,10 @@ public class ServerClients implements Runnable {
 		try {
 			greetClient();
 			while (true) {
-				receiveAndRespond();
+				msg.setServerTextArea(receiveAndRespond());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			msg.setServerTextArea("Error while reading/sending message.\r\n");
 		}
 
 	}

@@ -66,7 +66,5 @@ public class Client extends JFrame implements Runnable {
 				txtArea.append(msg.getClientTextArea());
 			}
 		}
-
 	}
-
 }
