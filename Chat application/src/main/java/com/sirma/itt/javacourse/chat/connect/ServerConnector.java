@@ -8,12 +8,12 @@ import java.net.Socket;
 /**
  * The Class Connect.
  */
-public final class Connect {
+public final class ServerConnector {
 
 	/**
 	 * Instantiates a new connect.
 	 */
-	private Connect() {
+	private ServerConnector() {
 
 	}
 

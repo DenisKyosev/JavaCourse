@@ -1,0 +1,4 @@
+package com.sirma.itt.javacourse.chat.clientfunctions;
+public class Memento {
+
+}
