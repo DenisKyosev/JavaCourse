@@ -17,7 +17,8 @@
   	<module>../Reflection, Annotations, RegEx</module>
   	<module>../Networking And Gui</module>
   	<module>../Threads</module>
-  	<module>../Chat application</module>
+  	<module>../Chat application client side</module>
+  	<module>../Chat application server side</module>
   </modules>
   <dependencies>
   	<dependency>
