@@ -13,12 +13,10 @@ import java.util.Properties;
  */
 public final class ServerConnector {
 
-	InterfaceUpdater msg = new InterfaceUpdater();
-	LanguageController lang;
+	Wrapper wrap;
 
-	public ServerConnector(InterfaceUpdater msg) {
-		this.msg = msg;
-		this.lang = new LanguageController(msg);
+	public ServerConnector(Wrapper wrap) {
+		this.wrap = wrap;
 	}
 
 	/**
@@ -26,7 +24,7 @@ public final class ServerConnector {
 	 * 
 	 * @return the server socket
 	 */
-	public ServerSocket openServerSocket() {
+	public void openServerSocket() {
 		boolean error = false;
 		Properties config = new Properties();
 		try {
@@ -45,7 +43,8 @@ public final class ServerConnector {
 		}
 
 		if (error) {
-			msg.setTextToBeUpdated("Main area", lang.getValue("configFileError"));
+			wrap.getMsg().setTextToBeUpdated("Main area",
+					wrap.getLang().getValue("configFileError"));
 			error = false;
 		}
 
@@ -54,20 +53,17 @@ public final class ServerConnector {
 		try {
 			for (int i = minPort; i <= maxPort; i++) {
 				try {
-					msg.setTextToBeUpdated("Main area", lang.getValue("serverStartedSuccess") + i);
-					return new ServerSocket(i);
+					wrap.getMsg().setTextToBeUpdated("Main area",
+							wrap.getLang().getValue("serverStartedSuccess") + i);
+					wrap.setServer(new ServerSocket(i));
+					break;
 				} catch (IOException ex) {
 					continue;
 				}
 			}
 		} catch (NumberFormatException e) {
-			msg.setTextToBeUpdated("Main area", "configPropertiesError");
+			wrap.getMsg().setTextToBeUpdated("Main area", "configPropertiesError");
 		}
-		return null;
 	}
 
-	public int closeServer() {
-
-		return 0;
-	}
 }

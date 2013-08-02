@@ -5,36 +5,38 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.ServerSocket;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 
-import com.sirma.itt.javacourse.chat.controllers.InterfaceUpdater;
-import com.sirma.itt.javacourse.chat.controllers.LanguageController;
-import com.sirma.itt.javacourse.chat.controllers.ServerConnector;
-import com.sirma.itt.javacourse.chat.controllers.ServerMessenger;
+import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
 public class ServerWindow extends JFrame implements ActionListener, Runnable {
-	JTextArea txtArea;
-	InterfaceUpdater msg;
-	ServerSocket server;
-	JButton editConfig;
-	LanguageController lang;
+	JTextArea txtArea = new JTextArea();
+	JMenuItem editConfig = new JMenuItem();
+	Wrapper wrap;
 	boolean closed = false;
-	JButton close;
+	JMenuItem start = new JMenuItem();
+	JMenuItem stop = new JMenuItem();
+	JMenu langs = new JMenu();
+	JList usersList = new JList<>();
+	JMenu serverControl = new JMenu();
+	JMenuItem bulgarian = new JMenuItem();
+	JMenuItem english = new JMenuItem();
 
 	ServerWindow() {
-		msg = new InterfaceUpdater();
-		lang = new LanguageController(msg);
-		ServerConnector connector = new ServerConnector(msg);
+		wrap = new Wrapper();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(10, 10, 500, 600);
@@ -46,59 +48,68 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 
 		txtArea = new JTextArea();
 		JScrollPane scroll = new JScrollPane(txtArea);
-		c.fill = GridBagConstraints.VERTICAL;
-		c.ipadx = 300;
-		c.weightx = 0.7;
-		c.weighty = 0.1;
+		c.fill = GridBagConstraints.BOTH;
+		// c.ipadx = 300;
+		c.weightx = 0.9;
+		c.weighty = 1.0;
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 1;
+		c.gridwidth = 5;
 		DefaultCaret caret = (DefaultCaret) txtArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		panel.add(scroll, c);
 		txtArea.setFocusable(false);
 
-		close = new JButton("Close server");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 5;
+		ArrayList<String> users = new ArrayList<String>();
+		usersList = new JList(users.toArray());
+		c.fill = GridBagConstraints.BOTH;
+		c.ipadx = 150;
+		c.gridx = 5;
+		c.weightx = 0.0;
+		c.gridy = 1;
 		c.gridwidth = 1;
+		panel.add(usersList, c);
+
+		JMenuBar menuBar = new JMenuBar();
+
+		menuBar.add(serverControl);
+		serverControl.setMnemonic(KeyEvent.VK_S);
+		stop.setEnabled(false);
+		stop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		stop.addActionListener(this);
+		start.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		start.addActionListener(this);
+		serverControl.add(start);
+		serverControl.add(stop);
+		c.ipady = 5;
 		c.weighty = 0.01;
 		c.gridx = 0;
-		c.gridy = 1;
-		panel.add(close, c);
-		close.addActionListener(this);
-
-		editConfig = new JButton("Edit settings");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 5;
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.weighty = 0.01;
-		c.gridy = 1;
-		panel.add(editConfig, c);
-		editConfig.addActionListener(this);
-
-		String[] users = { "1", "2" };
-		JList userslList = new JList(users);
-		userslList.setBorder(BorderFactory.createTitledBorder("Online users"));
-		c.fill = GridBagConstraints.VERTICAL;
-		c.ipadx = 300;
-		c.gridx = 1;
-		c.weighty = 0.1;
 		c.gridy = 0;
-		panel.add(userslList, c);
+		panel.add(menuBar, c);
+
+		serverControl.add(editConfig);
+		editConfig.addActionListener(this);
+		editConfig.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+
+		langs.setMnemonic(KeyEvent.VK_L);
+
+		bulgarian.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
+		english.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+
+		bulgarian.addActionListener(this);
+		english.addActionListener(this);
+
+		langs.add(bulgarian);
+		langs.add(english);
+		menuBar.add(langs);
+
+		languageChanged();
+
 		setVisible(true);
 
-		msg.newComponent("Main area");
-		msg.setTextToBeUpdated("Main area", lang.getValue("serverStarted"));
+		wrap.getMsg().newComponent("Main area");
+		wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("serverLaunched"));
 
-		server = connector.openServerSocket();
-		ServerMessenger messenger = null;
-		try {
-			messenger = new ServerMessenger(server.accept());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		msg.setTextToBeUpdated("Main area", messenger.receive());
 		new Thread(this).start();
 	}
 
@@ -110,9 +121,23 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 		if (e.getSource() == editConfig) {
 			new ServerSettings();
 		}
-		if (e.getSource() == close) {
-			dispose();
-			System.exit(0);
+		if (e.getSource() == start || e.getSource() == stop) {
+			if (wrap.getServer() == null) {
+				wrap.connect();
+				start.setEnabled(false);
+				stop.setEnabled(true);
+			} else {
+				stop.setEnabled(false);
+				wrap.disconnect();
+				start.setEnabled(true);
+			}
+		}
+		if (e.getSource() == bulgarian) {
+			wrap.getLang().setLanguage("bulgarian");
+			languageChanged();
+		} else if (e.getSource() == english) {
+			wrap.getLang().setLanguage("english");
+			languageChanged();
 		}
 	}
 
@@ -126,10 +151,21 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 			}
-			if (msg.getComponentsFlags("Main area")) {
-				txtArea.append(msg.getUpdatedText("Main area"));
+			if (wrap.getMsg().getComponentsFlags("Main area")) {
+				txtArea.append(wrap.getMsg().getUpdatedText("Main area"));
 			}
 		}
 	}
 
+	private void languageChanged() {
+		usersList.setBorder(BorderFactory
+				.createTitledBorder(wrap.getLang().getValue("onlineUsers")));
+		serverControl.setText(wrap.getLang().getValue("serverControl"));
+		stop.setText(wrap.getLang().getValue("stopServer"));
+		start.setText(wrap.getLang().getValue("startServer"));
+		bulgarian.setText(wrap.getLang().getValue("bulgarian"));
+		english.setText(wrap.getLang().getValue("english"));
+		editConfig.setText(wrap.getLang().getValue("settings"));
+		langs.setText(wrap.getLang().getValue("languages"));
+	}
 }

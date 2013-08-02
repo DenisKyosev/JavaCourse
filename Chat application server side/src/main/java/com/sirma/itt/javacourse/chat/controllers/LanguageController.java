@@ -8,7 +8,7 @@ import java.util.Properties;
 public class LanguageController {
 	private static String language = "english";
 	static Properties lang = new Properties();;
-	InterfaceUpdater msg = new InterfaceUpdater();
+	static InterfaceUpdater msg = new InterfaceUpdater();
 
 	public LanguageController() {
 
@@ -37,4 +37,5 @@ public class LanguageController {
 		}
 		return "";
 	}
+
 }

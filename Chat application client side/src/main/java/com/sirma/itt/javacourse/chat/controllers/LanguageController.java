@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class LanguageController {
-	private static String language = "bulgarian";
+	private String language = "english";
 	Properties lang = new Properties();;
 	InterfaceUpdater msg = new InterfaceUpdater();
 
@@ -18,17 +18,17 @@ public class LanguageController {
 		this.msg = msg;
 	}
 
-	public static String getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 
-	public static void setLanguage(String language) {
-		LanguageController.language = language;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public String getValue(String key) {
 		try {
-			lang.load(new FileInputStream(LanguageController.getLanguage() + ".properties"));
+			lang.load(new FileInputStream(this.getLanguage() + ".properties"));
 			return lang.getProperty(key);
 		} catch (FileNotFoundException e) {
 			msg.setTextToBeUpdated("Main area", "Error loading language.");

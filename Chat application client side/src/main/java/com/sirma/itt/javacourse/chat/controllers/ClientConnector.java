@@ -5,23 +5,42 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ClientConnector {
-	InterfaceUpdater msg;
+	Wrapper wrap;
 
-	public ClientConnector(InterfaceUpdater msg) {
-		this.msg = msg;
+	ClientConnector(Wrapper wrap) {
+		this.wrap = wrap;
 	}
 
-	public Socket openSocket(String host, int port, String username) {
-		Socket client;
+	public boolean openSocket(String host, int port, String username) {
 		try {
-			client = new Socket(host, port);
-			ClientMessenger messenger = new ClientMessenger(client);
-			messenger.send(username);
+			wrap.setClient(new Socket(host, port));
+
+			wrap.getMsg().setTextToBeUpdated("Main area",
+					wrap.getLang().getValue("connectionSuccess"));
+
+			wrap.setMessenger(new ClientMessenger(wrap.getClient()));
+			wrap.getMessenger().send(username);
+			String message = wrap.getMessenger().receive();
+
+			if (message.contains("unavailable")) {
+				wrap.getMsg().setTextToBeUpdated("Main area",
+						wrap.getLang().getValue("usernameUnavailable"));
+				wrap.getClient().close();
+				wrap.setClient(null);
+				wrap.getMsg().setTextToBeUpdated("Main area",
+						wrap.getLang().getValue("disconnected"));
+				return true;
+			} else {
+				wrap.getMsg().setTextToBeUpdated("Users newUser", message);
+				return false;
+			}
 		} catch (UnknownHostException e) {
-			msg.setTextToBeUpdated("Main area", msg.getText("clientConnectError"));
+			wrap.getMsg()
+					.setTextToBeUpdated("Main area", wrap.getLang().getValue("connectionFail"));
 		} catch (IOException e) {
-			msg.setTextToBeUpdated("Main area", msg.getText("clientConnectError"));
+			wrap.getMsg()
+					.setTextToBeUpdated("Main area", wrap.getLang().getValue("connectionFail"));
 		}
-		return null;
+		return false;
 	}
 }

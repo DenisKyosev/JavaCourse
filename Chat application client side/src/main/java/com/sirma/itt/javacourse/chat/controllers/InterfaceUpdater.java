@@ -42,6 +42,7 @@ public class InterfaceUpdater {
 						+ "\r\n");
 			} else {
 				componentsUpdateText.put(component, newText + "\r\n");
+				componentsFlags.put(component, true);
 			}
 		}
 	}
@@ -87,4 +88,5 @@ public class InterfaceUpdater {
 			setTextToBeUpdated("Main area", "Error saving configuration file.");
 		}
 	}
+
 }

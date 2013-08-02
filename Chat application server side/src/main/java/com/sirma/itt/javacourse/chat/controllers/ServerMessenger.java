@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerMessenger {
 	/** The reader. */
@@ -13,6 +15,7 @@ public class ServerMessenger {
 
 	/** The writer. */
 	private BufferedWriter writer;
+	private ObjectOutputStream objectWriter;
 
 	/**
 	 * Instantiates a new client connector.
@@ -24,6 +27,7 @@ public class ServerMessenger {
 		try {
 			reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+			objectWriter = new ObjectOutputStream(client.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,13 +39,23 @@ public class ServerMessenger {
 	 * @param message
 	 *            the message
 	 */
-	protected void send(String message) {
+	public void send(String message) {
 		try {
 			writer.write(message);
 			writer.newLine();
 			writer.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void sendObject(ArrayList<String> list) {
+		System.out.println(list);
+		try {
+			objectWriter.writeObject(list);
+			objectWriter.flush();
+		} catch (IOException e) {
+			System.out.println("maika ti");
 		}
 	}
 
