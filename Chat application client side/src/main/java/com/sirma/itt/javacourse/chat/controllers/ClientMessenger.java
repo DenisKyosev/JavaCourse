@@ -22,10 +22,9 @@ public class ClientMessenger {
 	 */
 	protected ClientMessenger(Socket client) {
 		try {
-			reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+			reader = new BufferedReader(new InputStreamReader(client.getInputStream(), "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), "UTF-8"));
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -35,14 +34,18 @@ public class ClientMessenger {
 	 * @param message
 	 *            the message
 	 */
-	protected void send(String message) {
+	public void send(String message) {
 		try {
 			writer.write(message);
 			writer.newLine();
 			writer.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
+	}
+
+	public void sendCommand(String cmd, String msg) {
+		send(cmd);
+		send(msg);
 	}
 
 	/**

@@ -30,12 +30,17 @@ public class InterfaceUpdater {
 	public void setTextToBeUpdated(String component, String newText) {
 		if (componentsFlags.containsKey(component)) {
 			StringBuilder string = new StringBuilder();
-			Date date = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("[hh:mm:ss]");
 
-			string.append(format.format(date));
-			string.append(newText);
-			string.append("\r\n");
+			if (component.equals("Main area")) {
+				Date date = new Date();
+				SimpleDateFormat format = new SimpleDateFormat("[hh:mm:ss]");
+
+				string.append(format.format(date));
+				string.append(newText);
+				string.append("\r\n");
+			} else {
+				string.append(newText);
+			}
 
 			if (componentsFlags.get(component)) {
 				string.insert(0, componentsUpdateText.get(component));

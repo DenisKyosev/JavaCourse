@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 
+import com.sirma.itt.javacourse.chat.clientfunctions.ClientFunctions;
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
 public class ClientWindow extends JFrame implements ActionListener, Runnable {
@@ -128,10 +129,14 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 			ClientLoginWindow login = new ClientLoginWindow(wrap);
 		} else if (e.getSource() == disconnect) {
 			try {
+				ClientFunctions func = new ClientFunctions();
+				wrap.getMessenger().sendCommand("disconnect", func.getSettings("lastUsedUsername"));
 				wrap.getClient().close();
 				wrap.setClient(null);
+
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("disconnected"));
+				users.removeAllElements();
 				connect.setEnabled(true);
 				disconnect.setEnabled(false);
 			} catch (IOException e1) {
@@ -173,8 +178,8 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 
 	private void updateUsersList() {
 		String message = wrap.getMsg().getUpdatedText("Users newUser");
-		if (message.contains("][")) {
-			String[] usernames = message.split("\\]\\[");
+		if (message.contains(";")) {
+			String[] usernames = message.split(";");
 			for (int i = 0; i < usernames.length; i++) {
 				wrap.getMsg().setTextToBeUpdated("Main area", usernames[i]);
 				users.addElement(usernames[i]);

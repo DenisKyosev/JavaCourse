@@ -2,6 +2,7 @@ package com.sirma.itt.javacourse.chat.controllers;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 
 import com.sirma.itt.javacourse.chat.serverfunctions.ClientsListener;
 
@@ -11,6 +12,15 @@ public class Wrapper {
 	ServerConnector connector;
 	ServerSocket server;
 	Thread thread;
+	ArrayList<String> usersList = new ArrayList<String>();
+
+	public ArrayList<String> getUsersList() {
+		return usersList;
+	}
+
+	protected void setUsersList(ArrayList<String> usersList) {
+		this.usersList = usersList;
+	}
 
 	public Wrapper() {
 		this.connector = new ServerConnector(this);

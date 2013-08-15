@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ServerMessenger {
 	/** The reader. */
@@ -25,11 +24,10 @@ public class ServerMessenger {
 	 */
 	public ServerMessenger(Socket client) {
 		try {
-			reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+			reader = new BufferedReader(new InputStreamReader(client.getInputStream(), "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), "UTF-8"));
 			objectWriter = new ObjectOutputStream(client.getOutputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -45,17 +43,6 @@ public class ServerMessenger {
 			writer.newLine();
 			writer.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void sendObject(ArrayList<String> list) {
-		System.out.println(list);
-		try {
-			objectWriter.writeObject(list);
-			objectWriter.flush();
-		} catch (IOException e) {
-			System.out.println("maika ti");
 		}
 	}
 
@@ -70,6 +57,15 @@ public class ServerMessenger {
 		} catch (IOException e) {
 			return null;
 		}
+	}
+
+	public String[] receiveCommand() {
+		String[] cmd = new String[2];
+		String message = receive();
+		cmd[0] = message;
+		message = receive();
+		cmd[1] = message;
+		return cmd;
 	}
 
 	/**

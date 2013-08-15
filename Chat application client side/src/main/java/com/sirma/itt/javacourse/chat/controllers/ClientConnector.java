@@ -31,6 +31,7 @@ public class ClientConnector {
 						wrap.getLang().getValue("disconnected"));
 				return true;
 			} else {
+				System.out.println(message);
 				wrap.getMsg().setTextToBeUpdated("Users newUser", message);
 				return false;
 			}

@@ -6,9 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -34,12 +34,13 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 	JMenu serverControl = new JMenu();
 	JMenuItem bulgarian = new JMenuItem();
 	JMenuItem english = new JMenuItem();
+	DefaultListModel<String> users;
 
 	ServerWindow() {
 		wrap = new Wrapper();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(10, 10, 500, 600);
+		setBounds(100, 200, 700, 600);
 		Container mainPanel = getContentPane();
 		JPanel panel = new JPanel();
 		mainPanel.add(panel);
@@ -60,8 +61,8 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 		panel.add(scroll, c);
 		txtArea.setFocusable(false);
 
-		ArrayList<String> users = new ArrayList<String>();
-		usersList = new JList(users.toArray());
+		users = new DefaultListModel<String>();
+		usersList = new JList(users);
 		c.fill = GridBagConstraints.BOTH;
 		c.ipadx = 150;
 		c.gridx = 5;
@@ -69,6 +70,8 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 		c.gridy = 1;
 		c.gridwidth = 1;
 		panel.add(usersList, c);
+		wrap.getMsg().newComponent("new user");
+		wrap.getMsg().newComponent("logout user");
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -153,6 +156,12 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 			}
 			if (wrap.getMsg().getComponentsFlags("Main area")) {
 				txtArea.append(wrap.getMsg().getUpdatedText("Main area"));
+			}
+			if (wrap.getMsg().getComponentsFlags("logout user")) {
+				users.removeElement(wrap.getMsg().getUpdatedText("logout user"));
+			}
+			if (wrap.getMsg().getComponentsFlags("new user")) {
+				users.addElement(wrap.getMsg().getUpdatedText("new user"));
 			}
 		}
 	}
