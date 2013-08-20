@@ -21,6 +21,7 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
+import com.sirma.itt.javacourse.chat.serverfunctions.Settings;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -69,7 +70,7 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 	 */
 	ServerWindow() {
 		wrap = new Wrapper();
-
+		new Settings();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(100, 200, 800, 600);
 		Container mainPanel = getContentPane();

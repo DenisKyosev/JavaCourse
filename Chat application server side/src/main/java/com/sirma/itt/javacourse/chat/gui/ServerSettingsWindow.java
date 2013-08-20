@@ -90,6 +90,7 @@ public class ServerSettingsWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == save) {
 			function.saveSettings(host.getText(), minPort.getText(), maxPort.getText());
+			dispose();
 		}
 		if (e.getSource() == cancel) {
 			dispose();

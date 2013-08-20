@@ -58,3 +58,15 @@
 [03:18:52]New client connected.
 [03:18:52]Thread waiting for messages from the new client was started.
 [03:18:53]User successfully added to users list: fester2
+[03:27:30]Welcome to the server side :)
+[03:28:13]Welcome to the server side :)
+[04:19:42]Welcome to the server side :)
+[04:20:24]Welcome to the server side :)
+[04:21:37]Welcome to the server side :)
+[04:21:56]Welcome to the server side :)
+[04:22:15]Welcome to the server side :)
+[04:23:23]Welcome to the server side :)
+[04:24:27]Welcome to the server side :)
+[04:25:10]Welcome to the server side :)
+[04:26:03]Welcome to the server side :)
+[04:26:34]Welcome to the server side :)
