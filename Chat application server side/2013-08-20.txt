@@ -1,0 +1,6 @@
+[11:47:31]Welcome to the server side :)
+[11:47:32]Server started successfully on port: 7000
+[11:47:46]New client connected.
+[11:47:46]Thread waiting for messages from the new client was started.
+[11:47:46]User successfully added to users list: fester
+[11:48:09]User disconnected: fester

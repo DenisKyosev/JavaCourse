@@ -1,0 +1,24 @@
+[01:59:26]Trying to connect to server.
+[01:59:26]Successfully connected to server.
+[01:59:33]<fester>: Dawdaw
+[02:29:24]Trying to connect to server.
+[02:29:24]Successfully connected to server.
+[02:29:27]Disconnected from server.
+[02:29:27]Lost connection to server.
+[02:29:31]Trying to connect to server.
+[02:29:31]Successfully connected to server.
+[02:29:34]Disconnected from server.
+[02:29:34]Lost connection to server.
+[03:16:45]Trying to connect to server.
+[03:16:45]Successfully connected to server.
+[03:17:04]New user connected: fester22
+[03:17:03]Trying to connect to server.
+[03:17:04]Successfully connected to server.
+[03:17:15]fester22 left the chat room.
+[03:18:47]Trying to connect to server.
+[03:18:47]Successfully connected to server.
+[03:18:52]Trying to connect to server.
+[03:18:52]Successfully connected to server.
+[03:18:52]New user connected: fester2
+[03:18:56]Lost connection to server.
+[03:18:56]Lost connection to server.

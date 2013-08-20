@@ -6,8 +6,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ServerFunctions {
+/**
+ * The Class Settings.
+ */
+public class Settings {
 
+	/**
+	 * Save settings.
+	 * 
+	 * @param host
+	 *            the host
+	 * @param minPort
+	 *            the min port
+	 * @param maxPort
+	 *            the max port
+	 * @return true, if successful
+	 */
 	public boolean saveSettings(String host, String minPort, String maxPort) {
 		Properties config = new Properties();
 		try {
@@ -28,6 +42,13 @@ public class ServerFunctions {
 		}
 	}
 
+	/**
+	 * Gets the last used settings.
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the settings
+	 */
 	public String getSettings(String key) {
 		Properties config = new Properties();
 		try {

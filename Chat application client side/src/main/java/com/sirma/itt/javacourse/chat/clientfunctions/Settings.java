@@ -6,7 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ClientFunctions {
+// TODO: Auto-generated Javadoc
+/**
+ * Settings reader and saver.
+ */
+public class Settings {
+
+	/**
+	 * Returns setting by given key.
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the settings
+	 */
 	public String getSettings(String key) {
 		Properties config = new Properties();
 		try {
@@ -19,6 +31,17 @@ public class ClientFunctions {
 		return config.getProperty(key);
 	}
 
+	/**
+	 * Save settings.
+	 * 
+	 * @param host
+	 *            the host
+	 * @param port
+	 *            the port
+	 * @param username
+	 *            the username
+	 * @return true, if successful
+	 */
 	public boolean saveSettings(String host, String port, String username) {
 		Properties config = new Properties();
 		try {

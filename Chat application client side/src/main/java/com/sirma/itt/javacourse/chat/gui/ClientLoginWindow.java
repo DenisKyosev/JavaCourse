@@ -14,19 +14,44 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.sirma.itt.javacourse.chat.clientfunctions.ClientFunctions;
+import com.sirma.itt.javacourse.chat.clientfunctions.Settings;
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ClientLoginWindow.
+ */
 public class ClientLoginWindow extends JFrame implements ActionListener {
-	JTextField host;
-	JTextField port;
-	JTextField username;
-	JButton connect;
-	JButton cancel;
 
-	Wrapper wrap;
-	ClientFunctions function = new ClientFunctions();
+	private static final long serialVersionUID = 9187415098397371455L;
 
+	/** The host. */
+	private final JTextField host;
+
+	/** The port. */
+	private final JTextField port;
+
+	/** The username. */
+	private final JTextField username;
+
+	/** The connect button. */
+	private final JButton connect;
+
+	/** The cancel button. */
+	private final JButton cancel;
+
+	/** The wrapper. */
+	private final Wrapper wrap;
+
+	/** The function. */
+	private final Settings function = new Settings();
+
+	/**
+	 * Instantiates a new client login window.
+	 * 
+	 * @param wrap
+	 *            the wrapper
+	 */
 	ClientLoginWindow(Wrapper wrap) {
 		this.wrap = wrap;
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -63,11 +88,14 @@ public class ClientLoginWindow extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == connect) {
 			try {
-				wrap.getConnector().openSocket(host.getText(), Integer.parseInt(port.getText()),
+				wrap.getConnector().connect(host.getText(), Integer.parseInt(port.getText()),
 						username.getText());
 				function.saveSettings(host.getText(), port.getText(), username.getText());
 				dispose();
@@ -82,6 +110,9 @@ public class ClientLoginWindow extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets last used settings.
+	 */
 	private void getSettings() {
 		host.setText(function.getSettings("host"));
 		port.setText(function.getSettings("port"));

@@ -1,0 +1,60 @@
+[11:55:18]Welcome to the server side :)
+[01:59:20]Welcome to the server side :)
+[01:59:21]Server started successfully on port: 7000
+[01:59:26]New client connected.
+[01:59:26]Thread waiting for messages from the new client was started.
+[01:59:26]User successfully added to users list: fester
+[01:59:33]<fester>: Dawdaw
+[01:59:42]User disconnected: fester
+[02:25:51]Welcome to the server side :)
+[02:25:51]configPropertiesError
+[02:28:14]Welcome to the server side :)
+[02:28:16]Server started successfully on port: 7000
+[02:29:24]New client connected.
+[02:29:24]Thread waiting for messages from the new client was started.
+[02:29:24]User successfully added to users list: fester
+[02:29:27]User disconnected: fester
+[02:29:31]New client connected.
+[02:29:31]Thread waiting for messages from the new client was started.
+[02:29:31]User successfully added to users list: fester2
+[02:29:34]User disconnected: fester2
+[03:03:12]Welcome to the server side :)
+[03:03:13]Server started successfully on port: 7000
+[03:03:15]Server stopped successfully.
+[03:03:15]Server started successfully on port: 7000
+[03:03:19]Welcome to the server side :)
+[03:03:20]Server started successfully on port: 7000
+[03:03:20]Port already in use: 7000
+[03:03:20]Server started successfully on port: 7001
+[03:03:46]Welcome to the server side :)
+[03:03:46]Port already in use: 7000
+[03:03:46]Server started successfully on port: 7001
+[03:03:50]Welcome to the server side :)
+[03:03:54]Port already in use: 7000
+[03:03:54]Port already in use: 7001
+[03:03:54]Server started successfully on port: 7002
+[03:16:39]Welcome to the server side :)
+[03:16:40]Server started successfully on port: 7000
+[03:16:45]New client connected.
+[03:16:45]Thread waiting for messages from the new client was started.
+[03:16:45]User successfully added to users list: fester2
+[03:16:51]Welcome to the server side :)
+[03:16:51]Welcome to the server side :)
+[03:16:53]Welcome to the server side :)
+[03:16:53]Welcome to the server side :)
+[03:16:53]Welcome to the server side :)
+[03:16:55]Port already in use: 7000
+[03:16:55]Server started successfully on port: 7001
+[03:17:03]New client connected.
+[03:17:04]Thread waiting for messages from the new client was started.
+[03:17:04]User successfully added to users list: fester22
+[03:17:15]User disconnected: fester22
+[03:17:16]User disconnected: fester2
+[03:18:41]Welcome to the server side :)
+[03:18:42]Server started successfully on port: 7000
+[03:18:47]New client connected.
+[03:18:47]Thread waiting for messages from the new client was started.
+[03:18:47]User successfully added to users list: fester
+[03:18:52]New client connected.
+[03:18:52]Thread waiting for messages from the new client was started.
+[03:18:53]User successfully added to users list: fester2

@@ -6,6 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -23,25 +27,57 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 
-import com.sirma.itt.javacourse.chat.clientfunctions.ClientFunctions;
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
-public class ClientWindow extends JFrame implements ActionListener, Runnable {
-	JTextArea outputArea = new JTextArea();
-	JTextField inputField = new JTextField();
-	JMenu connectMenu = new JMenu();
-	JMenuItem connect = new JMenuItem();
-	JMenuItem disconnect = new JMenuItem();
-	JMenuItem bulgarian = new JMenuItem();
-	JMenuItem english = new JMenuItem();
-	JButton send = new JButton();
-	JList userslList;
-	JMenu langMenu = new JMenu();
-	DefaultListModel<String> users = new DefaultListModel<>();
-	Wrapper wrap = new Wrapper();
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Client Window.
+ */
+public class ClientWindow extends JFrame implements ActionListener, KeyListener, Runnable {
 
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -569662617699323268L;
+
+	/** The output area. */
+	private final JTextArea outputArea = new JTextArea();
+
+	/** The input field. */
+	private final JTextField inputField = new JTextField();
+
+	/** The connect menu. */
+	private final JMenu connectMenu = new JMenu();
+
+	/** The connect menu item. */
+	private final JMenuItem connect = new JMenuItem();
+
+	/** The disconnect menu item. */
+	private final JMenuItem disconnect = new JMenuItem();
+
+	/** The bulgarian menu item. */
+	private final JMenuItem bulgarian = new JMenuItem();
+
+	/** The english menu item. */
+	private final JMenuItem english = new JMenuItem();
+
+	/** The send button. */
+	private final JButton send = new JButton();
+
+	/** The users list. */
+	private final JList<String> usersList;
+
+	/** The language menu. */
+	private final JMenu langMenu = new JMenu();
+
+	/** The users list. */
+	private final DefaultListModel<String> users = new DefaultListModel<String>();
+
+	/** The wrapper. */
+	private final Wrapper wrap = new Wrapper();
+
+	/**
+	 * Instantiates a new client window.
+	 */
 	ClientWindow() {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(300, 200, 800, 550);
 		Container container = getContentPane();
 
@@ -58,8 +94,8 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 		langMenu.setMnemonic(KeyEvent.VK_L);
 		connectMenu.setMnemonic(KeyEvent.VK_C);
 		connectMenu.add(connect);
-		connect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
-		disconnect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
+		connect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.SHIFT_MASK));
+		disconnect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.SHIFT_MASK));
 		disconnect.setEnabled(false);
 		connectMenu.add(disconnect);
 		menu.add(connectMenu);
@@ -89,16 +125,18 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 		wrap.getMsg().newComponent("Main area");
 		outputArea.setFocusable(false);
 
-		wrap.getMsg().newComponent("Users newUser");
-		wrap.getMsg().newComponent("Users leftIser");
-		userslList = new JList(users);
-		userslList
-				.setBorder(BorderFactory.createTitledBorder(wrap.getMsg().getText("onlineUsers")));
+		wrap.getMsg().newComponent("newUser");
+		wrap.getMsg().newComponent("userLeft");
+
+		usersList = new JList<String>(users);
+		JScrollPane scrollList = new JScrollPane(usersList);
+		usersList.setBorder(BorderFactory
+				.createTitledBorder(wrap.getLang().getValue("onlineUsers")));
 		c.fill = GridBagConstraints.VERTICAL;
 		c.ipadx = 700;
 		c.gridx = 4;
 		c.gridy = 1;
-		panel.add(userslList, c);
+		panel.add(scrollList, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 5;
@@ -108,6 +146,9 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 		c.gridy = 2;
 		panel.add(inputField, c);
 		inputField.addActionListener(this);
+		inputField.addKeyListener(this);
+		inputField.setText("Connect first");
+		inputField.setEnabled(false);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 1;
@@ -119,26 +160,27 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 		send.addActionListener(this);
 		languageChanged();
 		setVisible(true);
+		this.addWindowListener(exitListener);
 
 		new Thread(this).start();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == connect) {
-			ClientLoginWindow login = new ClientLoginWindow(wrap);
+			new ClientLoginWindow(wrap);
 		} else if (e.getSource() == disconnect) {
 			try {
-				ClientFunctions func = new ClientFunctions();
-				wrap.getMessenger().sendCommand("disconnect", func.getSettings("lastUsedUsername"));
 				wrap.getClient().close();
 				wrap.setClient(null);
 
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("disconnected"));
 				users.removeAllElements();
-				connect.setEnabled(true);
-				disconnect.setEnabled(false);
+				enableConnect();
 			} catch (IOException e1) {
 			}
 		}
@@ -150,45 +192,91 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 			wrap.getLang().setLanguage("english");
 			languageChanged();
 		}
+
+		if (e.getSource() == send) {
+			wrap.getMessenger().send(inputField.getText());
+		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void run() {
 		while (true) {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 			if (wrap.getMsg().hasUpdate("Main area")) {
-				outputArea.append(wrap.getMsg().getUpdatedText("Main area"));
+				String message = wrap.getMsg().getUpdatedText("Main area");
+				outputArea.append(message);
+				wrap.getLog().log(message);
 			}
-			if (wrap.getMsg().hasUpdate("Users newUser")) {
-				updateUsersList();
+
+			if (wrap.getMsg().hasUpdate("newUser")) {
+				String usersList = wrap.getMsg().getUpdatedText("newUser");
+				if (usersList.contains("::")) {
+					String[] usernames = usersList.split("::");
+					for (int i = 0; i < usernames.length; i++) {
+						users.addElement(usernames[i].trim());
+					}
+				} else {
+					users.addElement(usersList.trim());
+				}
 			}
-			if (wrap.getMsg().hasUpdate("Users leftUser")) {
-				users.removeElement(wrap.getMsg().getUpdatedText("Users newUser"));
+
+			if (wrap.getMsg().hasUpdate("userLeft")) {
+				users.removeElement(wrap.getMsg().getUpdatedText("userLeft").trim());
 			}
+
 			if (wrap.getClient() != null) {
-				disconnect.setEnabled(true);
-				connect.setEnabled(false);
+				disableConnect();
 			}
 		}
 	}
 
-	private void updateUsersList() {
-		String message = wrap.getMsg().getUpdatedText("Users newUser");
-		if (message.contains(";")) {
-			String[] usernames = message.split(";");
-			for (int i = 0; i < usernames.length; i++) {
-				wrap.getMsg().setTextToBeUpdated("Main area", usernames[i]);
-				users.addElement(usernames[i]);
-			}
-		} else {
-			users.addElement(message);
+	/**
+	 * Enable connect button. Disable disconnect button.
+	 */
+	private void enableConnect() {
+		disconnect.setEnabled(false);
+		connect.setEnabled(true);
+		inputField.setEnabled(false);
+		inputField.setText("Connect first");
+	}
+
+	/**
+	 * Disable connect button. Enable disconnect button.
+	 */
+	private void disableConnect() {
+		if (!inputField.isEnabled()) {
+			disconnect.setEnabled(true);
+			connect.setEnabled(false);
+			inputField.setEnabled(true);
+			inputField.setText("");
 		}
 	}
 
+	/** The exit listener. */
+	private final WindowListener exitListener = new WindowAdapter() {
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			if (wrap.getClient() != null) {
+				try {
+					wrap.getClient().close();
+					wrap.setClient(null);
+				} catch (IOException e1) {
+				}
+			}
+			System.exit(0);
+		}
+	};
+
+	/**
+	 * Updates GUI on language change.
+	 */
 	private void languageChanged() {
 		connectMenu.setText(wrap.getLang().getValue("connectMenu"));
 		connect.setText(wrap.getLang().getValue("connect"));
@@ -196,9 +284,33 @@ public class ClientWindow extends JFrame implements ActionListener, Runnable {
 		bulgarian.setText(wrap.getLang().getValue("bulgarian"));
 		english.setText(wrap.getLang().getValue("english"));
 		send.setText(wrap.getLang().getValue("send"));
-		userslList.setBorder(BorderFactory.createTitledBorder(wrap.getLang()
-				.getValue("onlineUsers")));
+		usersList.setBorder(BorderFactory
+				.createTitledBorder(wrap.getLang().getValue("onlineUsers")));
 		langMenu.setText(wrap.getLang().getValue("language"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+			wrap.getMessenger().send(inputField.getText());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 
 }

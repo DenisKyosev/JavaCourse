@@ -1,92 +1,107 @@
 package com.sirma.itt.javacourse.chat.controllers;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InterfaceUpdater.
+ */
 public class InterfaceUpdater {
+
+	/** The components flags. */
 	private final Map<String, Boolean> componentsFlags = new HashMap<String, Boolean>();
+
+	/** The components update text. */
 	private final Map<String, String> componentsUpdateText = new HashMap<String, String>();
-	String lang;
 
-	public InterfaceUpdater() {
-		getLanguage();
-	}
+	/** The language. */
+	private String lang;
 
+	/**
+	 * Register new component.
+	 * 
+	 * @param component
+	 *            the component
+	 */
 	public void newComponent(String component) {
 		componentsFlags.put(component, false);
 		componentsUpdateText.put(component, "");
 	}
 
+	/**
+	 * Gets the updated text.
+	 * 
+	 * @param component
+	 *            the component
+	 * @return the updated text
+	 */
 	public String getUpdatedText(String component) {
 		componentsFlags.put(component, false);
-		return componentsUpdateText.get(component);
+		String result = componentsUpdateText.get(component);
+		componentsUpdateText.put(component, "");
+		return result;
 	}
 
+	/**
+	 * Checks for update.
+	 * 
+	 * @param component
+	 *            the component
+	 * @return true, if successful
+	 */
 	public boolean hasUpdate(String component) {
-		if (componentsFlags.containsKey(component) && componentsFlags.get(component)) {
-			return true;
-		} else {
-			return false;
-		}
+		return componentsFlags.containsKey(component) && componentsFlags.get(component);
 	}
 
+	/**
+	 * Sets the component and text to be updated.
+	 * 
+	 * @param component
+	 *            the component
+	 * @param newText
+	 *            the new text
+	 */
 	public void setTextToBeUpdated(String component, String newText) {
 		if (componentsFlags.containsKey(component)) {
+			String result = "";
+			if ("Main area".equals(component)) {
+				result = timeBuilder() + newText;
+			} else {
+				result = newText;
+			}
+
 			if (componentsFlags.get(component)) {
-				componentsUpdateText.put(component, componentsUpdateText.get(component) + newText
+				componentsUpdateText.put(component, componentsUpdateText.get(component) + result
 						+ "\r\n");
 			} else {
-				componentsUpdateText.put(component, newText + "\r\n");
+				componentsUpdateText.put(component, result + "\r\n");
 				componentsFlags.put(component, true);
 			}
+
 		}
 	}
 
-	public String getText(String key) {
-		Properties languageFile = new Properties();
-		try {
-			languageFile.load(new FileInputStream(lang + ".properties"));
-			return languageFile.getProperty(key);
-		} catch (FileNotFoundException e) {
-			setTextToBeUpdated("Main area", "Error loading language.");
-		} catch (IOException e) {
-			setTextToBeUpdated("Main area", "Error loading language.");
-		}
-		return "";
-	}
-
-	private void getLanguage() {
-		Properties configFile = new Properties();
-		try {
-			configFile.load(new FileInputStream("config.properties"));
-			lang = configFile.getProperty("lastUsedLanguage");
-		} catch (FileNotFoundException e) {
-			setTextToBeUpdated("Main area", "Error loading configuration file.");
-		} catch (IOException e) {
-			setTextToBeUpdated("Main area", "Error loading configuration file.");
-		}
-	}
-
+	/**
+	 * Gets the lang.
+	 * 
+	 * @return the lang
+	 */
 	public String getLang() {
 		return lang;
 	}
 
-	public void setLang(String lang) {
-		this.lang = lang;
-		Properties configFile = new Properties();
-		configFile.setProperty("lastUsedLanguage", lang);
-		try {
-			configFile.store(new FileOutputStream("config.properties"), null);
-		} catch (FileNotFoundException e) {
-			setTextToBeUpdated("Main area", "Error saving configuration file.");
-		} catch (IOException e) {
-			setTextToBeUpdated("Main area", "Error saving configuration file.");
-		}
-	}
+	/**
+	 * Time builder.
+	 * 
+	 * @return the string
+	 */
+	public String timeBuilder() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("[hh:mm:ss]");
 
+		return format.format(date);
+	}
 }

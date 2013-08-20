@@ -2,56 +2,144 @@ package com.sirma.itt.javacourse.chat.controllers;
 
 import java.net.Socket;
 
-public class Wrapper {
-	ClientConnector connector;
-	InterfaceUpdater msg;
-	ClientMessenger messenger;
-	LanguageController lang;
-	Socket client;
+import com.sirma.itt.javacourse.chat.clientfunctions.Logger;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Wrapper.
+ */
+public class Wrapper {
+
+	/** The connector. */
+	private final ClientConnector connector;
+
+	/** The interface updater. */
+	private final InterfaceUpdater msg;
+
+	/** The messenger. */
+	private ClientMessenger messenger;
+
+	/** The language controller. */
+	private final LanguageController lang;
+
+	/** The client. */
+	private Socket client;
+
+	/** The logger class. */
+	private Logger log;
+
+	/** The current username. */
+	private String username;
+
+	/**
+	 * Gets the current username.
+	 * 
+	 * @return the current username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * Sets the current username.
+	 * 
+	 * @param username
+	 *            the current username
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * Instantiates a new wrapper.
+	 */
 	public Wrapper() {
 		this.connector = new ClientConnector(this);
 		this.msg = new InterfaceUpdater();
 		this.lang = new LanguageController(msg);
 	}
 
+	/**
+	 * Gets the logger.
+	 * 
+	 * @return the logger
+	 */
+	public Logger getLog() {
+		return log;
+	}
+
+	/**
+	 * Gets the connector.
+	 * 
+	 * @return the connector
+	 */
 	public ClientConnector getConnector() {
 		return connector;
 	}
 
-	protected void setConnector(ClientConnector connector) {
-		this.connector = connector;
-	}
-
+	/**
+	 * Gets the msg.
+	 * 
+	 * @return the msg
+	 */
 	public InterfaceUpdater getMsg() {
 		return msg;
 	}
 
-	protected void setMsg(InterfaceUpdater ui) {
-		this.msg = ui;
-	}
-
+	/**
+	 * Gets the messenger.
+	 * 
+	 * @return the messenger
+	 */
 	public ClientMessenger getMessenger() {
 		return messenger;
 	}
 
+	/**
+	 * Sets the messenger.
+	 * 
+	 * @param messenger
+	 *            the new messenger
+	 */
 	public void setMessenger(ClientMessenger messenger) {
 		this.messenger = messenger;
 	}
 
+	/**
+	 * Gets the language controller.
+	 * 
+	 * @return the language controller
+	 */
 	public LanguageController getLang() {
 		return lang;
 	}
 
+	/**
+	 * Gets the client.
+	 * 
+	 * @return the client
+	 */
 	public Socket getClient() {
 		return client;
 	}
 
+	/**
+	 * Sets the client.
+	 * 
+	 * @param client
+	 *            the new client
+	 */
 	public void setClient(Socket client) {
 		this.client = client;
 	}
 
-	protected void setLang(LanguageController lang) {
-		this.lang = lang;
+	/**
+	 * Sets the logger.
+	 * 
+	 * @param log
+	 *            the new logger
+	 */
+	public void setLog(Logger log) {
+		this.log = log;
 	}
 }

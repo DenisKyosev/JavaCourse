@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.charset.Charset;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Communication class receiving and sending messages to server.
+ */
 public class ClientMessenger {
 	/** The reader. */
 	private BufferedReader reader;
@@ -15,41 +20,45 @@ public class ClientMessenger {
 	private BufferedWriter writer;
 
 	/**
-	 * Instantiates a new client connector.
+	 * Instantiates a new client messenger.
 	 * 
 	 * @param client
 	 *            the client
 	 */
 	protected ClientMessenger(Socket client) {
 		try {
-			reader = new BufferedReader(new InputStreamReader(client.getInputStream(), "UTF-8"));
-			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(client.getInputStream(),
+					Charset.forName("UTF-8")));
+			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(),
+					Charset.forName("UTF-8")));
 		} catch (IOException e) {
 		}
 	}
 
 	/**
-	 * Send.
+	 * Send message to server. Cuts the message to 200 symbols.
 	 * 
 	 * @param message
 	 *            the message
 	 */
 	public void send(String message) {
 		try {
-			writer.write(message);
+			String msg;
+			if (message.length() > 200) {
+				msg = message.substring(0, 200);
+			} else {
+				msg = message;
+			}
+			msg = msg.substring(0, 1).toUpperCase() + msg.substring(1);
+			writer.write(msg);
 			writer.newLine();
 			writer.flush();
 		} catch (IOException e) {
 		}
 	}
 
-	public void sendCommand(String cmd, String msg) {
-		send(cmd);
-		send(msg);
-	}
-
 	/**
-	 * Receive.
+	 * Receive message from server.
 	 * 
 	 * @return the string
 	 */
@@ -61,41 +70,4 @@ public class ClientMessenger {
 		}
 	}
 
-	/**
-	 * Gets the reader.
-	 * 
-	 * @return the reader
-	 */
-	protected BufferedReader getReader() {
-		return reader;
-	}
-
-	/**
-	 * Sets the reader.
-	 * 
-	 * @param reader
-	 *            the new reader
-	 */
-	protected void setReader(BufferedReader reader) {
-		this.reader = reader;
-	}
-
-	/**
-	 * Gets the writer.
-	 * 
-	 * @return the writer
-	 */
-	protected BufferedWriter getWriter() {
-		return writer;
-	}
-
-	/**
-	 * Sets the writer.
-	 * 
-	 * @param writer
-	 *            the new writer
-	 */
-	protected void setWriter(BufferedWriter writer) {
-		this.writer = writer;
-	}
 }

@@ -14,17 +14,41 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.sirma.itt.javacourse.chat.serverfunctions.ServerFunctions;
+import com.sirma.itt.javacourse.chat.serverfunctions.Settings;
 
-public class ServerSettings extends JFrame implements ActionListener {
-	JTextField host;
-	JTextField minPort;
-	JTextField maxPort;
-	JButton save;
-	JButton cancel;
-	ServerFunctions function = new ServerFunctions();
+// TODO: Auto-generated Javadoc
+/**
+ * Server Settings Window.
+ */
+public class ServerSettingsWindow extends JFrame implements ActionListener {
 
-	ServerSettings() {
+	/**
+	 * Comment for serialVersionUID.
+	 */
+	private static final long serialVersionUID = -5682727138147980248L;
+
+	/** The host. */
+	private final JTextField host;
+
+	/** The min port. */
+	private final JTextField minPort;
+
+	/** The max port. */
+	private final JTextField maxPort;
+
+	/** The save. */
+	private final JButton save;
+
+	/** The cancel. */
+	private final JButton cancel;
+
+	/** The function. */
+	private final Settings function = new Settings();
+
+	/**
+	 * Instantiates a new server settings window.
+	 */
+	ServerSettingsWindow() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(300, 200, 300, 150);
 		Container mainPanel = getContentPane();
@@ -59,6 +83,9 @@ public class ServerSettings extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == save) {
@@ -69,6 +96,9 @@ public class ServerSettings extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets the last used settings settings.
+	 */
 	private void getSettings() {
 		host.setText(function.getSettings("host"));
 		minPort.setText(function.getSettings("minPort"));

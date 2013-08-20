@@ -9,30 +9,41 @@ import java.util.Properties;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Connect.
+ * Server starter.
  */
 public final class ServerConnector {
 
-	Wrapper wrap;
+	/** The wrapper. */
+	private final Wrapper wrap;
 
+	/** The error flag. */
+	private boolean error = false;
+
+	/** The configuration file. */
+	private final Properties config = new Properties();
+
+	/**
+	 * Instantiates a new server starter.
+	 * 
+	 * @param wrap
+	 *            the wrap
+	 */
 	public ServerConnector(Wrapper wrap) {
 		this.wrap = wrap;
 	}
 
 	/**
-	 * Open server socket on port range 7000-7020.
-	 * 
-	 * @return the server socket
+	 * Gets the last used settings.
 	 */
-	public void openServerSocket() {
-		boolean error = false;
-		Properties config = new Properties();
+	private void getSettings() {
+
 		try {
 			config.load(new FileInputStream("config.properties"));
 		} catch (IOException e1) {
 			error = true;
 			config.setProperty("minPort", "7000");
 			config.setProperty("maxPort", "7020");
+			config.setProperty("host", "localhost");
 			try {
 				config.store(new FileOutputStream("config.properties"), null);
 			} catch (FileNotFoundException e) {
@@ -41,29 +52,51 @@ public final class ServerConnector {
 				error = true;
 			}
 		}
+	}
+
+	/**
+	 * Open server socket on port range from configuration file.
+	 */
+	public void openServerSocket() {
+		int minPort;
+		int maxPort;
+		try {
+			minPort = Integer.parseInt(config.getProperty("minPort"));
+			maxPort = Integer.parseInt(config.getProperty("maxPort"));
+		} catch (NumberFormatException e) {
+			wrap.getMsg().setTextToBeUpdated("Main area", "configPropertiesError");
+			minPort = 7000;
+			maxPort = 7020;
+		}
+		for (int i = minPort; i <= maxPort; i++) {
+			if (wrap.getServer() == null) {
+				try {
+					wrap.setServer(new ServerSocket(i));
+					wrap.getMsg().setTextToBeUpdated("Main area",
+							wrap.getLang().getValue("serverStartedSuccess") + i);
+				} catch (Exception ex) {
+					wrap.getMsg().setTextToBeUpdated("Main area",
+							wrap.getLang().getValue("portInUse") + i);
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Start server.
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean connect() {
+		getSettings();
 
 		if (error) {
 			wrap.getMsg().setTextToBeUpdated("Main area",
 					wrap.getLang().getValue("configFileError"));
 			error = false;
 		}
-
-		int minPort = Integer.parseInt(config.getProperty("minPort"));
-		int maxPort = Integer.parseInt(config.getProperty("maxPort"));
-		try {
-			for (int i = minPort; i <= maxPort; i++) {
-				try {
-					wrap.getMsg().setTextToBeUpdated("Main area",
-							wrap.getLang().getValue("serverStartedSuccess") + i);
-					wrap.setServer(new ServerSocket(i));
-					break;
-				} catch (IOException ex) {
-					continue;
-				}
-			}
-		} catch (NumberFormatException e) {
-			wrap.getMsg().setTextToBeUpdated("Main area", "configPropertiesError");
-		}
+		openServerSocket();
+		return wrap.getServer() != null;
 	}
-
 }

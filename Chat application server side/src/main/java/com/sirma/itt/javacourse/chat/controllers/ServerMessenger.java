@@ -4,35 +4,55 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Server - client messenger.
+ */
 public class ServerMessenger {
 	/** The reader. */
 	private BufferedReader reader;
 
 	/** The writer. */
 	private BufferedWriter writer;
-	private ObjectOutputStream objectWriter;
+
+	/** The client. */
+	private Socket client;
 
 	/**
-	 * Instantiates a new client connector.
+	 * Instantiates a new server - client messenger.
 	 * 
 	 * @param client
 	 *            the client
 	 */
 	public ServerMessenger(Socket client) {
 		try {
-			reader = new BufferedReader(new InputStreamReader(client.getInputStream(), "UTF-8"));
-			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), "UTF-8"));
-			objectWriter = new ObjectOutputStream(client.getOutputStream());
+			this.client = client;
+			reader = new BufferedReader(new InputStreamReader(client.getInputStream(),
+					Charset.forName("UTF-8")));
+			writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(),
+					Charset.forName("UTF-8")));
+			writer.flush();
 		} catch (IOException e) {
 		}
 	}
 
 	/**
-	 * Send.
+	 * Gets the client.
+	 * 
+	 * @return the client
+	 */
+	public Socket getClient() {
+		return client;
+	}
+
+	/**
+	 * Send message to client.
 	 * 
 	 * @param message
 	 *            the message
@@ -47,7 +67,7 @@ public class ServerMessenger {
 	}
 
 	/**
-	 * Receive.
+	 * Receive message from client. Blocks until message is received or connection is lost.
 	 * 
 	 * @return the string
 	 */
@@ -59,50 +79,15 @@ public class ServerMessenger {
 		}
 	}
 
-	public String[] receiveCommand() {
-		String[] cmd = new String[2];
-		String message = receive();
-		cmd[0] = message;
-		message = receive();
-		cmd[1] = message;
-		return cmd;
-	}
-
 	/**
-	 * Gets the reader.
+	 * Time builder.
 	 * 
-	 * @return the reader
+	 * @return the string
 	 */
-	protected BufferedReader getReader() {
-		return reader;
-	}
+	public String timeBuilder() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("[hh:mm:ss]");
 
-	/**
-	 * Sets the reader.
-	 * 
-	 * @param reader
-	 *            the new reader
-	 */
-	protected void setReader(BufferedReader reader) {
-		this.reader = reader;
-	}
-
-	/**
-	 * Gets the writer.
-	 * 
-	 * @return the writer
-	 */
-	protected BufferedWriter getWriter() {
-		return writer;
-	}
-
-	/**
-	 * Sets the writer.
-	 * 
-	 * @param writer
-	 *            the new writer
-	 */
-	protected void setWriter(BufferedWriter writer) {
-		this.writer = writer;
+		return format.format(date);
 	}
 }
