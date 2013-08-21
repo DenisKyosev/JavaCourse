@@ -3,6 +3,7 @@ package com.sirma.itt.javacourse.chat.controllers;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import com.sirma.itt.javacourse.chat.log.Logger;
 import com.sirma.itt.javacourse.chat.serverfunctions.ClientsAcceptThread;
@@ -30,6 +31,19 @@ public class Wrapper {
 
 	/** The clients. */
 	private final Hashtable<ServerMessenger, String> clients = new Hashtable<ServerMessenger, String>();
+
+	/** The clients iterator. */
+	private Iterator<ServerMessenger> clientsIterator;
+
+	/**
+	 * Gets the clients iterator.
+	 * 
+	 * @return the clients iterator
+	 */
+	public Iterator<ServerMessenger> getClientsIterator() {
+		clientsIterator = clients.keySet().iterator();
+		return clientsIterator;
+	}
 
 	/**
 	 * Instantiates a new wrapper.
@@ -78,6 +92,9 @@ public class Wrapper {
 	 */
 	public void disconnect() {
 		try {
+			while (getClientsIterator().hasNext()) {
+				getClientsIterator().next().send("/serverClosed ");
+			}
 			server.close();
 			server = null;
 			this.getMsg().setTextToBeUpdated("Main area", this.getLang().getValue("serverStopped"));

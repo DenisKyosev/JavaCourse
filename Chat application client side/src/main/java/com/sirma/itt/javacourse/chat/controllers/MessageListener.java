@@ -1,5 +1,6 @@
 package com.sirma.itt.javacourse.chat.controllers;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * Listening for messages from the server. Forwards the messages to the interested classes. Command
@@ -37,6 +38,11 @@ public class MessageListener implements Runnable {
 			if (msg == null) {
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("connectionLost"));
+				try {
+					wrap.getClient().close();
+				} catch (Exception e) {
+				}
+				wrap.setClient(null);
 				stop = true;
 
 			} else if (msg.startsWith("/")) {

@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -63,6 +64,18 @@ public class ServerMessenger {
 			writer.newLine();
 			writer.flush();
 		} catch (IOException e) {
+		}
+	}
+
+	/**
+	 * Send message to all clients.
+	 * 
+	 * @param msg
+	 *            the msg
+	 */
+	public void sendMessageToAll(String msg, Iterator<ServerMessenger> clients) {
+		while (clients.hasNext()) {
+			clients.next().send(msg);
 		}
 	}
 

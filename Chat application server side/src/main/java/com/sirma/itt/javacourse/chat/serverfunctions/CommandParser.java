@@ -41,16 +41,55 @@ public class CommandParser {
 	 *            the message
 	 */
 	protected void parseCmd(String msg) {
-		command = msg.substring(1, msg.indexOf(" "));
-		message = msg.substring(msg.indexOf(" ") + 1);
-		/*
-		 * if (command.equals("username") && !message.equals("") && message.contains("[") &&
-		 * message.contains("]")) { if (wrap.getClients().containsValue(message)) {
-		 * wrap.getClients().put(messenger, message); if
-		 * (wrap.getMsg().getComponentsFlags("new user")) {
-		 * wrap.getMsg().setTextToBeUpdated("new user", "::" + message); } else {
-		 * wrap.getMsg().setTextToBeUpdated("new user", message); } } }
-		 */
+		if (msg.indexOf(" ") != -1) {
+			command = msg.substring(1, msg.indexOf(" ")).trim();
+			message = msg.substring(msg.indexOf(" ") + 1).trim();
+		} else {
+			command = msg.substring(1).trim();
+		}
+		if (command.equals("username") && !message.contains("[") && !message.contains("]")) {
+			if (wrap.getClients().containsKey(messenger)) {
+
+				String oldUser = wrap.getClients().get(messenger);
+				wrap.getClients().remove(messenger);
+				wrap.getClients().put(messenger, message);
+
+				wrap.getMsg().setTextToBeUpdated("Main area",
+						oldUser + " " + wrap.getLang().getValue("changeUsername") + message);
+				message = oldUser + "-" + message;
+				if (wrap.getMsg().getComponentsFlags("usernameChange")) {
+					wrap.getMsg().setTextToBeUpdated("usernameChange", "::" + message);
+				} else {
+					wrap.getMsg().setTextToBeUpdated("usernameChange", message);
+				}
+				messenger.sendMessageToAll("/usernameChange " + message, wrap.getClientsIterator());
+
+			}
+		} else if ("disconnect".equals(command)) {
+			String username = wrap.getClients().get(messenger);
+			wrap.getMsg().setTextToBeUpdated("Main area",
+					wrap.getLang().getValue("userDisconnected") + username);
+			wrap.getClients().remove(messenger);
+			if (wrap.getMsg().getComponentsFlags("logout user")) {
+				wrap.getMsg().setTextToBeUpdated("logout user", "::" + username);
+			} else {
+				wrap.getMsg().setTextToBeUpdated("logout user", username);
+			}
+			messenger.sendMessageToAll("/disconnect " + username, wrap.getClientsIterator());
+		} else if ("incognito".equals(command)) {
+			String username = wrap.getClients().get(messenger);
+			wrap.getMsg().setTextToBeUpdated("Main area",
+					wrap.getLang().getValue("userWentIncognito") + username);
+			if (wrap.getMsg().getComponentsFlags("usernameChange")) {
+				wrap.getMsg().setTextToBeUpdated("usernameChange",
+						"::" + username + "-" + username + "[inv]");
+			} else {
+				wrap.getMsg().setTextToBeUpdated("usernameChange",
+						username + "-" + username + "[inv]");
+			}
+			messenger.sendMessageToAll("/incognito " + username, wrap.getClientsIterator());
+		}
+
 	}
 
 	/**

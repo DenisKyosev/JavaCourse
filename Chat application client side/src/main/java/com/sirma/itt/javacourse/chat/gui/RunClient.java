@@ -22,13 +22,23 @@ public final class RunClient {
 	public static void main(String[] args) {
 
 		/*
-		 * for (int i = 0; i < 100; i++) { ClientWindow client = new ClientWindow();
-		 * client.wrap.getConnector().openSocket("localhost", 7000, "fester" +
-		 * Double.toString(Math.random() * 20).substring(0, 5));
-		 * client.wrap.getMessenger().send("hello" + i); }
+		 * for (int i = 0; i < 200; i++) { try { Thread.sleep(100); } catch (InterruptedException e)
+		 * { // TODO Auto-generated catch block e.printStackTrace(); } Wrapper wrap = new Wrapper();
+		 * wrap.getConnector().connect("77.78.14.79", 7010, "fester" + Double.toString(Math.random()
+		 * * 20).substring(0, 7)); wrap.getMessenger().send("hello" + i); try {
+		 * wrap.getClient().close(); } catch (IOException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } }
 		 */
 
-		@SuppressWarnings("unused")
+		// @SuppressWarnings("unused")
 		ClientWindow client = new ClientWindow();
+		// client.getWrap().getConnector().connect("localhost", 7000, "fester");
+		/*
+		 * for (int i = 0; i < 500; i++) { try { Thread.sleep(100); } catch (InterruptedException e)
+		 * { e.printStackTrace(); } client.getWrap() .getMessenger() .send(
+		 * " ar adaw d aw dawd awd awd awd awd awd awd awdawdawdwqr adaw d aw dawd awd awd awd awd awd awd awdawdaw dawd awd awd awd awd awd awd awdawdaw dawaw"
+		 * ); }
+		 */
+
 	}
 }

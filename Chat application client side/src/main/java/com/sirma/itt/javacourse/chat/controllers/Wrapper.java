@@ -57,6 +57,8 @@ public class Wrapper {
 		this.connector = new ClientConnector(this);
 		this.msg = new InterfaceUpdater();
 		this.lang = new LanguageController(msg);
+		this.log = new Logger(this);
+		client = null;
 	}
 
 	/**

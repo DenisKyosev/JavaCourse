@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 
+import com.sirma.itt.javacourse.chat.clientfunctions.Settings;
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
 // TODO: Auto-generated Javadoc
@@ -78,6 +79,7 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	 * Instantiates a new client window.
 	 */
 	ClientWindow() {
+		new Settings();
 		setBounds(300, 200, 800, 550);
 		Container container = getContentPane();
 
@@ -122,16 +124,16 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		DefaultCaret caret = (DefaultCaret) outputArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		panel.add(scroll, c);
-		wrap.getMsg().newComponent("Main area");
+		getWrap().getMsg().newComponent("Main area");
 		outputArea.setFocusable(false);
 
-		wrap.getMsg().newComponent("newUser");
-		wrap.getMsg().newComponent("userLeft");
+		getWrap().getMsg().newComponent("newUser");
+		getWrap().getMsg().newComponent("userLeft");
 
 		usersList = new JList<String>(users);
 		JScrollPane scrollList = new JScrollPane(usersList);
-		usersList.setBorder(BorderFactory
-				.createTitledBorder(wrap.getLang().getValue("onlineUsers")));
+		usersList.setBorder(BorderFactory.createTitledBorder(getWrap().getLang().getValue(
+				"onlineUsers")));
 		c.fill = GridBagConstraints.VERTICAL;
 		c.ipadx = 700;
 		c.gridx = 4;
@@ -171,30 +173,31 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == connect) {
-			new ClientLoginWindow(wrap);
+			new ClientLoginWindow(getWrap());
 		} else if (e.getSource() == disconnect) {
 			try {
-				wrap.getClient().close();
-				wrap.setClient(null);
+				getWrap().getClient().close();
+				getWrap().setClient(null);
 
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						wrap.getLang().getValue("disconnected"));
+				getWrap().getMsg().setTextToBeUpdated("Main area",
+						getWrap().getLang().getValue("disconnected"));
 				users.removeAllElements();
 				enableConnect();
 			} catch (IOException e1) {
 			}
 		}
 		if (e.getSource() == bulgarian) {
-			wrap.getLang().setLanguage("bulgarian");
+			getWrap().getLang().setLanguage("bulgarian");
 			languageChanged();
 		}
 		if (e.getSource() == english) {
-			wrap.getLang().setLanguage("english");
+			getWrap().getLang().setLanguage("english");
 			languageChanged();
 		}
 
 		if (e.getSource() == send) {
-			wrap.getMessenger().send(inputField.getText());
+			getWrap().getMessenger().send(inputField.getText());
+			inputField.setText("");
 		}
 	}
 
@@ -208,14 +211,15 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 			}
-			if (wrap.getMsg().hasUpdate("Main area")) {
-				String message = wrap.getMsg().getUpdatedText("Main area");
+			if (getWrap().getMsg().hasUpdate("Main area")) {
+				String message = getWrap().getMsg().getUpdatedText("Main area");
 				outputArea.append(message);
-				wrap.getLog().log(message);
+				getWrap().getLog().log(message);
 			}
 
-			if (wrap.getMsg().hasUpdate("newUser")) {
-				String usersList = wrap.getMsg().getUpdatedText("newUser");
+			if (getWrap().getMsg().hasUpdate("newUser")) {
+				String usersList = getWrap().getMsg().getUpdatedText("newUser");
+
 				if (usersList.contains("::")) {
 					String[] usernames = usersList.split("::");
 					for (int i = 0; i < usernames.length; i++) {
@@ -226,12 +230,16 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 				}
 			}
 
-			if (wrap.getMsg().hasUpdate("userLeft")) {
-				users.removeElement(wrap.getMsg().getUpdatedText("userLeft").trim());
+			if (getWrap().getMsg().hasUpdate("userLeft")) {
+				users.removeElement(getWrap().getMsg().getUpdatedText("userLeft").trim());
 			}
 
-			if (wrap.getClient() != null) {
+			if (getWrap().getClient() == null) {
+				enableConnect();
+				users.removeAllElements();
+			} else {
 				disableConnect();
+
 			}
 		}
 	}
@@ -263,10 +271,10 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 
 		@Override
 		public void windowClosing(WindowEvent e) {
-			if (wrap.getClient() != null) {
+			if (getWrap().getClient() != null) {
 				try {
-					wrap.getClient().close();
-					wrap.setClient(null);
+					getWrap().getClient().close();
+					getWrap().setClient(null);
 				} catch (IOException e1) {
 				}
 			}
@@ -278,15 +286,15 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	 * Updates GUI on language change.
 	 */
 	private void languageChanged() {
-		connectMenu.setText(wrap.getLang().getValue("connectMenu"));
-		connect.setText(wrap.getLang().getValue("connect"));
-		disconnect.setText(wrap.getLang().getValue("disconnect"));
-		bulgarian.setText(wrap.getLang().getValue("bulgarian"));
-		english.setText(wrap.getLang().getValue("english"));
-		send.setText(wrap.getLang().getValue("send"));
-		usersList.setBorder(BorderFactory
-				.createTitledBorder(wrap.getLang().getValue("onlineUsers")));
-		langMenu.setText(wrap.getLang().getValue("language"));
+		connectMenu.setText(getWrap().getLang().getValue("connectMenu"));
+		connect.setText(getWrap().getLang().getValue("connect"));
+		disconnect.setText(getWrap().getLang().getValue("disconnect"));
+		bulgarian.setText(getWrap().getLang().getValue("bulgarian"));
+		english.setText(getWrap().getLang().getValue("english"));
+		send.setText(getWrap().getLang().getValue("send"));
+		usersList.setBorder(BorderFactory.createTitledBorder(getWrap().getLang().getValue(
+				"onlineUsers")));
+		langMenu.setText(getWrap().getLang().getValue("language"));
 	}
 
 	/**
@@ -302,7 +310,9 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-			wrap.getMessenger().send(inputField.getText());
+			String message = inputField.getText();
+			getWrap().getMessenger().send(message);
+			inputField.setText("");
 		}
 	}
 
@@ -311,6 +321,15 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+
+	/**
+	 * Gets the wrapper.
+	 * 
+	 * @return the wrapper
+	 */
+	public Wrapper getWrap() {
+		return wrap;
 	}
 
 }

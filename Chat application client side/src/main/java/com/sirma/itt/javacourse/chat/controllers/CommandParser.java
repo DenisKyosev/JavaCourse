@@ -21,7 +21,7 @@ public class CommandParser {
 	 * @param wrap
 	 *            the wrapper
 	 */
-	CommandParser(Wrapper wrap) {
+	public CommandParser(Wrapper wrap) {
 		this.wrap = wrap;
 	}
 
@@ -31,10 +31,15 @@ public class CommandParser {
 	 * @param msg
 	 *            the command
 	 */
-	protected void parseCommand(String msg) {
+	public void parseCommand(String msg) {
 		try {
-			command = msg.substring(1, msg.indexOf(" "));
-			property = msg.substring(msg.indexOf(" ") + 1);
+			if (msg.indexOf(" ") != -1) {
+				command = msg.substring(1, msg.indexOf(" ")).trim();
+				property = msg.substring(msg.indexOf(" ") + 1).trim();
+			} else {
+				command = msg.substring(1).trim();
+			}
+			System.out.println(command);
 			if ("connected".equals(command)) {
 				if (wrap.getMsg().hasUpdate("newUser")) {
 					wrap.getMsg().setTextToBeUpdated("newUser", "::" + property);
@@ -44,13 +49,32 @@ public class CommandParser {
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("userConnected") + property);
 
-			} else if ("disconnected".equals(command)) {
+			} else if ("disconnect".equals(command)) {
+				if (wrap.getUsername().equals(property)) {
+					wrap.getMsg().setTextToBeUpdated("Main area",
+							property + " " + wrap.getLang().getValue("disconnected"));
+					wrap.getClient().close();
+					wrap.setClient(null);
+				} else {
+					wrap.getMsg().setTextToBeUpdated("userLeft", property);
+					wrap.getMsg().setTextToBeUpdated("Main area",
+							property + " " + wrap.getLang().getValue("userDisconnected"));
+				}
+			} else if ("usernameChange".equals(command)) {
+				String oldUser = property.split("-")[0].trim();
+				String newUser = property.split("-")[1].trim();
+				wrap.getMsg().setTextToBeUpdated("userLeft", oldUser);
+				wrap.getMsg().setTextToBeUpdated("newUser", newUser);
+				wrap.getMsg().setTextToBeUpdated("Main area",
+						oldUser + " " + wrap.getLang().getValue("disconnected"));
+			} else if ("serverClosed".equals(command)) {
+				wrap.getClient().close();
+				wrap.setClient(null);
+			} else if ("incognito".equals(command)) {
+				String newUser = "";
 				wrap.getMsg().setTextToBeUpdated("userLeft", property);
 				wrap.getMsg().setTextToBeUpdated("Main area",
-						property + " " + wrap.getLang().getValue("userDisconnected"));
-
-			} else if ("usersList".equals(command)) {
-				wrap.getMsg().setTextToBeUpdated("Users newUser", property);
+						property + " " + wrap.getLang().getValue("userDisconnected") + newUser);
 			}
 		} catch (Exception e) {
 			wrap.setClient(null);

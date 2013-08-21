@@ -104,6 +104,7 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 		panel.add(scrollList, c);
 		wrap.getMsg().newComponent("new user");
 		wrap.getMsg().newComponent("logout user");
+		wrap.getMsg().newComponent("usernameChange");
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -166,6 +167,8 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 			} else {
 				stop.setEnabled(false);
 				wrap.disconnect();
+				wrap.getClients().clear();
+				users.removeAllElements();
 				start.setEnabled(true);
 			}
 		}
@@ -191,6 +194,10 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 			if (wrap.getMsg().getComponentsFlags("Main area")) {
 				String message = wrap.getMsg().getUpdatedText("Main area");
 				outputArea.append(message);
+				if (outputArea.getText().length() > 6000) {
+					outputArea.setText(outputArea.getText().substring(1000));
+					System.gc();
+				}
 				wrap.getLog().log(message);
 			}
 
@@ -203,6 +210,20 @@ public class ServerWindow extends JFrame implements ActionListener, Runnable {
 					}
 				} else {
 					users.removeElement(usernames.trim());
+				}
+			}
+
+			if (wrap.getMsg().getComponentsFlags("usernameChange")) {
+				String usernames = wrap.getMsg().getUpdatedText("usernameChange");
+				if (usernames.contains("::")) {
+					String[] usersSplit = usernames.split("::");
+					for (int i = 0; i < usersSplit.length; i++) {
+						users.removeElement(usersSplit[i].split("-")[0].trim());
+						users.addElement(usersSplit[i].split("-")[1].trim());
+					}
+				} else {
+					users.removeElement(usernames.split("-")[0].trim());
+					users.addElement(usernames.split("-")[1].trim());
 				}
 			}
 

@@ -1,7 +1,5 @@
 package com.sirma.itt.javacourse.chat.serverfunctions;
 
-import java.util.Iterator;
-
 import com.sirma.itt.javacourse.chat.controllers.ServerMessenger;
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
@@ -39,35 +37,6 @@ public class MessageListener implements Runnable {
 	}
 
 	/**
-	 * User logout notifier.Sends command to all connected clients to remove the user from their
-	 * lists.
-	 * 
-	 * @param username
-	 *            the username
-	 */
-	private void userLogoutNotifier(String username) {
-		Iterator<ServerMessenger> clients = wrap.getClients().keySet().iterator();
-		while (clients.hasNext()) {
-			clients.next().send("/disconnected " + username);
-		}
-	}
-
-	/**
-	 * Send message to all clients.
-	 * 
-	 * @param msg
-	 *            the msg
-	 */
-	private void sendMessage(String msg) {
-		Iterator<ServerMessenger> clients = wrap.getClients().keySet().iterator();
-		while (clients.hasNext()) {
-			ServerMessenger messenger = clients.next();
-
-			messenger.send(buildMessage(msg, messenger));
-		}
-	}
-
-	/**
 	 * Builds the message.
 	 * 
 	 * @param msg
@@ -83,23 +52,6 @@ public class MessageListener implements Runnable {
 		message.append(">: ");
 		message.append(msg);
 		return message.toString();
-	}
-
-	/**
-	 * User logged out case.Removes client from clients list. Sends username to client notifier.
-	 */
-	private void userLoggedOut() {
-		String username = wrap.getClients().get(msg);
-		wrap.getClients().remove(msg);
-		userLogoutNotifier(username);
-		wrap.getMsg().setTextToBeUpdated("Main area",
-				wrap.getLang().getValue("userDisconnected") + username);
-		if (wrap.getMsg().getComponentsFlags("logout user")) {
-			wrap.getMsg().setTextToBeUpdated("logout user", "::" + username);
-		} else {
-			wrap.getMsg().setTextToBeUpdated("logout user", username);
-		}
-		stop = true;
 	}
 
 	/**
@@ -120,12 +72,17 @@ public class MessageListener implements Runnable {
 			try {
 				message = msg.receive();
 				if (message == null) {
-					userLoggedOut();
+					String username = wrap.getClients().get(msg);
+					message = "/disconnect " + username;
+					commandReceived();
+					stop = true;
 				} else if (message.startsWith("/")) {
+					System.out.println(message);
 					commandReceived();
 				} else {
-					wrap.getMsg().setTextToBeUpdated("Main area", buildMessage(message, msg));
-					sendMessage(message);
+					message = buildMessage(message, msg);
+					wrap.getMsg().setTextToBeUpdated("Main area", message);
+					msg.sendMessageToAll(message, wrap.getClientsIterator());
 				}
 			} catch (Exception e) {
 				stop = true;

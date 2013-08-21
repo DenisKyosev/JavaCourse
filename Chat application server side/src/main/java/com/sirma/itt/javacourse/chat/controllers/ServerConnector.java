@@ -38,14 +38,14 @@ public final class ServerConnector {
 	private void getSettings() {
 
 		try {
-			config.load(new FileInputStream("config.properties"));
+			config.load(new FileInputStream("resources/config.properties"));
 		} catch (IOException e1) {
 			error = true;
 			config.setProperty("minPort", "7000");
 			config.setProperty("maxPort", "7020");
 			config.setProperty("host", "localhost");
 			try {
-				config.store(new FileOutputStream("config.properties"), null);
+				config.store(new FileOutputStream("resources/config.properties"), null);
 			} catch (FileNotFoundException e) {
 				error = true;
 			} catch (IOException e) {

@@ -14,7 +14,7 @@ public class LanguageController {
 
 	/** The language. */
 	private String language = "english";
-
+	private final Properties configFile = new Properties();
 	/** The language properties files. */
 	private final Properties lang = new Properties();
 
@@ -45,9 +45,9 @@ public class LanguageController {
 	 * Gets the last used language.
 	 */
 	private void getLastUsedLanguage() {
-		Properties configFile = new Properties();
 		try {
-			configFile.load(new FileInputStream("config.properties"));
+			FileInputStream stream = new FileInputStream("resources/config.properties");
+			configFile.load(stream);
 			language = configFile.getProperty("lastUsedLanguage");
 		} catch (FileNotFoundException e) {
 			msg.setTextToBeUpdated("Main area", "Error loading configuration file.");
@@ -84,7 +84,7 @@ public class LanguageController {
 	 */
 	public String getValue(String key) {
 		try {
-			lang.load(new FileInputStream(this.getLanguage() + ".properties"));
+			lang.load(new FileInputStream(language + ".properties"));
 			return lang.getProperty(key);
 		} catch (FileNotFoundException e) {
 			msg.setTextToBeUpdated("Main area", "Error loading language.");

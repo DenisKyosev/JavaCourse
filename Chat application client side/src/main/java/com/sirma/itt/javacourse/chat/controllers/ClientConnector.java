@@ -2,8 +2,6 @@ package com.sirma.itt.javacourse.chat.controllers;
 
 import java.net.Socket;
 
-import com.sirma.itt.javacourse.chat.clientfunctions.Logger;
-
 // TODO: Auto-generated Javadoc
 /**
  * Connecting the client to the server.
@@ -88,7 +86,6 @@ public class ClientConnector {
 				return false;
 			} else {
 				wrap.setUsername(username);
-				wrap.setLog(new Logger(wrap));
 				wrap.getMsg().setTextToBeUpdated("newUser", cmdParser.getMessage());
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("connectionSuccess"));

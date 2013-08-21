@@ -1,8 +1,8 @@
 package com.sirma.itt.javacourse.chat.clientfunctions;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -11,6 +11,28 @@ import java.util.Properties;
  * Settings reader and saver.
  */
 public class Settings {
+	Properties config = new Properties();
+
+	public Settings() {
+		File file = new File("resources");
+		if (!file.exists()) {
+			file.mkdir();
+		} else {
+			file = new File(file + "/config.properties");
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+					config.load(new FileInputStream(file));
+					config.setProperty("host", "localhost");
+					config.setProperty("port", "7000");
+					config.setProperty("lastUsedUsername", "yourName");
+					config.setProperty("lastUsedLanguage", "english");
+					config.store(new FileOutputStream(file), null);
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
 
 	/**
 	 * Returns setting by given key.
@@ -20,13 +42,9 @@ public class Settings {
 	 * @return the settings
 	 */
 	public String getSettings(String key) {
-		Properties config = new Properties();
 		try {
-			config.load(new FileInputStream("config.properties"));
-		} catch (FileNotFoundException e) {
-			return "Error";
-		} catch (IOException e) {
-			return "Error";
+			config.load(new FileInputStream("resources/config.properties"));
+		} catch (Exception e) {
 		}
 		return config.getProperty(key);
 	}
@@ -43,19 +61,12 @@ public class Settings {
 	 * @return true, if successful
 	 */
 	public boolean saveSettings(String host, String port, String username) {
-		Properties config = new Properties();
-		try {
-			config.load(new FileInputStream("config.properties"));
-		} catch (FileNotFoundException e) {
-			return false;
-		} catch (IOException e) {
-			return false;
-		}
 		config.setProperty("host", host);
 		config.setProperty("port", port);
 		config.setProperty("lastUsedUsername", username);
+		config.setProperty("lastUsedLanguage", config.getProperty("lastUsedLanguage"));
 		try {
-			config.store(new FileWriter("config.properties"), null);
+			config.store(new FileOutputStream("resources/config.properties"), null);
 			return true;
 		} catch (IOException e) {
 			return false;
