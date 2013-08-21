@@ -39,7 +39,7 @@ public class CommandParser {
 			} else {
 				command = msg.substring(1).trim();
 			}
-			System.out.println(command);
+
 			if ("connected".equals(command)) {
 				if (wrap.getMsg().hasUpdate("newUser")) {
 					wrap.getMsg().setTextToBeUpdated("newUser", "::" + property);
@@ -60,6 +60,7 @@ public class CommandParser {
 					wrap.getMsg().setTextToBeUpdated("Main area",
 							property + " " + wrap.getLang().getValue("userDisconnected"));
 				}
+
 			} else if ("usernameChange".equals(command)) {
 				String oldUser = property.split("-")[0].trim();
 				String newUser = property.split("-")[1].trim();
@@ -67,9 +68,11 @@ public class CommandParser {
 				wrap.getMsg().setTextToBeUpdated("newUser", newUser);
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						oldUser + " " + wrap.getLang().getValue("disconnected"));
+
 			} else if ("serverClosed".equals(command)) {
 				wrap.getClient().close();
 				wrap.setClient(null);
+
 			} else if ("incognito".equals(command)) {
 				String newUser = "";
 				wrap.getMsg().setTextToBeUpdated("userLeft", property);
