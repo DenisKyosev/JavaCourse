@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.chat.controllers;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
@@ -65,9 +64,7 @@ public class LanguageController {
 	 */
 	public String getValue(String key) {
 		try {
-			lang.load(new FileInputStream("resources/" + language + ".properties"));
-			// lang.load(LanguageController.class.getResourceAsStream("/resources/" + language
-			// + ".properties"));
+			lang.load(LanguageController.class.getResourceAsStream("/" + language + ".properties"));
 			return lang.getProperty(key);
 		} catch (FileNotFoundException e) {
 			msg.setTextToBeUpdated("Main area", "Error loading language.");

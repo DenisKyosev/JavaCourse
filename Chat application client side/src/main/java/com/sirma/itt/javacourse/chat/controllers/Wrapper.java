@@ -19,6 +19,18 @@ public class Wrapper {
 	/** The messenger. */
 	private ClientMessenger messenger;
 
+	/** The command parser. */
+	private final CommandParser cmdParser;
+
+	/**
+	 * Gets the command parser.
+	 * 
+	 * @return the command parser
+	 */
+	public CommandParser getCmdParser() {
+		return cmdParser;
+	}
+
 	/** The language controller. */
 	private final LanguageController lang;
 
@@ -29,7 +41,7 @@ public class Wrapper {
 	private Logger log;
 
 	/** The current username. */
-	private String username;
+	private String username = "";
 
 	/**
 	 * Gets the current username.
@@ -54,10 +66,12 @@ public class Wrapper {
 	 * Instantiates a new wrapper.
 	 */
 	public Wrapper() {
-		this.connector = new ClientConnector(this);
 		this.msg = new InterfaceUpdater();
 		this.lang = new LanguageController(msg);
-		this.log = new Logger(this);
+		this.log = new Logger(msg, lang);
+		log.createLogFile(username);
+		this.connector = new ClientConnector(this);
+		this.cmdParser = new CommandParser(this);
 		client = null;
 	}
 

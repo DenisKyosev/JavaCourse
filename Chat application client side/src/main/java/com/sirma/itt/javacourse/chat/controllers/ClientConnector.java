@@ -11,9 +11,6 @@ public class ClientConnector {
 	/** The wrapper. */
 	private final Wrapper wrap;
 
-	/** The command parser. */
-	private CommandParser cmdParser;
-
 	/**
 	 * Instantiates a new client connector.
 	 * 
@@ -38,7 +35,6 @@ public class ClientConnector {
 			wrap.setClient(new Socket(host, port));
 			wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("clientStarted"));
 			wrap.setMessenger(new ClientMessenger(wrap.getClient()));
-			cmdParser = new CommandParser(wrap);
 			return true;
 		} catch (Exception e) {
 			wrap.getMsg()
@@ -75,8 +71,8 @@ public class ClientConnector {
 	 */
 	public boolean receiveUsernameResponse(String username) {
 		try {
-			cmdParser.parseCommand(wrap.getMessenger().receive());
-			if (cmdParser.getCommand().contains("Unavailable")) {
+			wrap.getCmdParser().parseCommand(wrap.getMessenger().receive());
+			if (wrap.getCmdParser().getCommand().contains("Unavailable")) {
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("usernameUnavailable"));
 				wrap.getClient().close();
@@ -86,10 +82,10 @@ public class ClientConnector {
 				return false;
 			} else {
 				wrap.setUsername(username);
-				wrap.getMsg().setTextToBeUpdated("newUser", cmdParser.getMessage());
+				wrap.getMsg().setTextToBeUpdated("newUser", wrap.getCmdParser().getMessage());
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						wrap.getLang().getValue("connectionSuccess"));
-
+				wrap.getLog().createLogFile(username);
 				new Thread(new MessageListener(wrap)).start();
 				return true;
 			}

@@ -17,7 +17,6 @@ public class CommandParser {
 
 	/** The message. */
 	private String message;
-
 	/** The messenger. */
 	private final ServerMessenger messenger;
 
@@ -32,6 +31,37 @@ public class CommandParser {
 	public CommandParser(Wrapper wrap, ServerMessenger msg) {
 		this.messenger = msg;
 		this.wrap = wrap;
+
+	}
+
+	/**
+	 * Info command builder.
+	 * 
+	 * @return the string
+	 */
+	private String infoCommand() {
+		StringBuilder build = new StringBuilder();
+		build.append("Server started on: " + wrap.getServerStartDate() + "\r\n");
+		build.append("Port: " + wrap.getServer().getLocalPort() + "\r\n");
+		build.append("Host: " + wrap.getServer().getLocalSocketAddress() + "\r\n");
+		build.append("Online users count: " + wrap.getClients().size());
+
+		return build.toString();
+	}
+
+	/**
+	 * Splits the command in property and command part.
+	 * 
+	 * @param msg
+	 *            the msg
+	 */
+	protected void splitCommand(String msg) {
+		if (msg.indexOf(" ") != -1) {
+			command = msg.substring(1, msg.indexOf(" ")).trim();
+			message = msg.substring(msg.indexOf(" ") + 1).trim();
+		} else {
+			command = msg.substring(1).trim();
+		}
 	}
 
 	/**
@@ -41,14 +71,10 @@ public class CommandParser {
 	 *            the message
 	 */
 	protected void parseCmd(String msg) {
-		if (msg.indexOf(" ") != -1) {
-			command = msg.substring(1, msg.indexOf(" ")).trim();
-			message = msg.substring(msg.indexOf(" ") + 1).trim();
-		} else {
-			command = msg.substring(1).trim();
-		}
-		if (command.equals("username") && !message.contains("[") && !message.contains("]")) {
-			if (wrap.getClients().containsKey(messenger)) {
+		splitCommand(msg);
+		if ("username".equals(command) && !message.contains("[") && !message.contains("]")) {
+			if (wrap.getClients().containsKey(messenger)
+					&& !wrap.getClients().containsValue(message)) {
 
 				String oldUser = wrap.getClients().get(messenger);
 				wrap.getClients().remove(messenger);
@@ -64,6 +90,8 @@ public class CommandParser {
 				}
 				messenger.sendMessageToAll("/usernameChange " + message, wrap.getClientsIterator());
 
+			} else {
+				messenger.send("/usernameUnavailable");
 			}
 		} else if ("disconnect".equals(command)) {
 			String username = wrap.getClients().get(messenger);
@@ -88,6 +116,8 @@ public class CommandParser {
 						username + "-" + username + "[inv]");
 			}
 			messenger.sendMessageToAll("/incognito " + username, wrap.getClientsIterator());
+		} else if ("info".equals(command)) {
+			messenger.send(infoCommand());
 		}
 
 	}

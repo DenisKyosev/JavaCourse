@@ -52,7 +52,7 @@ public class CommandParser {
 			} else if ("disconnect".equals(command)) {
 				if (wrap.getUsername().equals(property)) {
 					wrap.getMsg().setTextToBeUpdated("Main area",
-							property + " " + wrap.getLang().getValue("disconnected"));
+							wrap.getLang().getValue("disconnected"));
 					wrap.getClient().close();
 					wrap.setClient(null);
 				} else {
@@ -67,7 +67,14 @@ public class CommandParser {
 				wrap.getMsg().setTextToBeUpdated("userLeft", oldUser);
 				wrap.getMsg().setTextToBeUpdated("newUser", newUser);
 				wrap.getMsg().setTextToBeUpdated("Main area",
-						oldUser + " " + wrap.getLang().getValue("disconnected"));
+						oldUser + " " + wrap.getLang().getValue("usernameChange") + newUser);
+				if (oldUser.equals(wrap.getUsername())) {
+					wrap.setUsername(newUser);
+				}
+
+			} else if ("usernameUnavailable".equals(command)) {
+				wrap.getMsg().setTextToBeUpdated("Main area",
+						wrap.getLang().getValue("usernameUnavailable"));
 
 			} else if ("serverClosed".equals(command)) {
 				wrap.getClient().close();
@@ -78,6 +85,17 @@ public class CommandParser {
 				wrap.getMsg().setTextToBeUpdated("userLeft", property);
 				wrap.getMsg().setTextToBeUpdated("Main area",
 						property + " " + wrap.getLang().getValue("userDisconnected") + newUser);
+
+			} else if ("help".equals(command)) {
+
+				String result = wrap.getLang().getValue("help") + "\r\n";
+				result += wrap.getLang().getValue("helpCommand") + "\r\n";
+				result += wrap.getLang().getValue("usernameCommand") + "\r\n";
+				result += wrap.getLang().getValue("disconnectCommand") + "\r\n";
+				result += wrap.getLang().getValue("incognitoCommand") + "\r\n";
+				result += wrap.getLang().getValue("infoCommand") + "\r\n";
+				wrap.getMsg().setTextToBeUpdated("Main area", result);
+
 			}
 		} catch (Exception e) {
 			wrap.setClient(null);

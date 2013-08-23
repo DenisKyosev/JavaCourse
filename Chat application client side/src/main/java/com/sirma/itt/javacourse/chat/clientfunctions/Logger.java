@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.sirma.itt.javacourse.chat.controllers.Wrapper;
+import com.sirma.itt.javacourse.chat.controllers.InterfaceUpdater;
+import com.sirma.itt.javacourse.chat.controllers.LanguageController;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,23 +15,37 @@ import com.sirma.itt.javacourse.chat.controllers.Wrapper;
  */
 public class Logger {
 
-	/** The wrapper. */
-	private final Wrapper wrap;
+	/** The msg. */
+	private final InterfaceUpdater msg;
 
+	/** The lang. */
+	private final LanguageController lang;
 	/** The log file writer. */
 	private FileWriter writer;
 
 	/**
 	 * Instantiates a new logger. Creates directory "log" and log file by date.
 	 * 
-	 * @param wrap
-	 *            the wrapper
+	 * @param msg
+	 *            the msg
+	 * @param lang
+	 *            the lang
 	 */
-	public Logger(Wrapper wrap) {
-		this.wrap = wrap;
+	public Logger(InterfaceUpdater msg, LanguageController lang) {
+		this.msg = msg;
+		this.lang = lang;
+	}
+
+	/**
+	 * Creates the log file.
+	 * 
+	 * @param username
+	 *            the username
+	 */
+	public void createLogFile(String username) {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String fileName = "logs/" + format.format(date) + ".txt";
+		String fileName = "logs/" + format.format(date) + "-" + username + ".txt";
 
 		try {
 			File dir = new File("logs");
@@ -45,7 +60,7 @@ public class Logger {
 				writer = new FileWriter(file, true);
 			}
 		} catch (IOException e) {
-			wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("logFileError"));
+			msg.setTextToBeUpdated("Main area", lang.getValue("logFileError"));
 		}
 	}
 
@@ -60,7 +75,7 @@ public class Logger {
 			writer.append(message);
 			writer.flush();
 		} catch (IOException e) {
-			wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("logFileError"));
+			msg.setTextToBeUpdated("Main area", lang.getValue("logFileError"));
 		}
 	}
 }

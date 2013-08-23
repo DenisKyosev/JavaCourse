@@ -11,6 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -27,6 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 
+import com.sirma.itt.javacourse.chat.clientfunctions.Memento;
+import com.sirma.itt.javacourse.chat.clientfunctions.Originator;
 import com.sirma.itt.javacourse.chat.clientfunctions.Settings;
 import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
@@ -73,13 +77,20 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	private final DefaultListModel<String> users = new DefaultListModel<String>();
 
 	/** The wrapper. */
-	private final Wrapper wrap = new Wrapper();
+	private final Wrapper wrap;
+	/** The saved states. */
+	private final List<Memento> savedStates;
+
+	/** The memento. */
+	private final Originator memento;
 
 	/**
 	 * Instantiates a new client window.
 	 */
 	ClientWindow() {
 		new Settings();
+
+		wrap = new Wrapper();
 		setBounds(300, 200, 800, 550);
 		Container container = getContentPane();
 
@@ -164,6 +175,8 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		setVisible(true);
 		this.addWindowListener(exitListener);
 
+		memento = new Originator();
+		savedStates = new ArrayList<Memento>();
 		new Thread(this).start();
 	}
 
@@ -196,8 +209,11 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		}
 
 		if (e.getSource() == send) {
-			getWrap().getMessenger().send(inputField.getText());
+			String message = inputField.getText();
+			getWrap().getMessenger().send(message);
 			inputField.setText("");
+			savedStates.add(memento.saveToMemento(message));
+			memento.setCurrent(savedStates.size());
 		}
 	}
 
@@ -309,10 +325,20 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == 38 && memento.getCurrent() > 0) {
+			memento.setCurrent(memento.getCurrent() - 1);
+			inputField.setText(savedStates.get(memento.getCurrent()).getSavedState());
+		}
+		if (e.getKeyCode() == 40 && memento.getCurrent() < savedStates.size() - 1) {
+			memento.setCurrent(memento.getCurrent() + 1);
+			inputField.setText(savedStates.get(memento.getCurrent()).getSavedState());
+		}
 		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 			String message = inputField.getText();
 			getWrap().getMessenger().send(message);
 			inputField.setText("");
+			savedStates.add(memento.saveToMemento(message));
+			memento.setCurrent(savedStates.size());
 		}
 	}
 

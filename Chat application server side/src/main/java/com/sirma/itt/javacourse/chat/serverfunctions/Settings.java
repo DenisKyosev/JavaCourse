@@ -17,22 +17,23 @@ public class Settings {
 	 * Instantiates a new settings.
 	 */
 	public Settings() {
-		File file = new File("resources");
-		if (!file.exists()) {
-			file.mkdir();
-		} else {
+		try {
+			File file = new File("resources");
+			if (!file.exists()) {
+				file.mkdir();
+			}
 			file = new File(file + "/config.properties");
 			if (!file.exists()) {
-				try {
-					file.createNewFile();
-					config.load(new FileInputStream(file));
-					config.setProperty("host", "localhost");
-					config.setProperty("minPort", "7000");
-					config.setProperty("maxPort", "7020");
-					config.store(new FileOutputStream(file), null);
-				} catch (Exception e) {
-				}
+
+				file.createNewFile();
+				config.load(new FileInputStream(file));
+				config.setProperty("host", "localhost");
+				config.setProperty("minPort", "7000");
+				config.setProperty("maxPort", "7020");
+				config.store(new FileOutputStream(file), null);
 			}
+
+		} catch (Exception e) {
 		}
 	}
 

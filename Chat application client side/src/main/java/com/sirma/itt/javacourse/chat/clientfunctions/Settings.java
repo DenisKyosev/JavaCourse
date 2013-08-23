@@ -11,26 +11,32 @@ import java.util.Properties;
  * Settings reader and saver.
  */
 public class Settings {
-	Properties config = new Properties();
 
+	/** The config. */
+	private final Properties config = new Properties();
+
+	/**
+	 * Instantiates a settings. Creates settings file if not exist.
+	 */
 	public Settings() {
 		File file = new File("resources");
 		if (!file.exists()) {
 			file.mkdir();
-		} else {
-			file = new File(file + "/config.properties");
-			if (!file.exists()) {
-				try {
-					file.createNewFile();
-					config.load(new FileInputStream(file));
-					config.setProperty("host", "localhost");
-					config.setProperty("port", "7000");
-					config.setProperty("lastUsedUsername", "yourName");
-					config.setProperty("lastUsedLanguage", "english");
-					config.store(new FileOutputStream(file), null);
-				} catch (Exception e) {
-				}
+		}
+		file = new File(file + "/config.properties");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				config.load(new FileInputStream(file));
+				config.setProperty("host", "localhost");
+				config.setProperty("port", "7000");
+				config.setProperty("lastUsedUsername", "yourName");
+				config.setProperty("lastUsedLanguage", "english");
+				config.store(new FileOutputStream(file), null);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -64,7 +70,6 @@ public class Settings {
 		config.setProperty("host", host);
 		config.setProperty("port", port);
 		config.setProperty("lastUsedUsername", username);
-		config.setProperty("lastUsedLanguage", config.getProperty("lastUsedLanguage"));
 		try {
 			config.store(new FileOutputStream("resources/config.properties"), null);
 			return true;

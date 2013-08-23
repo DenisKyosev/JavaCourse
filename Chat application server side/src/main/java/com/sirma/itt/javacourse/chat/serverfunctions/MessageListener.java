@@ -77,7 +77,6 @@ public class MessageListener implements Runnable {
 					commandReceived();
 					stop = true;
 				} else if (message.startsWith("/")) {
-					System.out.println(message);
 					commandReceived();
 				} else {
 					message = buildMessage(message, msg);

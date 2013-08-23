@@ -29,6 +29,13 @@ public class LanguageController {
 	 */
 	LanguageController(InterfaceUpdater msg) {
 		this.msg = msg;
+		FileInputStream stream;
+		try {
+			stream = new FileInputStream("resources/config.properties");
+			configFile.load(stream);
+		} catch (Exception e) {
+			msg.setTextToBeUpdated("Main area", "Error loading configuration file.");
+		}
 		getLastUsedLanguage();
 	}
 
@@ -43,17 +50,12 @@ public class LanguageController {
 
 	/**
 	 * Gets the last used language.
+	 * 
+	 * @return last used language
 	 */
-	private void getLastUsedLanguage() {
-		try {
-			FileInputStream stream = new FileInputStream("resources/config.properties");
-			configFile.load(stream);
-			language = configFile.getProperty("lastUsedLanguage");
-		} catch (FileNotFoundException e) {
-			msg.setTextToBeUpdated("Main area", "Error loading configuration file.");
-		} catch (IOException e) {
-			msg.setTextToBeUpdated("Main area", "Error loading configuration file.");
-		}
+	public String getLastUsedLanguage() {
+		language = configFile.getProperty("lastUsedLanguage");
+		return language;
 	}
 
 	/**
@@ -64,10 +66,9 @@ public class LanguageController {
 	 */
 	public void setLanguage(String lang) {
 		this.language = lang;
-		Properties configFile = new Properties();
 		configFile.setProperty("lastUsedLanguage", lang);
 		try {
-			configFile.store(new FileOutputStream("config.properties"), null);
+			configFile.store(new FileOutputStream("resources/config.properties"), null);
 		} catch (FileNotFoundException e) {
 			msg.setTextToBeUpdated("Main area", "Error saving configuration file.");
 		} catch (IOException e) {
@@ -84,7 +85,8 @@ public class LanguageController {
 	 */
 	public String getValue(String key) {
 		try {
-			lang.load(new FileInputStream(language + ".properties"));
+			lang.load(LanguageController.class.getResourceAsStream("/" + language + ".properties"));
+			// lang.load(new FileInputStream("languages/" + language + ".properties"));
 			return lang.getProperty(key);
 		} catch (FileNotFoundException e) {
 			msg.setTextToBeUpdated("Main area", "Error loading language.");

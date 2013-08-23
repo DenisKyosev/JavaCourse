@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.chat.controllers;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * Listening for messages from the server. Forwards the messages to the interested classes. Command
@@ -14,9 +13,6 @@ public class MessageListener implements Runnable {
 	/** The wrapper. */
 	private final Wrapper wrap;
 
-	/** The command parser. */
-	private final CommandParser cmd;
-
 	/**
 	 * Instantiates a new message listener.
 	 * 
@@ -25,7 +21,6 @@ public class MessageListener implements Runnable {
 	 */
 	MessageListener(Wrapper wrap) {
 		this.wrap = wrap;
-		cmd = new CommandParser(wrap);
 	}
 
 	/**
@@ -46,7 +41,7 @@ public class MessageListener implements Runnable {
 				stop = true;
 
 			} else if (msg.startsWith("/")) {
-				cmd.parseCommand(msg);
+				wrap.getCmdParser().parseCommand(msg);
 			} else {
 				wrap.getMsg().setTextToBeUpdated("Main area", msg);
 			}

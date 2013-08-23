@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 
 // TODO: Auto-generated Javadoc
@@ -72,6 +70,8 @@ public class ServerMessenger {
 	 * 
 	 * @param msg
 	 *            the msg
+	 * @param clients
+	 *            clients iterator
 	 */
 	public void sendMessageToAll(String msg, Iterator<ServerMessenger> clients) {
 		while (clients.hasNext()) {
@@ -92,15 +92,4 @@ public class ServerMessenger {
 		}
 	}
 
-	/**
-	 * Time builder.
-	 * 
-	 * @return the string
-	 */
-	public String timeBuilder() {
-		Date date = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("[hh:mm:ss]");
-
-		return format.format(date);
-	}
 }

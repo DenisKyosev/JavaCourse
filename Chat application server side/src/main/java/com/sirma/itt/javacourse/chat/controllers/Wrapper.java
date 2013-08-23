@@ -2,6 +2,8 @@ package com.sirma.itt.javacourse.chat.controllers;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -28,6 +30,11 @@ public class Wrapper {
 
 	/** The logger. */
 	private final Logger log;
+	private String serverStartDate;
+
+	public String getServerStartDate() {
+		return serverStartDate;
+	}
 
 	/** The clients. */
 	private final Hashtable<ServerMessenger, String> clients = new Hashtable<ServerMessenger, String>();
@@ -82,6 +89,9 @@ public class Wrapper {
 		if (connector.connect()) {
 			ClientsAcceptThread newClientListener = new ClientsAcceptThread(this);
 			new Thread(newClientListener).start();
+			Date date = new Date();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			serverStartDate = format.format(date);
 		} else {
 			this.msg.setTextToBeUpdated("Main area", this.getLang().getValue("cantStartServer"));
 		}

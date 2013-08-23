@@ -49,7 +49,7 @@ public class NewUserThread implements Runnable {
 			CommandParser parser = new CommandParser(wrap, messenger);
 
 			try {
-				parser.parseCmd(messenger.receive());
+				parser.splitCommand(messenger.receive());
 				username = parser.getMessage();
 				if (wrap.getClients().contains(username) || username.contains("[")
 						|| username.contains("]")) {

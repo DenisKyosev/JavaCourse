@@ -49,10 +49,12 @@ public class ClientMessenger {
 			} else {
 				msg = message;
 			}
-			msg = msg.substring(0, 1).toUpperCase() + msg.substring(1);
-			writer.write(msg);
-			writer.newLine();
-			writer.flush();
+			if (msg.length() > 0) {
+				msg = msg.substring(0, 1).toUpperCase() + msg.substring(1);
+				writer.write(msg);
+				writer.newLine();
+				writer.flush();
+			}
 		} catch (IOException e) {
 		}
 	}

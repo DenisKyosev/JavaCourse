@@ -17,9 +17,6 @@ public class InterfaceUpdater {
 	/** The components update text. */
 	private final Map<String, String> componentsUpdateText = new HashMap<String, String>();
 
-	/** The language. */
-	private String lang;
-
 	/**
 	 * Register new component.
 	 * 
@@ -82,15 +79,6 @@ public class InterfaceUpdater {
 			}
 
 		}
-	}
-
-	/**
-	 * Gets the lang.
-	 * 
-	 * @return the lang
-	 */
-	public String getLang() {
-		return lang;
 	}
 
 	/**

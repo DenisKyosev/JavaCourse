@@ -1,5 +1,6 @@
 package com.sirma.itt.javacourse.chat.gui;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class RunClient.
@@ -20,17 +21,15 @@ public final class RunClient {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
-
 		/*
-		 * for (int i = 0; i < 200; i++) { try { Thread.sleep(100); } catch (InterruptedException e)
-		 * { // TODO Auto-generated catch block e.printStackTrace(); } Wrapper wrap = new Wrapper();
-		 * wrap.getConnector().connect("77.78.14.79", 7010, "fester" + Double.toString(Math.random()
-		 * * 20).substring(0, 7)); wrap.getMessenger().send("hello" + i); try {
-		 * wrap.getClient().close(); } catch (IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } }
+		 * for (int i = 0; i < 100; i++) { try { Thread.sleep(200); } catch (InterruptedException e)
+		 * { e.printStackTrace(); } Wrapper wrap = new Wrapper();
+		 * wrap.getConnector().connect("localhost", 7000, "fester" + Double.toString(Math.random() *
+		 * 20).substring(0, 4)); wrap.getMessenger().send( "/username " + "fester" +
+		 * Double.toString(Math.random() * 20).substring(0, 4)); }
 		 */
 
-		// @SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		ClientWindow client = new ClientWindow();
 		// client.getWrap().getConnector().connect("localhost", 7000, "fester");
 		/*
