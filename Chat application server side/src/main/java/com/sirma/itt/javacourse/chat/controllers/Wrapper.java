@@ -30,8 +30,15 @@ public class Wrapper {
 
 	/** The logger. */
 	private final Logger log;
+
+	/** The server start date. */
 	private String serverStartDate;
 
+	/**
+	 * Gets the server start date.
+	 * 
+	 * @return the server start date
+	 */
 	public String getServerStartDate() {
 		return serverStartDate;
 	}
