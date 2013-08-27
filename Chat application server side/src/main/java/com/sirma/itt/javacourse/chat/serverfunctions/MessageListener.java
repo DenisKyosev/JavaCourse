@@ -59,7 +59,7 @@ public class MessageListener implements Runnable {
 	 */
 	private void commandReceived() {
 		CommandParser cmd = new CommandParser(wrap, msg);
-		cmd.parseCmd(message);
+		cmd.execute(message);
 	}
 
 	/**

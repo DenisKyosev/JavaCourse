@@ -22,15 +22,6 @@ public class Wrapper {
 	/** The command parser. */
 	private final CommandParser cmdParser;
 
-	/**
-	 * Gets the command parser.
-	 * 
-	 * @return the command parser
-	 */
-	public CommandParser getCmdParser() {
-		return cmdParser;
-	}
-
 	/** The language controller. */
 	private final LanguageController lang;
 
@@ -42,6 +33,15 @@ public class Wrapper {
 
 	/** The current username. */
 	private String username = "";
+
+	/**
+	 * Gets the command parser.
+	 * 
+	 * @return the command parser
+	 */
+	public CommandParser getCmdParser() {
+		return cmdParser;
+	}
 
 	/**
 	 * Gets the current username.

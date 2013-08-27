@@ -10,4 +10,22 @@
   </parent>
   <artifactId>ChatApplicationClientSide</artifactId>
   <description>ChatApplicationClientSide</description>
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-assembly-plugin</artifactId><configuration>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+        <archive>
+          <manifest>
+          	<addClasspath>true</addClasspath>
+            <mainClass>com.sirma.itt.javacourse.chat.gui.RunClient</mainClass>
+          </manifest>
+        </archive>
+      </configuration>
+  		</plugin>
+  	</plugins>
+  </build>
 </project>

@@ -1,0 +1,12 @@
+[12:14:49]Trying to connect to server.
+[12:14:53]Failed connecting to server.Check host/port.
+[12:16:12]Trying to connect to server.
+[12:16:20]Failed connecting to server.Check host/port.
+[12:16:48]Failed connecting to server.Check host/port.
+[01:59:38]Trying to connect to server.
+[02:48:30]Връзката със сървъра не е успешна.
+[02:59:10]Failed connecting to server.Check host/port.
+[02:59:37]Failed connecting to server.Check host/port.
+[02:59:43]Failed connecting to server.Check host/port.
+[03:04:00]Failed connecting to server.Check host/port.
+[03:35:55]Trying to connect to server.

@@ -1,0 +1,2 @@
+[04:16:23]Trying to connect to server.
+[04:16:23]Successfully connected to server.

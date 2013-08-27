@@ -1,0 +1,64 @@
+[04:15:51]Failed connecting to server.Check host/port.
+[04:15:52]Failed connecting to server.Check host/port.
+[04:15:53]Failed connecting to server.Check host/port.
+[04:15:54]Failed connecting to server.Check host/port.
+[04:16:15]Failed connecting to server.Check host/port.
+[04:16:22]Trying to connect to server.
+[04:16:22]Invalid command. For list of available commands type /help
+[04:17:31]Trying to connect to server.
+[04:17:31]Invalid command. For list of available commands type /help
+[04:17:36]Trying to connect to server.
+[04:17:36]Invalid command. For list of available commands type /help
+[04:17:38]Trying to connect to server.
+[04:17:38]Invalid command. For list of available commands type /help
+[04:17:40]Trying to connect to server.
+[04:17:40]Invalid command. For list of available commands type /help
+[04:17:41]Trying to connect to server.
+[04:17:41]Invalid command. For list of available commands type /help
+[04:17:46]Trying to connect to server.
+[04:17:46]Invalid command. For list of available commands type /help
+[04:17:47]Trying to connect to server.
+[04:17:47]Invalid command. For list of available commands type /help
+[04:17:48]Trying to connect to server.
+[04:17:48]Invalid command. For list of available commands type /help
+[04:17:50]Trying to connect to server.
+[04:17:50]Invalid command. For list of available commands type /help
+[04:17:51]Trying to connect to server.
+[04:17:51]Invalid command. For list of available commands type /help
+[04:17:56]Trying to connect to server.
+[04:17:56]Invalid command. For list of available commands type /help
+[04:17:57]Trying to connect to server.
+[04:17:57]Invalid command. For list of available commands type /help
+[04:17:58]Trying to connect to server.
+[04:17:58]Invalid command. For list of available commands type /help
+[04:18:00]Trying to connect to server.
+[04:18:00]Invalid command. For list of available commands type /help
+[04:18:01]Trying to connect to server.
+[04:18:01]Invalid command. For list of available commands type /help
+[04:18:03]Trying to connect to server.
+[04:18:03]Invalid command. For list of available commands type /help
+[04:18:05]Trying to connect to server.
+[04:18:05]Invalid command. For list of available commands type /help
+[04:18:05]Trying to connect to server.
+[04:18:05]Invalid command. For list of available commands type /help
+[04:18:08]Trying to connect to server.
+[04:18:08]Invalid command. For list of available commands type /help
+[04:18:09]Trying to connect to server.
+[04:18:09]Invalid command. For list of available commands type /help
+[04:18:12]Trying to connect to server.
+[04:18:12]Invalid command. For list of available commands type /help
+[04:18:13]Trying to connect to server.
+[04:18:13]Invalid command. For list of available commands type /help
+[04:18:14]Trying to connect to server.
+[04:18:14]Invalid command. For list of available commands type /help
+[04:18:16]Trying to connect to server.
+[04:18:17]Trying to connect to server.
+[04:18:18]Trying to connect to server.
+[04:18:18]Invalid command. For list of available commands type /help
+[04:18:21]Trying to connect to server.
+[04:18:21]Invalid command. For list of available commands type /help
+[04:18:21]Trying to connect to server.
+[04:18:28]Trying to connect to server.
+[04:18:33]Trying to connect to server.
+[04:18:33]Invalid command. For list of available commands type /help
+[04:18:36]Trying to connect to server.

@@ -1,0 +1,12 @@
+[04:04:58]Trying to connect to server.
+[04:04:58]Successfully connected to server.
+[04:04:58]New user connected: fester10.1
+[04:04:59]New user connected: fester14.2
+[04:04:59]New user connected: fester19.5
+[04:04:59]New user connected: fester17.0
+[04:04:59]New user connected: fester15.4
+[04:05:00]New user connected: fester3.20
+[04:05:00]New user connected: fester12.7
+[04:05:00]New user connected: fester15.1
+[04:05:00]New user connected: fester19.6
+[04:05:03]Lost connection to server.

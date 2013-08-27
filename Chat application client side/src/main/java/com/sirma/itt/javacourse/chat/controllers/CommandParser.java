@@ -1,105 +1,179 @@
 package com.sirma.itt.javacourse.chat.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 // TODO: Auto-generated Javadoc
 /**
- * Parses received commands from the server.
+ * The Class CommandParser.
  */
 public class CommandParser {
 
-	/** The wrapper. */
+	/** The self executed. */
+	List<String> selfExecuted = new ArrayList<>();
+	/** The wrap. */
 	private final Wrapper wrap;
-
-	/** The command. */
-	private String command;
-
-	/** The message. */
-	private String property;
 
 	/**
 	 * Instantiates a new command parser.
 	 * 
 	 * @param wrap
-	 *            the wrapper
+	 *            the wrap
 	 */
-	public CommandParser(Wrapper wrap) {
+	CommandParser(Wrapper wrap) {
 		this.wrap = wrap;
+		selfExecuted.add("help");
+		selfExecuted.add("disconnect");
+		selfExecuted.add("exit");
+		selfExecuted.add("quit");
 	}
 
 	/**
-	 * Parses the command.
+	 * Gets the self executed.
 	 * 
-	 * @param msg
-	 *            the command
+	 * @return the self executed
 	 */
-	public void parseCommand(String msg) {
-		try {
-			if (msg.indexOf(" ") != -1) {
-				command = msg.substring(1, msg.indexOf(" ")).trim();
-				property = msg.substring(msg.indexOf(" ") + 1).trim();
-			} else {
-				command = msg.substring(1).trim();
-			}
+	public List<String> getSelfExecuted() {
+		return selfExecuted;
+	}
 
-			if ("connected".equals(command)) {
-				if (wrap.getMsg().hasUpdate("newUser")) {
-					wrap.getMsg().setTextToBeUpdated("newUser", "::" + property);
-				} else {
-					wrap.getMsg().setTextToBeUpdated("newUser", property);
-				}
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						wrap.getLang().getValue("userConnected") + property);
+	/**
+	 * Sets the self executed.
+	 * 
+	 * @param selfExecuted
+	 *            the new self executed
+	 */
+	public void setSelfExecuted(List<String> selfExecuted) {
+		this.selfExecuted = selfExecuted;
+	}
 
-			} else if ("disconnect".equals(command)) {
-				if (wrap.getUsername().equals(property)) {
-					wrap.getMsg().setTextToBeUpdated("Main area",
-							wrap.getLang().getValue("disconnected"));
-					wrap.getClient().close();
-					wrap.setClient(null);
-				} else {
-					wrap.getMsg().setTextToBeUpdated("userLeft", property);
-					wrap.getMsg().setTextToBeUpdated("Main area",
-							property + " " + wrap.getLang().getValue("userDisconnected"));
-				}
+	/** The command. */
+	private String command = "";
 
-			} else if ("usernameChange".equals(command)) {
-				String oldUser = property.split("-")[0].trim();
-				String newUser = property.split("-")[1].trim();
-				wrap.getMsg().setTextToBeUpdated("userLeft", oldUser);
-				wrap.getMsg().setTextToBeUpdated("newUser", newUser);
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						oldUser + " " + wrap.getLang().getValue("usernameChange") + newUser);
-				if (oldUser.equals(wrap.getUsername())) {
-					wrap.setUsername(newUser);
-				}
+	/** The property. */
+	private String property = "";
 
-			} else if ("usernameUnavailable".equals(command)) {
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						wrap.getLang().getValue("usernameUnavailable"));
+	/**
+	 * Execute message as command.
+	 * 
+	 * @param message
+	 *            the message
+	 */
+	public void execute(String message) {
+		splitMessage(message);
 
-			} else if ("serverClosed".equals(command)) {
+		switch (command) {
+			case "usernameChange":
+				usernameChange();
+				break;
+			case "usernameUnavailable":
+				usernameUnavailable();
+				break;
+			case "connected":
+				connected();
+				break;
+			case "serverClosed":
+				serverClosed();
+				break;
+			case "incognito":
+				incognito();
+				break;
+			case "userDisconnected":
+				userDisconnected();
+				break;
+			case "usersList":
+				buildUsersList();
+				break;
+			case "info":
+				infoCommand();
+				break;
+
+			case "help":
+				help();
+				break;
+			case "disconnect":
+				userDisconnected();
+				break;
+			case "exit":
+				exitCommand();
+				break;
+			case "quit":
+				quitCommand();
+				break;
+
+			default:
+				invalidCommand();
+				break;
+		}
+	}
+
+	/**
+	 * Split message into command and property.
+	 * 
+	 * @param message
+	 *            the message
+	 */
+	public void splitMessage(String message) {
+		if (message.indexOf(" ") != -1) {
+			command = message.substring(1, message.indexOf(" ")).trim();
+			property = message.substring(message.indexOf(" ") + 1).trim();
+		} else {
+			command = message.substring(1).trim();
+		}
+
+	}
+
+	/**
+	 * Quit command. Disconnect with quit message.
+	 */
+	private void quitCommand() {
+		wrap.getMessenger().send("Disconnecting: " + property);
+		if (wrap.getClient() != null) {
+			try {
 				wrap.getClient().close();
 				wrap.setClient(null);
-
-			} else if ("incognito".equals(command)) {
-				String newUser = "";
-				wrap.getMsg().setTextToBeUpdated("userLeft", property);
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						property + " " + wrap.getLang().getValue("userDisconnected") + newUser);
-
-			} else if ("help".equals(command)) {
-
-				String result = wrap.getLang().getValue("help") + "\r\n";
-				result += wrap.getLang().getValue("helpCommand") + "\r\n";
-				result += wrap.getLang().getValue("usernameCommand") + "\r\n";
-				result += wrap.getLang().getValue("disconnectCommand") + "\r\n";
-				result += wrap.getLang().getValue("incognitoCommand") + "\r\n";
-				result += wrap.getLang().getValue("infoCommand") + "\r\n";
-				wrap.getMsg().setTextToBeUpdated("Main area", result);
-
+			} catch (IOException e1) {
 			}
-		} catch (Exception e) {
-			wrap.setClient(null);
 		}
+
+	}
+
+	/**
+	 * Exit command.Close window and disconnect.
+	 */
+	private void exitCommand() {
+		if (wrap.getClient() != null) {
+			try {
+				wrap.getClient().close();
+				wrap.setClient(null);
+			} catch (IOException e1) {
+			}
+		}
+		System.exit(0);
+	}
+
+	/**
+	 * Info command. Show server info.
+	 */
+	private void infoCommand() {
+		StringBuilder info = new StringBuilder();
+		info.append(property);
+		info.append("::Address: ");
+		info.append(wrap.getClient().getRemoteSocketAddress());
+		String[] result = info.toString().split("::");
+		for (int i = 0; i < result.length; i++) {
+			wrap.getMsg().setTextToBeUpdated("Main area", result[i]);
+		}
+
+	}
+
+	/**
+	 * Receive online users list command /usersList.
+	 */
+	private void buildUsersList() {
+		wrap.getMsg().setTextToBeUpdated("newUser", property);
+		wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("connectionSuccess"));
 	}
 
 	/**
@@ -112,12 +186,153 @@ public class CommandParser {
 	}
 
 	/**
-	 * Gets the message.
+	 * Gets the property.
 	 * 
-	 * @return the message
+	 * @return the property
 	 */
-	public String getMessage() {
+	public String getProperty() {
 		return property;
 	}
 
+	/**
+	 * Help command - /help.
+	 * 
+	 * @return help
+	 */
+	public String helpWindowInfo() {
+		StringBuilder result = new StringBuilder();
+		result.append(wrap.getLang().getValue("help"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("helpCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("usernameCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("disconnectCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("incognitoCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("infoCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("exitCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("quitCommand"));
+		result.append("\r\n");
+		return result.toString();
+	}
+
+	/**
+	 * Help command - /help.
+	 */
+	private void help() {
+		StringBuilder result = new StringBuilder();
+		result.append(wrap.getLang().getValue("help"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("helpCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("usernameCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("disconnectCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("incognitoCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("infoCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("exitCommand"));
+		result.append("\r\n");
+		result.append(wrap.getLang().getValue("quitCommand"));
+		result.append("\r\n");
+		wrap.getMsg().setTextToBeUpdated("Main area", result.toString());
+	}
+
+	/**
+	 * User disconnected command received - /disconnect.Disconnects the client socket from the
+	 * server if the username is client's username, else removes the user from users list.
+	 */
+	private void userDisconnected() {
+		if (!wrap.getUsername().equals(property)) {
+			wrap.getMsg().setTextToBeUpdated("userLeft", property);
+			wrap.getMsg().setTextToBeUpdated("Main area",
+					property + " " + wrap.getLang().getValue("userDisconnected"));
+		} else {
+			wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("disconnected"));
+			try {
+				wrap.getClient().close();
+			} catch (IOException e) {
+			}
+			wrap.setClient(null);
+		}
+	}
+
+	/**
+	 * Invalid command.
+	 */
+	private void invalidCommand() {
+		wrap.getMsg().setTextToBeUpdated("Main area", wrap.getLang().getValue("invalidCommand"));
+	}
+
+	/**
+	 * Incognito command received - /incognito. Sets client in incognito mode.
+	 */
+	private void incognito() {
+		if (!wrap.getUsername().equals(property)) {
+			wrap.getMsg().setTextToBeUpdated("userLeft", property);
+			wrap.getMsg().setTextToBeUpdated("Main area",
+					property + " " + wrap.getLang().getValue("userDisconnected"));
+		}
+	}
+
+	/**
+	 * Server closed command received - /serverClosed. Disconnects client and sets socket to null.
+	 */
+	private void serverClosed() {
+		try {
+			wrap.getClient().close();
+		} catch (IOException e) {
+		}
+		wrap.setClient(null);
+	}
+
+	/**
+	 * Connected command received - /connected. When new client connects. Adds the new user to the
+	 * users list.
+	 */
+	private void connected() {
+		if (wrap.getMsg().hasUpdate("newUser")) {
+			wrap.getMsg().setTextToBeUpdated("newUser", "::" + property);
+		} else {
+			wrap.getMsg().setTextToBeUpdated("newUser", property);
+		}
+		wrap.getMsg().setTextToBeUpdated("Main area",
+				wrap.getLang().getValue("userConnected") + property);
+	}
+
+	/**
+	 * Username unavailable command received - /usernameUnavailable.
+	 */
+	private void usernameUnavailable() {
+		if (wrap.getClient() != null) {
+			try {
+				wrap.getClient().close();
+			} catch (IOException e) {
+			}
+			wrap.setClient(null);
+		}
+		wrap.getMsg().setTextToBeUpdated("Main area",
+				wrap.getLang().getValue("usernameUnavailable"));
+	}
+
+	/**
+	 * Username change command received - /username olduser-newuser. Updates the users list.
+	 */
+	private void usernameChange() {
+		String oldUser = property.split("-")[0].trim();
+		String newUser = property.split("-")[1].trim();
+		wrap.getMsg().setTextToBeUpdated("userLeft", oldUser);
+		wrap.getMsg().setTextToBeUpdated("newUser", newUser);
+		wrap.getMsg().setTextToBeUpdated("Main area",
+				oldUser + " " + wrap.getLang().getValue("usernameChange") + newUser);
+		if (oldUser.equals(wrap.getUsername())) {
+			wrap.setUsername(newUser);
+		}
+	}
 }

@@ -45,14 +45,18 @@ public class Logger {
 	public void createLogFile(String username) {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String fileName = "logs/" + format.format(date) + "-" + username + ".txt";
-
+		StringBuilder fileName = new StringBuilder();
+		fileName.append("logs/");
+		fileName.append(format.format(date));
+		fileName.append("-");
+		fileName.append(username);
+		fileName.append(".txt");
 		try {
 			File dir = new File("logs");
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
-			File file = new File(fileName);
+			File file = new File(fileName.toString());
 			if (file.exists()) {
 				writer = new FileWriter(file, true);
 			} else {

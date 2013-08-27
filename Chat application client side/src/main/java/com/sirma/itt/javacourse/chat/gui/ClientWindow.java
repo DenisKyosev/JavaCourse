@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -54,7 +55,8 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 
 	/** The connect menu item. */
 	private final JMenuItem connect = new JMenuItem();
-
+	/** The help menu item. */
+	private final JMenuItem help = new JMenuItem();
 	/** The disconnect menu item. */
 	private final JMenuItem disconnect = new JMenuItem();
 
@@ -102,19 +104,24 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		JMenuBar menu = new JMenuBar();
 		langMenu.add(bulgarian);
 		langMenu.add(english);
+
 		bulgarian.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
 		english.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+		connect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.SHIFT_MASK));
+		disconnect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.SHIFT_MASK));
+		help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		langMenu.setMnemonic(KeyEvent.VK_L);
 		connectMenu.setMnemonic(KeyEvent.VK_C);
 		connectMenu.add(connect);
-		connect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.SHIFT_MASK));
-		disconnect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.SHIFT_MASK));
+
 		disconnect.setEnabled(false);
 		connectMenu.add(disconnect);
 		menu.add(connectMenu);
 		menu.add(langMenu);
+		menu.add(help);
+
 		c.fill = GridBagConstraints.FIRST_LINE_START;
-		c.ipadx = 160;
+		c.ipadx = 220;
 		c.ipady = 20;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -123,6 +130,7 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		disconnect.addActionListener(this);
 		bulgarian.addActionListener(this);
 		english.addActionListener(this);
+		help.addActionListener(this);
 
 		JScrollPane scroll = new JScrollPane(outputArea);
 		c.fill = GridBagConstraints.VERTICAL;
@@ -215,6 +223,10 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 			savedStates.add(memento.saveToMemento(message));
 			memento.setCurrent(savedStates.size());
 		}
+
+		if (e.getSource() == help) {
+			showHelp();
+		}
 	}
 
 	/**
@@ -261,13 +273,20 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 	}
 
 	/**
+	 * Show help window.
+	 */
+	private void showHelp() {
+		JOptionPane.showMessageDialog(null, wrap.getCmdParser().helpWindowInfo());
+	}
+
+	/**
 	 * Enable connect button. Disable disconnect button.
 	 */
 	private void enableConnect() {
 		disconnect.setEnabled(false);
 		connect.setEnabled(true);
 		inputField.setEnabled(false);
-		inputField.setText("Connect first");
+		inputField.setText(wrap.getLang().getValue("connectToWrite"));
 	}
 
 	/**
@@ -308,6 +327,7 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		bulgarian.setText(getWrap().getLang().getValue("bulgarian"));
 		english.setText(getWrap().getLang().getValue("english"));
 		send.setText(getWrap().getLang().getValue("send"));
+		help.setText(wrap.getLang().getValue("helpButton"));
 		usersList.setBorder(BorderFactory.createTitledBorder(getWrap().getLang().getValue(
 				"onlineUsers")));
 		langMenu.setText(getWrap().getLang().getValue("language"));
@@ -335,10 +355,26 @@ public class ClientWindow extends JFrame implements ActionListener, KeyListener,
 		}
 		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 			String message = inputField.getText();
-			getWrap().getMessenger().send(message);
+
+			if (message.startsWith("/")) {
+				wrap.getCmdParser().splitMessage(message);
+				if (wrap.getCmdParser().getSelfExecuted()
+						.contains(wrap.getCmdParser().getCommand())) {
+					wrap.getCmdParser().execute(message);
+				} else {
+					getWrap().getMessenger().send(message);
+				}
+			} else {
+				getWrap().getMessenger().send(message);
+			}
+
 			inputField.setText("");
 			savedStates.add(memento.saveToMemento(message));
 			memento.setCurrent(savedStates.size());
+			if ("/incognito".equals(message)) {
+				inputField.setEnabled(false);
+				inputField.setText(wrap.getLang().getValue("incognitoField"));
+			}
 		}
 	}
 

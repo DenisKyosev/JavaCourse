@@ -44,29 +44,30 @@ public class TestControllers {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("[hh:mm:ss]");
 
-		wrap.getCmdParser().parseCommand("/connected fester");
+		wrap.getLang().setLanguage("english");
+		wrap.getCmdParser().execute("/connected fester");
 		String expected = format.format(date) + "New user connected: fester\r\n";
 		assertEquals(expected, wrap.getMsg().getUpdatedText("Main area"));
 
 		wrap.setUsername("fester");
-		wrap.getCmdParser().parseCommand("/disconnect fester2");
+		wrap.getCmdParser().execute("/disconnect fester2");
 		expected = format.format(date) + "fester2 left the chat room.\r\n";
 		assertEquals(expected, wrap.getMsg().getUpdatedText("Main area"));
 
-		wrap.getCmdParser().parseCommand("/disconnect fester");
+		wrap.getCmdParser().execute("/disconnect fester");
 		expected = format.format(date) + "Disconnected from server.\r\n";
 		assertEquals(expected, wrap.getMsg().getUpdatedText("Main area"));
 
-		wrap.getCmdParser().parseCommand("/usernameChange fester-fester2");
+		wrap.getCmdParser().execute("/usernameChange fester-fester2");
 		expected = format.format(date) + "fester renamed to: fester2\r\n";
 		assertEquals(expected, wrap.getMsg().getUpdatedText("Main area"));
 		assertEquals("fester2", wrap.getUsername());
 
-		wrap.getCmdParser().parseCommand("/usernameUnavailable");
+		wrap.getCmdParser().execute("/usernameUnavailable");
 		expected = format.format(date) + "Username already taken choose different one.\r\n";
 		assertEquals(expected, wrap.getMsg().getUpdatedText("Main area"));
 
-		wrap.getCmdParser().parseCommand("/incognito fester");
+		wrap.getCmdParser().execute("/incognito fester");
 		expected = format.format(date) + "fester left the chat room.\r\n";
 		assertEquals(expected, wrap.getMsg().getUpdatedText("Main area"));
 

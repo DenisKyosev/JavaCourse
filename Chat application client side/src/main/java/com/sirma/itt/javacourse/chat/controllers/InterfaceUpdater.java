@@ -63,16 +63,18 @@ public class InterfaceUpdater {
 	 */
 	public void setTextToBeUpdated(String component, String newText) {
 		if (componentsFlags.containsKey(component)) {
-			String result = "";
+			StringBuilder result = new StringBuilder();
 			if ("Main area".equals(component)) {
-				result = timeBuilder() + newText;
+				result.append(timeBuilder());
+				result.append(newText);
 			} else {
-				result = newText;
+				result.append(newText);
 			}
 
 			if (componentsFlags.get(component)) {
-				componentsUpdateText.put(component, componentsUpdateText.get(component) + result
-						+ "\r\n");
+				result.insert(0, componentsUpdateText.get(component));
+				result.append("\r\n");
+				componentsUpdateText.put(component, result.toString());
 			} else {
 				componentsUpdateText.put(component, result + "\r\n");
 				componentsFlags.put(component, true);

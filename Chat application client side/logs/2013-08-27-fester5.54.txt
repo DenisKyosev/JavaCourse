@@ -1,0 +1,5 @@
+[04:17:06]Trying to connect to server.
+[04:17:06]Successfully connected to server.
+[04:17:06]New user connected: fester6.76
+[04:17:07]New user connected: fester15.8
+[04:17:16]fester15.8 left the chat room.

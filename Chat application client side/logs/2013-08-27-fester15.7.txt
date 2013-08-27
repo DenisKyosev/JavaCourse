@@ -1,0 +1,15 @@
+[04:05:11]Trying to connect to server.
+[04:05:11]Successfully connected to server.
+[04:05:22]fester17.9 renamed to: kur4o
+[04:05:34]Available commands are:
+/help - Show available commands list.
+/username NewUsername - Change username.
+/disconnect - Disconnect from server.
+/incognito - Go into incognito mode. You can't write messages, but you can see all messages. 
+/info - Get server information.
+
+[04:05:37]Server started on: 2013-08-27 04:05:07
+[04:05:37]Online users count: 10
+[04:05:37]Port: 7000
+[04:05:37]Address: localhost/127.0.0.1:7000
+[04:05:49]Lost connection to server.

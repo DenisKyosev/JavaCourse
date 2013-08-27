@@ -71,20 +71,11 @@ public class ClientConnector {
 	 */
 	public boolean receiveUsernameResponse(String username) {
 		try {
-			wrap.getCmdParser().parseCommand(wrap.getMessenger().receive());
+			wrap.getCmdParser().execute(wrap.getMessenger().receive());
 			if (wrap.getCmdParser().getCommand().contains("Unavailable")) {
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						wrap.getLang().getValue("usernameUnavailable"));
-				wrap.getClient().close();
-				wrap.setClient(null);
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						wrap.getLang().getValue("disconnected"));
 				return false;
 			} else {
 				wrap.setUsername(username);
-				wrap.getMsg().setTextToBeUpdated("newUser", wrap.getCmdParser().getMessage());
-				wrap.getMsg().setTextToBeUpdated("Main area",
-						wrap.getLang().getValue("connectionSuccess"));
 				wrap.getLog().createLogFile(username);
 				new Thread(new MessageListener(wrap)).start();
 				return true;

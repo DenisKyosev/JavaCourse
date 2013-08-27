@@ -1,0 +1,47 @@
+[04:05:09]Trying to connect to server.
+[04:05:09]Successfully connected to server.
+[04:05:09]New user connected: fester5.10
+[04:05:09]New user connected: fester11.0
+[04:05:10]New user connected: fester10.4
+[04:05:10]New user connected: fester2.73
+[04:05:10]New user connected: fester17.9
+[04:05:10]New user connected: fester18.5
+[04:05:11]New user connected: fester14.0
+[04:05:11]New user connected: fester15.7
+[04:05:22]fester17.9 renamed to: kur4o
+[04:05:49]<fester15.7>: Disconnecting: bye bye
+[04:05:49]fester15.7 left the chat room.
+[04:16:00]Trying to connect to server.
+[04:16:00]Successfully connected to server.
+[04:16:00]New user connected: fester12.4
+[04:16:00]New user connected: fester16.0
+[04:16:00]New user connected: fester8.97
+[04:16:00]New user connected: fester10.0
+[04:16:00]New user connected: fester0.01
+[04:16:01]New user connected: fester6.77
+[04:16:01]New user connected: fester7.21
+[04:16:01]New user connected: fester13.8
+[04:16:01]New user connected: fester8.40
+[04:16:11]Lost connection to server.
+[04:18:06]Trying to connect to server.
+[04:18:06]Successfully connected to server.
+[04:18:06]New user connected: fester6.37
+[04:18:07]New user connected: fester4.94
+[04:18:07]New user connected: fester0.18
+[04:18:08]New user connected: fester0.94
+[04:18:08]New user connected: fester14.8
+[04:18:09]New user connected: fester3.57
+[04:18:10]New user connected: fester19.5
+[04:18:10]New user connected: fester7.23
+[04:18:11]New user connected: fester0.58
+[04:18:11]New user connected: fester0.80
+[04:18:11]New user connected: fester13.0
+[04:18:12]New user connected: fester8.00
+[04:18:12]New user connected: fester8.87
+[04:18:14]New user connected: fester10.2
+[04:18:15]New user connected: fester1.55
+[04:18:16]New user connected: fester7.25
+[04:18:17]New user connected: fester3.55
+[04:18:19]New user connected: fester15.5
+[04:18:22]New user connected: fester5.78
+[04:18:32]New user connected: fester2.26

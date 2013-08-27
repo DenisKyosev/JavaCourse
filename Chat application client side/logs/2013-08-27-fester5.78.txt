@@ -1,0 +1,2 @@
+[04:18:25]Successfully connected to server.
+[04:18:32]New user connected: fester2.26

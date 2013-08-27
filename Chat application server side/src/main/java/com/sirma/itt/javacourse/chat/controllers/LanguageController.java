@@ -41,7 +41,7 @@ public class LanguageController {
 	 * 
 	 * @return the language
 	 */
-	public static String getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 

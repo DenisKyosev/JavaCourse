@@ -1,0 +1,9 @@
+[04:05:10]Trying to connect to server.
+[04:05:10]Successfully connected to server.
+[04:05:10]New user connected: fester17.9
+[04:05:10]New user connected: fester18.5
+[04:05:11]New user connected: fester14.0
+[04:05:11]New user connected: fester15.7
+[04:05:22]fester17.9 renamed to: kur4o
+[04:05:49]<fester15.7>: Disconnecting: bye bye
+[04:05:49]fester15.7 left the chat room.

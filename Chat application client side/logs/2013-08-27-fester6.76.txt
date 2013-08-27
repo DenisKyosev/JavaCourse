@@ -1,0 +1,3 @@
+[04:17:06]Trying to connect to server.
+[04:17:06]Successfully connected to server.
+[04:17:07]New user connected: fester15.8

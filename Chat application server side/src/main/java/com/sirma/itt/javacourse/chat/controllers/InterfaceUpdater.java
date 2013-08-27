@@ -38,7 +38,9 @@ public class InterfaceUpdater {
 	public String getUpdatedText(String component) {
 		if (componentsFlags.containsKey(component)) {
 			componentsFlags.put(component, false);
-			return componentsUpdateText.get(component);
+			String result = componentsUpdateText.get(component);
+			componentsUpdateText.put(component, "");
+			return result;
 		} else {
 			return "";
 		}
@@ -52,7 +54,7 @@ public class InterfaceUpdater {
 	 * @return the components flags
 	 */
 	public boolean getComponentsFlags(String component) {
-		return componentsFlags.get(component);
+		return componentsFlags.containsKey(component) && componentsFlags.get(component);
 	}
 
 	/**

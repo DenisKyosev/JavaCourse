@@ -1,5 +1,6 @@
 package com.sirma.itt.javacourse.chat.gui;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class RunServerWindow.
@@ -22,5 +23,6 @@ public final class RunServerWindow {
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		ServerWindow wnd = new ServerWindow();
+
 	}
 }

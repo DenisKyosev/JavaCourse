@@ -41,7 +41,7 @@ public class MessageListener implements Runnable {
 				stop = true;
 
 			} else if (msg.startsWith("/")) {
-				wrap.getCmdParser().parseCommand(msg);
+				wrap.getCmdParser().execute(msg);
 			} else {
 				wrap.getMsg().setTextToBeUpdated("Main area", msg);
 			}

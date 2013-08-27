@@ -1,0 +1,3 @@
+[04:16:01]Trying to connect to server.
+[04:16:01]Successfully connected to server.
+[04:16:11]Lost connection to server.

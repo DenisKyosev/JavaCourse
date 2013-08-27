@@ -5,7 +5,7 @@ import com.sirma.itt.javacourse.chat.controllers.Wrapper;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CommandParser.
+ * Command parser server side.
  */
 public class CommandParser {
 
@@ -35,18 +35,23 @@ public class CommandParser {
 	}
 
 	/**
-	 * Info command builder.
-	 * 
-	 * @return the string
+	 * Info command message builder.
 	 */
-	private String infoCommand() {
+	private void infoCommand() {
 		StringBuilder build = new StringBuilder();
-		build.append("Server started on: " + wrap.getServerStartDate() + "\r\n");
-		build.append("Port: " + wrap.getServer().getLocalPort() + "\r\n");
-		build.append("Host: " + wrap.getServer().getLocalSocketAddress() + "\r\n");
-		build.append("Online users count: " + wrap.getClients().size());
+		build.append("/info ");
+		build.append("Server started on: ");
+		build.append(wrap.getServerStartDate());
+		build.append("::");
 
-		return build.toString();
+		build.append("Online users count: ");
+		build.append(wrap.getClients().size());
+		build.append("::");
+
+		build.append("Port: ");
+		build.append(wrap.getServer().getLocalPort());
+
+		messenger.send(build.toString().trim());
 	}
 
 	/**
@@ -65,14 +70,75 @@ public class CommandParser {
 	}
 
 	/**
-	 * Parses the command.
+	 * Execute a command.
 	 * 
 	 * @param msg
-	 *            the message
+	 *            the msg
 	 */
-	protected void parseCmd(String msg) {
+	protected void execute(String msg) {
 		splitCommand(msg);
-		if ("username".equals(command) && !message.contains("[") && !message.contains("]")) {
+		switch (command) {
+			case "username":
+				checkUsername();
+				break;
+			case "disconnect":
+				disconnectUser();
+				break;
+			case "incognito":
+				incognito();
+				break;
+			case "info":
+				infoCommand();
+				break;
+
+			default:
+				invalidCommand();
+				break;
+		}
+	}
+
+	/**
+	 * Invalid command.
+	 */
+	private void invalidCommand() {
+	}
+
+	/**
+	 * Incognito command received - /incognito. Sets client in incognito mode.
+	 */
+	private void incognito() {
+		String username = wrap.getClients().get(messenger);
+		wrap.getMsg().setTextToBeUpdated("Main area",
+				wrap.getLang().getValue("userWentIncognito") + username);
+		if (wrap.getMsg().getComponentsFlags("usernameChange")) {
+			wrap.getMsg().setTextToBeUpdated("usernameChange", "::" + username + "-" + username);
+		} else {
+			wrap.getMsg().setTextToBeUpdated("usernameChange", username + "-" + username);
+		}
+		messenger.sendMessageToAll("/incognito " + username, wrap.getClientsIterator());
+	}
+
+	/**
+	 * Disconnect user.
+	 */
+	private void disconnectUser() {
+		String username = wrap.getClients().get(messenger);
+		wrap.getMsg().setTextToBeUpdated("Main area",
+				wrap.getLang().getValue("userDisconnected") + username);
+		wrap.getClients().remove(messenger);
+		if (wrap.getMsg().getComponentsFlags("logout user")) {
+			wrap.getMsg().setTextToBeUpdated("logout user", "::" + username);
+		} else {
+			wrap.getMsg().setTextToBeUpdated("logout user", username);
+		}
+		messenger.sendMessageToAll("/disconnect " + username, wrap.getClientsIterator());
+	}
+
+	/**
+	 * Check if username is available and does not contain forbidden characters.
+	 */
+	private void checkUsername() {
+		if (!message.contains("[") && !message.contains("]")) {
 			if (wrap.getClients().containsKey(messenger)
 					&& !wrap.getClients().containsValue(message)) {
 
@@ -93,33 +159,7 @@ public class CommandParser {
 			} else {
 				messenger.send("/usernameUnavailable");
 			}
-		} else if ("disconnect".equals(command)) {
-			String username = wrap.getClients().get(messenger);
-			wrap.getMsg().setTextToBeUpdated("Main area",
-					wrap.getLang().getValue("userDisconnected") + username);
-			wrap.getClients().remove(messenger);
-			if (wrap.getMsg().getComponentsFlags("logout user")) {
-				wrap.getMsg().setTextToBeUpdated("logout user", "::" + username);
-			} else {
-				wrap.getMsg().setTextToBeUpdated("logout user", username);
-			}
-			messenger.sendMessageToAll("/disconnect " + username, wrap.getClientsIterator());
-		} else if ("incognito".equals(command)) {
-			String username = wrap.getClients().get(messenger);
-			wrap.getMsg().setTextToBeUpdated("Main area",
-					wrap.getLang().getValue("userWentIncognito") + username);
-			if (wrap.getMsg().getComponentsFlags("usernameChange")) {
-				wrap.getMsg().setTextToBeUpdated("usernameChange",
-						"::" + username + "-" + username + "[inv]");
-			} else {
-				wrap.getMsg().setTextToBeUpdated("usernameChange",
-						username + "-" + username + "[inv]");
-			}
-			messenger.sendMessageToAll("/incognito " + username, wrap.getClientsIterator());
-		} else if ("info".equals(command)) {
-			messenger.send(infoCommand());
 		}
-
 	}
 
 	/**

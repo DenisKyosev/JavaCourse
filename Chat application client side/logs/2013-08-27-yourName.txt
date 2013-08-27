@@ -1,0 +1,76 @@
+[03:39:06]Trying to connect to server.
+[03:39:06]Successfully connected to server.
+[03:45:44]Trying to connect to server.
+[03:45:44]Successfully connected to server.
+[03:45:47]Available commands are:
+/help - Show available commands list.
+/username NewUsername - Change username.
+/disconnect - Disconnect from server.
+/incognito - Go into incognito mode. You can't write messages, but you can see all messages. 
+/info - Get server information.
+
+[03:46:09]Trying to connect to server.
+[03:46:09]Successfully connected to server.
+[03:47:14]Disconnected from server.
+[03:47:14]Lost connection to server.
+[03:47:29]Trying to connect to server.
+[03:47:29]Successfully connected to server.
+[03:47:32]Available commands are:
+/help - Show available commands list.
+/username NewUsername - Change username.
+/disconnect - Disconnect from server.
+/incognito - Go into incognito mode. You can't write messages, but you can see all messages. 
+/info - Get server information.
+
+[03:48:06]Trying to connect to server.
+[03:48:06]Successfully connected to server.
+[03:48:09]Server started on: 2013-08-27 03:45:39
+Online users count: 1
+Port: 7000
+Address: localhost/127.0.0.1:7000
+[03:48:13]Available commands are:
+/help - Show available commands list.
+/username NewUsername - Change username.
+/disconnect - Disconnect from server.
+/incognito - Go into incognito mode. You can't write messages, but you can see all messages. 
+/info - Get server information.
+
+[03:56:43]Trying to connect to server.
+[03:56:43]Successfully connected to server.
+[03:57:50]Server started on: 2013-08-27 03:52:19
+Online users count: 1
+Port: 7000
+Address: localhost/127.0.0.1:7000
+[03:58:37]Lost connection to server.
+[03:59:14]Trying to connect to server.
+[03:59:14]Successfully connected to server.
+[03:59:16]Server started on: 2013-08-27 03:52:19
+Online users count: 1
+Port: 7000
+Address: localhost/127.0.0.1:7000
+[03:59:52]Trying to connect to server.
+[03:59:52]Successfully connected to server.
+[03:59:59]Server started on: 2013-08-27 03:52:19
+Online users count: 1
+Port: 7000
+Address: localhost/127.0.0.1:7000
+[04:00:03]Server started on: 2013-08-27 03:52:19::Online users count: 1::Port: 7000 left the chat room.
+[04:00:22]Lost connection to server.
+[04:01:35]Trying to connect to server.
+[04:01:35]Successfully connected to server.
+[04:01:39]Server started on: 2013-08-27 03:52:19
+[04:01:39]Online users count: 1
+[04:01:39]Port: 7000
+[04:01:39]Address: localhost/127.0.0.1:7000
+[04:01:45]Server started on: 2013-08-27 03:52:19
+[04:01:45]Online users count: 1
+[04:01:45]Port: 7000
+[04:01:45]Address: localhost/127.0.0.1:7000
+[04:02:10]Available commands are:
+/help - Show available commands list.
+/username NewUsername - Change username.
+/disconnect - Disconnect from server.
+/incognito - Go into incognito mode. You can't write messages, but you can see all messages. 
+/info - Get server information.
+
+[04:02:17]Lost connection to server.

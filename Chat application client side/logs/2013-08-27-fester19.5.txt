@@ -1,0 +1,24 @@
+[04:04:59]Trying to connect to server.
+[04:04:59]Successfully connected to server.
+[04:04:59]New user connected: fester17.0
+[04:04:59]New user connected: fester15.4
+[04:05:00]New user connected: fester3.20
+[04:05:00]New user connected: fester12.7
+[04:05:00]New user connected: fester15.1
+[04:05:00]New user connected: fester19.6
+[04:05:03]Lost connection to server.
+[04:18:10]Trying to connect to server.
+[04:18:10]Successfully connected to server.
+[04:18:10]New user connected: fester7.23
+[04:18:11]New user connected: fester0.58
+[04:18:11]New user connected: fester0.80
+[04:18:11]New user connected: fester13.0
+[04:18:12]New user connected: fester8.00
+[04:18:12]New user connected: fester8.87
+[04:18:14]New user connected: fester10.2
+[04:18:16]New user connected: fester1.55
+[04:18:16]New user connected: fester7.25
+[04:18:17]New user connected: fester3.55
+[04:18:19]New user connected: fester15.5
+[04:18:22]New user connected: fester5.78
+[04:18:29]New user connected: fester2.26
